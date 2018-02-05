@@ -42,30 +42,41 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Camera.cs" />
-    <Compile Include="Collider.cs" />
+    <Compile Include="Engines\Camera.cs" />
+    <Compile Include="Engines\Collider.cs" />
+    <Compile Include="Entities\Particles\BulletExplosion.cs" />
+    <Compile Include="Entities\Particles\MuzzleFlash.cs" />
+    <Compile Include="Entities\Particles\MuzzleFlashSentry.cs" />
+    <Compile Include="Entities\Particles\TankExplosion.cs" />
+    <Compile Include="GUI\Crosshair.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="HealthBar.cs" />
-    <Compile Include="InputEngine.cs" />
+    <Compile Include="GUI\HealthBar.cs" />
+    <Compile Include="Engines\Helpers.cs" />
+    <Compile Include="Engines\InputEngine.cs" />
+    <Compile Include="Events\TileTrigger.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Entities\Particles\Projectile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="rotatingSprite.cs" />
-    <Compile Include="SimpleTileLayer.cs" />
-    <Compile Include="Sprite.cs" />
-    <Compile Include="Tile.cs" />
-    <Compile Include="TilePlayer.cs" />
-    <Compile Include="TileRef.cs" />
+    <Compile Include="Sprites\RotatingSprite.cs" />
+    <Compile Include="Entities\Sentry.cs" />
+    <Compile Include="Entities\SentryTurret.cs" />
+    <Compile Include="Sprites\SimpleTileLayer.cs" />
+    <Compile Include="Sprites\AnimatedSprite.cs" />
+    <Compile Include="GUI\SplashScreen.cs" />
+    <Compile Include="Entities\TilePlayerTurret.cs" />
+    <Compile Include="Sprites\Tile.cs" />
+    <Compile Include="Entities\TilePlayer.cs" />
+    <Compile Include="Sprites\TileRef.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoGame.Framework.WindowsDX.3.6.0.1625\lib\net40\MonoGame.Framework.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Tiles\tank tiles 64 x 64.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
