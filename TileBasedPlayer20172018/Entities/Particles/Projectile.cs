@@ -154,6 +154,7 @@ namespace Tiler
                                 if (collisionDetect(otherSentry))
                                 {
                                     sentryDamageRate = damageRate.Next(30, 40);
+                                    flyTimer = 0f;
                                     projectileState = PROJECTILE_STATUS.Exploding;
                                     otherSentry.Health -= sentryDamageRate;
                                     _sndPierce.Play();
@@ -167,14 +168,6 @@ namespace Tiler
                             ShootSound.Play();
                             ShootSoundPlayed = true;
                         }
-
-                        //// Old smooth point to point projectile movement, doesn't move beyond target
-                        //PixelPosition = Vector2.Lerp(PixelPosition, Target, Velocity);
-
-                        //if (Vector2.Distance(PixelPosition, Target) < Velocity * 2)
-                        //{
-                        //    projectileState = PROJECTILE_STATUS.Exploding;
-                        //}
                         break;
 
                     case PROJECTILE_STATUS.Exploding:
@@ -231,18 +224,23 @@ namespace Tiler
         {
             BulletExplosion Explosion = (BulletExplosion)Game.Services.GetService(typeof(BulletExplosion));
 
-            if (ProjectileState != Projectile.PROJECTILE_STATUS.Idle)
+            if (ProjectileState == PROJECTILE_STATUS.Exploding && Explosion.State == BulletExplosion.Effect.Idle)
             {
-                Explosion.Visible = false;
+                Explosion.PixelPosition = this.PixelPosition;
+                Explosion.Visible = true;
 
-                if (ProjectileState == Projectile.PROJECTILE_STATUS.Exploding && timer < 0.75f)
+                if (Explosion.CurrentFrame >= Explosion.FrameCount - 1)
                 {
-                    Explosion.Visible = true;
-                    Explosion.PixelPosition = this.PixelPosition;
-                    Explosion.Draw(gameTime);
+                    Explosion.Visible = false;
+                    Explosion.State = BulletExplosion.Effect.Exploding;
                 }
-                base.Draw(gameTime);
             }
+            else if (ProjectileState == PROJECTILE_STATUS.Firing)
+            {
+                Explosion.State = BulletExplosion.Effect.Idle;
+            }
+
+            base.Draw(gameTime);
         }
     }
 }

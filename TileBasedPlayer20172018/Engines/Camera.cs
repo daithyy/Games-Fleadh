@@ -117,6 +117,9 @@ namespace CameraNS
                 #endregion
             }
 
+            // TILE GRID FIX
+            //CamPos = new Vector2((int)CamPos.X, (int)CamPos.Y);
+
             base.Update(gameTime);
         }
 

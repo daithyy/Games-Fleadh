@@ -103,7 +103,6 @@ namespace Tiler
             {
                 Explosion.Visible = true;
                 Explosion.PixelPosition = this.CentrePos;
-                Explosion.Draw(gameTime);
             }
 
             base.Draw(gameTime);

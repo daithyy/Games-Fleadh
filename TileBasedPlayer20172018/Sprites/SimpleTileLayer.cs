@@ -82,12 +82,10 @@ namespace Tiling
         {
             if (_tileSheet == null) return;
             SpriteBatch sp = Game.Services.GetService<SpriteBatch>();
-            //Texture2D tx = Game.Services.GetService<Texture2D>();
-            //SpriteFont font = Game.Services.GetService<SpriteFont>();
 
             // Draw the tiles
             sp.Begin(SpriteSortMode.Immediate,
-                        BlendState.AlphaBlend, null, null, null, null,
+                        BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null,
                             Camera.CurrentCameraTranslation);
             // Draw the Tiles
             foreach (Tile t in Tiles)
@@ -97,8 +95,7 @@ namespace Tiling
                 sp.Draw(_tileSheet,
                     new Rectangle(position.ToPoint(), new Point(t.TileWidth, t.TileHeight)),
                     new Rectangle(t.TileRef._sheetPosX * t.TileWidth, t.TileRef._sheetPosY * t.TileHeight,
-                                        t.TileWidth, t.TileHeight)
-                    , Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+                    t.TileWidth, t.TileHeight), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
             }
             sp.End();
             base.Draw(gameTime);

@@ -29,7 +29,7 @@ namespace Tiler
                     case "EXIT":
                         if (p.BoundingRectangle.Intersects(CollisionField) && SentryTurret.Count <= 0)
                         {
-                            TileBasedPlayer20172018.Game1.MainScreen.CurrentGameCondition = GameCondition.WIN;
+                            TileBasedPlayer20172018.GameRoot.MainScreen.CurrentGameCondition = GameCondition.WIN;
                         }
                         break;
                     default:

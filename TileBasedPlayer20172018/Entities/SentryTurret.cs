@@ -197,7 +197,6 @@ namespace Tiler
                     explosionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                     Explosion.PixelPosition = this.PixelPosition - new Vector2(10, -2);
                     Explosion.Visible = true;
-                    Explosion.Draw(gameTime);
                 }
             }
         }

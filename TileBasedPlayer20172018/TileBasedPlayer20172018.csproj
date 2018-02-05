@@ -45,11 +45,12 @@
     <Compile Include="Engines\Camera.cs" />
     <Compile Include="Engines\Collider.cs" />
     <Compile Include="Entities\Particles\BulletExplosion.cs" />
+    <Compile Include="Entities\Particles\Explosion.cs" />
     <Compile Include="Entities\Particles\MuzzleFlash.cs" />
     <Compile Include="Entities\Particles\MuzzleFlashSentry.cs" />
     <Compile Include="Entities\Particles\TankExplosion.cs" />
     <Compile Include="GUI\Crosshair.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="GameRoot.cs" />
     <Compile Include="GUI\HealthBar.cs" />
     <Compile Include="Engines\Helpers.cs" />
     <Compile Include="Engines\InputEngine.cs" />
@@ -71,7 +72,7 @@
   <ItemGroup>
     <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -85,6 +86,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Shaders\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

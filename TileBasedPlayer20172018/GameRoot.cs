@@ -17,25 +17,29 @@ using AnimatedSprite;
 
 namespace TileBasedPlayer20172018
 {
-    public class Game1 : Game
+    public class GameRoot : Game
     {
-        GraphicsDeviceManager graphics;
+        public readonly GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Color BackgroundColor = new Color(185, 132, 62);
 
-        Camera CurrentCamera;
+        private int _width = 800;
+        private int _height = 480;
+        private Color BackgroundColor = new Color(185, 132, 62);
+
+        private Camera CurrentCamera;
         public static SplashScreen MainScreen;
 
-        List<TileRef> TileRefs = new List<TileRef>();
-        List<Collider> Colliders = new List<Collider>();
-        List<Sentry> Sentries = new List<Sentry>();
-        List<SentryTurret> SentryTurrets = new List<SentryTurret>();
+        private List<TileRef> TileRefs = new List<TileRef>();
+        private List<Collider> Colliders = new List<Collider>();
+        private List<Sentry> Sentries = new List<Sentry>();
+        private List<SentryTurret> SentryTurrets = new List<SentryTurret>();
 
-        string[] backTileNames = { "dirt", "ground", "metal", "ground2", "ground3", "ground4", "ground5", "ground7", "metal2", "metal3", "metal4", "dirt2" };
+        private string[] backTileNames = { "dirt", "ground", "metal", "ground2", "ground3", "ground4", "ground5", "ground7", "metal2", "metal3", "metal4", "dirt2" };
         public enum TileType { DIRT, GROUND, METAL, GROUND2, GROUND3, GROUND4,
                                GROUND5, GROUND7, METAL2, METAL3, METAL4, DIRT2 };
-        int tileWidth = 64;
-        int tileHeight = 64;
+        
+        private int tileWidth = 64;
+        private int tileHeight = 64;
 
         #region Tile Map
         int[,] tileMap = new int[,]
@@ -75,13 +79,13 @@ namespace TileBasedPlayer20172018
         };
         #endregion
 
-        public Game1()
+        public GameRoot()
         {
             graphics = new GraphicsDeviceManager(this);
 
-            //graphics.PreferredBackBufferWidth = 1280;
-            //graphics.PreferredBackBufferHeight = 720;
-            graphics.PreferMultiSampling = false;
+            graphics.PreferredBackBufferWidth = _width;
+            graphics.PreferredBackBufferHeight = _height;
+            //graphics.PreferMultiSampling = false;
             graphics.SynchronizeWithVerticalRetrace = true;
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
@@ -552,7 +556,7 @@ namespace TileBasedPlayer20172018
 
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+
         }
 
         protected override void Update(GameTime gameTime)
