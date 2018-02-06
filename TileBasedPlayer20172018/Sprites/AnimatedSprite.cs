@@ -69,7 +69,6 @@ namespace AnimatedSprite
             }
 
             set { _pixelPosition = value; }
-
         }
 
         public int CurrentFrame

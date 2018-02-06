@@ -65,12 +65,6 @@ namespace Tiler
             #endregion
         }
 
-        public void Collision(Collider c)
-        {
-            if (BoundingRectangle.Intersects(c.CollisionField))
-                PixelPosition = PreviousPosition;
-        }
-
         public override void Update(GameTime gameTime)
         {
             if (Helper.CurrentGameStatus == GameStatus.PLAYING)

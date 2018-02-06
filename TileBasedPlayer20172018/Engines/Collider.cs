@@ -58,12 +58,53 @@ namespace Tiler
             if (obj == null) return;
             else
             {
-                if (obj.BoundingRectangle.Intersects(CollisionField))
+                Rectangle overlap = Rectangle.Intersect(this.CollisionField, obj.BoundingRectangle);
+
+                #region Minkowski sum of B and A
+                float w = 0.5f * (obj.BoundingRectangle.Width + CollisionField.Width);
+                float h = 0.5f * (obj.BoundingRectangle.Height + CollisionField.Height);
+                float dx = obj.BoundingRectangle.Center.X - CollisionField.Center.X;
+                float dy = obj.BoundingRectangle.Center.Y - CollisionField.Center.Y;
+
+                if (Math.Abs(dx) <= w && Math.Abs(dy) <= h)
                 {
-                    //Rectangle overlap = Rectangle.Intersect(this.CollisionField, obj.BoundingRectangle);
-                    obj.PixelPosition = obj.PreviousPosition;
-                    //obj.PixelPosition += ;
+                    /* collision! */
+                    float wy = w * dy;
+                    float hx = h * dx;
+
+                    if (wy > hx)
+                        if (wy > -hx)
+                        {
+                            /* collision at the top */
+                            obj.PixelPosition += new Vector2(0, overlap.Height);
+                        }
+                        else
+                        {
+                            /* on the left */
+                            obj.PixelPosition -= new Vector2(overlap.Width, 0);
+                        }
+                    else
+                    {
+                        if (wy > -hx)
+                        {
+                            /* on the right */
+                            obj.PixelPosition += new Vector2(overlap.Width, 0);
+                        }
+                        else
+                        {
+                            /* at the bottom */
+                            obj.PixelPosition -= new Vector2(0, overlap.Height);
+                        }
+                    }
                 }
+                #endregion
+
+                /// OLD COLLISION METHOD
+                //if (obj.BoundingRectangle.Intersects(CollisionField))
+                //{
+                //    //obj.PixelPosition = obj.PreviousPosition;
+                //}
+                ///
             }
         }
 
@@ -74,8 +115,8 @@ namespace Tiler
             {
                 Rectangle projectileBounds = new Rectangle(
                     new Point(
-                    (int)obj.CentrePos.X - (obj.ProjectileWidth), 
-                    (int)obj.CentrePos.Y), 
+                    (int)obj.CentrePos.X - (obj.ProjectileWidth),
+                    (int)obj.CentrePos.Y),
                     new Point(obj.ProjectileWidth, obj.ProjectileHeight));
 
                 if (projectileBounds.Intersects(CollisionField))
