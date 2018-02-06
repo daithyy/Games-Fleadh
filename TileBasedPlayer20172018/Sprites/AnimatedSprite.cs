@@ -159,9 +159,9 @@ namespace AnimatedSprite
             }
         }
 
-        public bool collisionDetect(AnimateSheetSprite other)
+        public bool CollisionDetect(AnimateSheetSprite other)
         {
-            Rectangle myBound = new Rectangle((int)(this.PixelPosition.X + FrameWidth / 2), (int)(this.PixelPosition.Y + FrameHeight / 2), 12, 2);
+            Rectangle myBound = new Rectangle((int)this.PixelPosition.X, (int)this.PixelPosition.Y, this.FrameWidth, this.FrameHeight);
             Rectangle otherBound = new Rectangle((int)other.PixelPosition.X, (int)other.PixelPosition.Y, other.FrameWidth, other.FrameHeight);
 
             return myBound.Intersects(otherBound);
@@ -170,7 +170,7 @@ namespace AnimatedSprite
         public bool TileCollision(Tile other)
         {
             Rectangle myBound = new Rectangle((int)this.PixelPosition.X, (int)this.PixelPosition.Y, this.FrameWidth, this.FrameHeight);
-            Rectangle otherBound = new Rectangle((int)other.X * (int)other.TileWidth, (int)other.Y * (int)other.TileHeight, (int)other.TileWidth, (int)other.TileHeight);
+            Rectangle otherBound = new Rectangle(other.X * other.TileWidth, other.Y * other.TileHeight, other.TileWidth, other.TileHeight);
 
             return myBound.Intersects(otherBound);
         }
@@ -178,7 +178,7 @@ namespace AnimatedSprite
         public bool InTile(Tile other)
         {
             Rectangle myBound = new Rectangle((int)this.PixelPosition.X, (int)this.PixelPosition.Y, this.FrameWidth, this.FrameHeight);
-            Rectangle otherBound = new Rectangle((int)other.X * (int)other.TileWidth, (int)other.Y * (int)other.TileHeight, (int)other.TileWidth, (int)other.TileHeight);
+            Rectangle otherBound = new Rectangle(other.X * other.TileWidth, other.Y * other.TileHeight, other.TileWidth, other.TileHeight);
 
             return otherBound.Contains(myBound);
         }

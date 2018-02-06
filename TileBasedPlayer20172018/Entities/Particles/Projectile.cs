@@ -33,7 +33,7 @@ namespace Tiler
         }
         private Vector2 Target;
         private Vector2 StartPosition;
-        private Vector2 PreviousPosition;
+        public Vector2 PreviousPosition;
         public Vector2 CentrePos
         {
             get
@@ -49,7 +49,7 @@ namespace Tiler
         private float explosionLifeSpan = 2f; // Default explosion life in seconds
         private const float FLYING_LIFE_SPAN = 1f; // Default flight life in seconds
         private float timer = 0;
-        private float flyTimer = 0;
+        public float flyTimer = 0;
         private string Parent;
         private bool isPastTarget = false;
         private bool gotDirection = false;
@@ -63,6 +63,8 @@ namespace Tiler
         }
         private SoundEffect _sndPierce;
         public bool ShootSoundPlayed = false;
+        public int ProjectileWidth = 12;
+        public int ProjectileHeight = 2;
 
         public Projectile(Game game, string ParentName, Vector2 projectilePosition, List<TileRef> sheetRefs, 
             int frameWidth, int frameHeight, float layerDepth, Vector2 direction, SoundEffect sndShoot, SoundEffect sndPierce)
@@ -116,53 +118,9 @@ namespace Tiler
 
                         FaceThis(gameTime);
 
-                        #region Collision Checking
+                        CollisionCheck();
 
-                        // Projectile is out of tile map bounds
-                        if (this.PixelPosition.X < 0 || this.PixelPosition.Y < 0
-                            || this.PixelPosition.X > CameraNS.Camera._worldBound.X
-                            || this.PixelPosition.Y > CameraNS.Camera._worldBound.Y
-                            || flyTimer > FLYING_LIFE_SPAN)
-                        {
-                            flyTimer = 0f;
-                            projectileState = PROJECTILE_STATUS.Exploding;
-                        }
-
-                        // Ensure the sentry doesn't shoot itself !
-                        if (Parent != "PLAYER")
-                        {
-                            Camera thisCamera = (Camera)Game.Services.GetService(typeof(Camera));
-                            TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
-
-                            if (collisionDetect(player))
-                            {
-                                playerDamageRate = damageRate.Next(5, 15);
-                                projectileState = PROJECTILE_STATUS.Exploding;
-                                player.Health -= playerDamageRate;
-                                thisCamera.Shake(7.5f, 0.25f);
-                                _sndPierce.Play();
-                            }
-                        }
-                        else
-                        {
-                            // Reference Collision Objects
-                            List<SentryTurret> SentryTurretList = (List<SentryTurret>)Game.Services.GetService(typeof(List<SentryTurret>));
-
-                            // Check collision with Sentry
-                            foreach (SentryTurret otherSentry in SentryTurretList)
-                            {
-                                if (collisionDetect(otherSentry))
-                                {
-                                    sentryDamageRate = damageRate.Next(30, 40);
-                                    flyTimer = 0f;
-                                    projectileState = PROJECTILE_STATUS.Exploding;
-                                    otherSentry.Health -= sentryDamageRate;
-                                    _sndPierce.Play();
-                                }
-                            }
-                        }
-                        #endregion
-
+                        // Play sounds
                         if (!ShootSoundPlayed)
                         {
                             ShootSound.Play();
@@ -220,6 +178,54 @@ namespace Tiler
             }
         }
 
+        private void CollisionCheck()
+        {
+            // Projectile is out of tile map bounds
+            if (this.PixelPosition.X < 0 || this.PixelPosition.Y < 0
+                || this.PixelPosition.X > CameraNS.Camera._worldBound.X
+                || this.PixelPosition.Y > CameraNS.Camera._worldBound.Y
+                || flyTimer > FLYING_LIFE_SPAN)
+            {
+                flyTimer = 0f;
+                projectileState = PROJECTILE_STATUS.Exploding;
+            }
+
+            // Ensure the sentry doesn't shoot itself !
+            if (Parent != "PLAYER")
+            {
+                Camera thisCamera = (Camera)Game.Services.GetService(typeof(Camera));
+                TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+
+                if (CollideWith(player))
+                {
+                    playerDamageRate = damageRate.Next(5, 15);
+                    flyTimer = 0f;
+                    projectileState = PROJECTILE_STATUS.Exploding;
+                    player.Health -= playerDamageRate;
+                    thisCamera.Shake(7.5f, 0.25f);
+                    _sndPierce.Play();
+                }
+            }
+            else
+            {
+                // Reference Collision Objects
+                List<SentryTurret> SentryTurretList = (List<SentryTurret>)Game.Services.GetService(typeof(List<SentryTurret>));
+
+                // Check collision with Sentry
+                foreach (SentryTurret otherSentry in SentryTurretList)
+                {
+                    if (CollideWith(otherSentry))
+                    {
+                        sentryDamageRate = damageRate.Next(30, 40);
+                        flyTimer = 0f;
+                        projectileState = PROJECTILE_STATUS.Exploding;
+                        otherSentry.Health -= sentryDamageRate;
+                        _sndPierce.Play();
+                    }
+                }
+            }
+        }
+
         public override void Draw(GameTime gameTime)
         {
             BulletExplosion Explosion = (BulletExplosion)Game.Services.GetService(typeof(BulletExplosion));
@@ -241,6 +247,14 @@ namespace Tiler
             }
 
             base.Draw(gameTime);
+        }
+
+        private bool CollideWith(AnimateSheetSprite other)
+        {
+            Rectangle myBound = new Rectangle((int)CentrePos.X - this.ProjectileWidth, (int)CentrePos.Y, ProjectileWidth, ProjectileHeight);
+            Rectangle otherBound = new Rectangle((int)other.PixelPosition.X, (int)other.PixelPosition.Y, other.FrameWidth, other.FrameHeight);
+
+            return myBound.Intersects(otherBound);
         }
     }
 }

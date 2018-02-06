@@ -101,12 +101,13 @@ namespace TileBasedPlayer20172018
 
         protected override void Initialize()
         {
+            new InputEngine(this);
+
+            // Add Camera
             CurrentCamera = new Camera(this, Vector2.Zero,
                 new Vector2((tileMap.GetLength(1) * tileWidth), 
                             (tileMap.GetLength(0) * tileHeight)));
             Services.AddService(CurrentCamera);
-
-            new InputEngine(this);
 
             #region Create Player Tank
             TilePlayer tankPlayer = new TilePlayer(this, new Vector2(96, 192), new List<TileRef>()
@@ -134,6 +135,13 @@ namespace TileBasedPlayer20172018
             Content.Load<SoundEffect>("audio/TankArmorPierce"));
             #endregion
 
+            tankPlayerTurret.AddProjectile(bullet);
+            Services.AddService(bullet);
+
+            Services.AddService(tankPlayer);
+            Services.AddService(tankPlayerTurret);
+
+            #region Load Animated Sprites
             MuzzleFlash muzzleFlash = new MuzzleFlash(this, tankPlayerTurret.PixelPosition, new List<TileRef>()
             {
                 new TileRef(11,1,0),
@@ -169,15 +177,14 @@ namespace TileBasedPlayer20172018
                 new TileRef(6,6,0),
                 new TileRef(7,6,0)
             }, 64, 64, 0f);
+            #endregion
 
+            #region Add Animated Sprites to Services
             Services.AddService(muzzleFlash);
             Services.AddService(muzzleFlashSentry);
             Services.AddService(tankExplosionSprite);
             Services.AddService(bulletExplosionSprite);
-
-            tankPlayerTurret.AddProjectile(bullet);
-            Services.AddService(tankPlayer);
-            Services.AddService(tankPlayerTurret);
+            #endregion
 
             #region Create Sentry Tanks
             const float ANGLE_VERTICAL = 1.574f;
@@ -255,6 +262,9 @@ namespace TileBasedPlayer20172018
                 new TileRef(10, 4, 0),
             }, 64, 64, 0f, "Enemy Tank 14", 0f);
 
+            #endregion
+
+            #region Add Sentry's to List
             Sentries.Add(enemyOne);
             Sentries.Add(enemyTwo);
             Sentries.Add(enemyThree);
@@ -270,9 +280,8 @@ namespace TileBasedPlayer20172018
             Sentries.Add(enemyThirteen);
             Sentries.Add(enemyFourteen);
 
-            #endregion
-
             Services.AddService(Sentries);
+            #endregion
 
             #region Create Sentry Tank Turrets
 
@@ -362,6 +371,7 @@ namespace TileBasedPlayer20172018
 
             #endregion
 
+            #region Add Sentry Turrets to List
             SentryTurrets.Add(enemyTurretOne);
             SentryTurrets.Add(enemyTurretTwo);
             SentryTurrets.Add(enemyTurretThree);
@@ -378,6 +388,7 @@ namespace TileBasedPlayer20172018
             SentryTurrets.Add(enemyTurretFourteen);
 
             Services.AddService(SentryTurrets);
+            #endregion
 
             #region Create Sentry Tank Projectiles
             Projectile enemyBulletOne = new Projectile(this, "SENTRY", new Vector2(0,0), new List<TileRef>()
@@ -494,11 +505,13 @@ namespace TileBasedPlayer20172018
             enemyTurretFourteen.AddProjectile(enemyBulletFourteen);
             #endregion
 
+            // Add Crosshair
             new Crosshair(this, new Vector2(0, 0), new List<TileRef>()
             {
                 new TileRef(10, 3, 0),
             }, 64, 64, 0f);
 
+            // Set Collisions
             SetCollider(TileType.DIRT);
             SetCollider(TileType.METAL);
             SetTrigger(TileType.DIRT2); // For WIN condition
