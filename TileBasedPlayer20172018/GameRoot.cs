@@ -526,7 +526,7 @@ namespace TileBasedPlayer20172018
 
             // Add SpriteBatch to services, it can be called anywhere.
             Services.AddService(spriteBatch);
-            Services.AddService(Content.Load<Texture2D>(@"tiles/tilesheet"));
+            Services.AddService(Content.Load<Texture2D>(@"tiles/tilesheet_alternate"));
 
             // Tile References to be drawn on the Map corresponding to the entries in the defined 
             // Tile Map
