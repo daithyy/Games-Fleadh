@@ -18,6 +18,7 @@ namespace Tiler
 {
     class TilePlayerTurret : RotatingSprite
     {
+        #region Properties
         float volumeVelocity = 0;
         private float turnSpeed = 0.04f;
         private const float WIDTH_IN = 11f; // Width in from the left for the sprites origin
@@ -25,13 +26,6 @@ namespace Tiler
         public Projectile Bullet;
         public Vector2 CrosshairPosition;
         public Vector2 Direction;
-        public Vector2 CentrePos
-        {
-            get
-            {
-                return PixelPosition + new Vector2(FrameWidth / 2, FrameHeight / 2);
-            }
-        }
         private Vector2 originToRotate
         {
             get
@@ -45,7 +39,9 @@ namespace Tiler
         private SoundEffect TankTurnSound;
         private SoundEffectInstance TurnSoundInstance;
         private bool IsDead = false;
+        #endregion
 
+        #region Constructor
         public TilePlayerTurret(Game game, Vector2 playerPosition,
             List<TileRef> sheetRefs, int frameWidth, int frameHeight, float layerDepth, 
             SoundEffect shellSound, SoundEffect shellReload, SoundEffect turnSound,
@@ -67,7 +63,9 @@ namespace Tiler
             TurnSoundInstance.Play();
             #endregion
         }
+        #endregion
 
+        #region Methods
         public override void Update(GameTime gameTime)
         {
             if (Helper.CurrentGameStatus == GameStatus.PLAYING)
@@ -176,5 +174,6 @@ namespace Tiler
                 TurnSoundInstance.Volume = 0f;
             }
         }
+        #endregion
     }
 }

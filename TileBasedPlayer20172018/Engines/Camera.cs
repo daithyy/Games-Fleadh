@@ -17,6 +17,7 @@ namespace CameraNS
 
     class Camera : GameComponent
     {
+        #region Properties
         static Vector2 _camPos = Vector2.Zero;
         public static Vector2 _worldBound;
         public float CameraSpeed = 0.03f;
@@ -59,14 +60,18 @@ namespace CameraNS
 
         static Vector2 _followPos
         { get; set; }
+        #endregion
 
+        #region Constructor
         public Camera(Game game, Vector2 startPos, Vector2 bound) : base(game)
         {
             game.Components.Add(this);
             CamPos = startPos;
             _worldBound = bound;
         }
+        #endregion
 
+        #region Methods
         public override void Update(GameTime gameTime)
         {
             TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
@@ -159,5 +164,6 @@ namespace CameraNS
             // Reset our timer
             shakeTimer = 0f;
         }
+        #endregion
     }
 }

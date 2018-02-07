@@ -12,6 +12,7 @@ namespace AnimatedSprite
 {
     public class AnimateSheetSprite : DrawableGameComponent
     {
+        #region Properties
         private bool visible = true;
         protected Vector2 origin;
         public float angleOfRotation;
@@ -19,13 +20,11 @@ namespace AnimatedSprite
         private float scale = 1f;
         private Vector2 _pixelPosition;
         private Rectangle boundingRectangle;
-
         public bool Visible
         {
             get { return visible; }
             set { visible = value; }
         }
-
         private Vector2 _tileposition;
         public Vector2 TilePosition
         {
@@ -52,13 +51,11 @@ namespace AnimatedSprite
 
         // The source of our image within the sprite sheet to draw
         Rectangle sourceRectangle;
-
         public Rectangle SourceRectangle
         {
             get { return sourceRectangle; }
             set { sourceRectangle = value; }
         }
-
         public Vector2 PixelPosition
         {
             get
@@ -70,7 +67,6 @@ namespace AnimatedSprite
 
             set { _pixelPosition = value; }
         }
-
         public int CurrentFrame
         {
             get
@@ -83,7 +79,6 @@ namespace AnimatedSprite
                 _currentFrame = value;
             }
         }
-
         public float Scale
         {
             get
@@ -96,7 +91,6 @@ namespace AnimatedSprite
                 scale = value;
             }
         }
-
         public Rectangle BoundingRectangle
         {
             get
@@ -110,10 +104,18 @@ namespace AnimatedSprite
                 boundingRectangle = value;
             }
         }
-
         protected List<TileRef> Frames = new List<TileRef>();
         private int _currentFrame;
+        public Vector2 CentrePos
+        {
+            get
+            {
+                return PixelPosition + new Vector2(FrameWidth / 2, FrameHeight / 2);
+            }
+        }
+        #endregion
 
+        #region Constructor
         public AnimateSheetSprite(Game g, Vector2 userPosition, List<TileRef> sheetRefs, int frameWidth, int frameHeight, float layerDepth) : base(g)
         {
             spriteDepth = layerDepth;
@@ -128,7 +130,9 @@ namespace AnimatedSprite
             CurrentFrame = 0;
             g.Components.Add(this);
         }
+        #endregion
 
+        #region Methods
         public override void Update(GameTime gameTime)
         {
             if (Visible)
@@ -203,5 +207,6 @@ namespace AnimatedSprite
 
             base.Draw(gameTime);
         }
+        #endregion
     }
 }

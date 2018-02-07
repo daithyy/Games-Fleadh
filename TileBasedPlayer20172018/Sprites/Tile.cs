@@ -17,6 +17,7 @@ namespace Tiling
             get { return _id; }
             set { _id = value; }
         }
+
         string _tileName;
 
         bool _passable;
@@ -72,7 +73,6 @@ namespace Tiling
                 _tileHeight = value;
             }
         }
-
 
         // The tiles reference in the Tile sheet for drawing puposes
         public TileRef TileRef

@@ -224,3 +224,9 @@
 /processorParam:TextureFormat=Color
 /build:tiles/tilesheet_alternate.png
 
+#begin audio/Resupply.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/Resupply.wav
+

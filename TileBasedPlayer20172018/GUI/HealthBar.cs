@@ -12,6 +12,7 @@ namespace Helpers
 {
     public class HealthBar : DrawableGameComponent
     {
+        #region Properties
         public int health;
         private Texture2D txHealthBar; // hold the texture
         public Vector2 position; // Position on the screen
@@ -26,7 +27,9 @@ namespace Helpers
                                 (int)position.Y, (health / 2), 5);
             }
         }
+        #endregion
 
+        #region Constructor
         public HealthBar(Game game, Vector2 pos) : base(game)
         {
             DrawOrder = 900;
@@ -34,7 +37,9 @@ namespace Helpers
             txHealthBar.SetData(new[] { Color.White });
             position = pos;
         }
+        #endregion
 
+        #region Methods
         public override void Draw(GameTime gameTime)
         {
             SpriteBatch spriteBatch = Game.Services.GetService<SpriteBatch>();
@@ -49,5 +54,6 @@ namespace Helpers
                 spriteBatch.Draw(txHealthBar, HealthRect, CriticalColor);
             spriteBatch.End();
         }
+        #endregion
     }
 }

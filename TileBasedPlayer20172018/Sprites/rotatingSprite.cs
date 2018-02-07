@@ -13,6 +13,7 @@ namespace AnimatedSprite
 {
     public class RotatingSprite : AnimateSheetSprite
     {
+        #region Properties
         int health = 100;
         protected int DamageRate = 1; // The rate at which this object reduces the health of others
         protected int DamageSustainedRate = 1; // The rate at which this object takes on damage
@@ -57,13 +58,17 @@ namespace AnimatedSprite
             }
         }
         HealthBar hbar;
+        #endregion
 
+        #region Constructor
         public RotatingSprite(Game game, Vector2 userPosition, List<TileRef> sheetRefs, int frameWidth, int frameHeight, float layerDepth)
             : base(game, userPosition, sheetRefs, frameWidth, frameHeight, layerDepth)
         {
 
         }
+        #endregion
 
+        #region Methods
         public void AddHealthBar(HealthBar h)
         {
             Hbar = h;
@@ -134,5 +139,6 @@ namespace AnimatedSprite
             }
             return radians;
         }
+        #endregion
     }
 }

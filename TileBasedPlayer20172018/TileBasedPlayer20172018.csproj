@@ -49,6 +49,7 @@
     <Compile Include="Entities\Particles\MuzzleFlash.cs" />
     <Compile Include="Entities\Particles\MuzzleFlashSentry.cs" />
     <Compile Include="Entities\Particles\TankExplosion.cs" />
+    <Compile Include="Entities\Power-Ups\PowerUp.cs" />
     <Compile Include="GUI\Crosshair.cs" />
     <Compile Include="GameRoot.cs" />
     <Compile Include="GUI\HealthBar.cs" />

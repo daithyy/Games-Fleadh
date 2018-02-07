@@ -15,31 +15,27 @@ namespace Tiler
 {
     public class TilePlayer : RotatingSprite
     {
+        #region Properties
         //List<TileRef> images = new List<TileRef>() { new TileRef(15, 2, 0) };
         //TileRef currentFrame;
 
         float turnSpeed = 0.025f;
         float volumeVelocity = 0;
         float pitchVelocity = -1;
-        Vector2 Velocity = new Vector2(0,0);
-        Vector2 MaxVelocity = new Vector2(2.5f, 2.5f);
-        Vector2 Acceleration = new Vector2(0.1f);
+        private Vector2 Velocity = new Vector2(0,0);
+        public Vector2 MaxVelocity = new Vector2(2.5f, 2.5f);
+        public Vector2 Acceleration = new Vector2(0.1f);
         public Vector2 Deceleration = new Vector2(0.08f);
         public Vector2 Direction;
         public Vector2 PreviousPosition;
-        public Vector2 CentrePos
-        {
-            get
-            {
-                return PixelPosition + new Vector2(FrameWidth / 2, FrameHeight / 2);
-            }
-        }
         SoundEffect TankHumSound;
         SoundEffect TankTrackSound;
         SoundEffectInstance HumSoundInstance;
         SoundEffectInstance TrackSoundInstance;
         HealthBar healthBar;
+        #endregion
 
+        #region Constructor
         public TilePlayer(Game game, Vector2 startPosition,
             List<TileRef> sheetRefs, int frameWidth, int frameHeight, float layerDepth,
             SoundEffect tankHumSound, SoundEffect tankTrackSound)
@@ -64,7 +60,9 @@ namespace Tiler
             TrackSoundInstance.Play();
             #endregion
         }
+        #endregion
 
+        #region Methods
         public override void Update(GameTime gameTime)
         {
             if (Helper.CurrentGameStatus == GameStatus.PLAYING)
@@ -148,5 +146,6 @@ namespace Tiler
             HumSoundInstance.Stop();
             TrackSoundInstance.Stop();
         }
+        #endregion
     }
 }

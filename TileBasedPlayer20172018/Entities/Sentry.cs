@@ -15,17 +15,13 @@ namespace Tiler
 {
     class Sentry : RotatingSprite
     {
+        #region Properties
         public Vector2 Direction;
         public Vector2 PreviousPosition;
-        public Vector2 CentrePos
-        {
-            get
-            {
-                return PixelPosition + new Vector2((FrameWidth / 2), (FrameHeight / 2));
-            }
-        }
         public string Name;
+        #endregion
 
+        #region Constructor
         public Sentry(Game game, Vector2 startPosition,
             List<TileRef> sheetRefs, int frameWidth, int frameHeight, float layerDepth, string nameIn, float angle)
                 : base(game, startPosition, sheetRefs, frameWidth, frameHeight, layerDepth)
@@ -34,7 +30,9 @@ namespace Tiler
             DrawOrder = 30;
             this.angleOfRotation = angle;
         }
+        #endregion
 
+        #region Methods
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
@@ -48,6 +46,6 @@ namespace Tiler
 
             base.Update(gameTime);
         }
-
+        #endregion
     }
 }

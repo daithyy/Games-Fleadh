@@ -11,6 +11,7 @@ namespace Tiler
 {
     public class Collider : DrawableGameComponent
     {
+        #region Properties
         public int tileX;
         public int tileY;
         public Texture2D texture;
@@ -31,7 +32,9 @@ namespace Tiler
                 return new Rectangle(WorldPosition.ToPoint(), new Point(texture.Width, texture.Height));
             }
         }
+        #endregion
 
+        #region Constructor
         public Collider(Game game, Texture2D tx, int tlx, int tly) : base(game)
         {
             game.Components.Add(this);
@@ -41,7 +44,9 @@ namespace Tiler
             DrawOrder = 2;
             this.Visible = false;
         }
+        #endregion
 
+        #region Methods
         public override void Update(GameTime gameTime)
         {
             TilePlayer p = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
@@ -141,5 +146,6 @@ namespace Tiler
 
             base.Draw(gameTime);
         }
+        #endregion
     }
 }

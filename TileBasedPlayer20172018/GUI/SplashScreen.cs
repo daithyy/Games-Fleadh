@@ -15,6 +15,7 @@ namespace Screens
 {
     public class SplashScreen : DrawableGameComponent
     {
+        #region Properties
         Texture2D _txMain;
         Texture2D _txPause;
         Texture2D _txGameOver;
@@ -74,7 +75,9 @@ namespace Screens
         public Color FontSafeColor = new Color(0, 137, 81);
         public Color FontWarningColor = new Color(255, 86, 86);
         TimeSpan PauseTime;
+        #endregion
 
+        #region Constructor
         public SplashScreen(Game game, Vector2 pos, float timeLeft,
             Texture2D txMain, Texture2D txPause, Texture2D txGameOver, Texture2D txWin,
             Song menuMusic, Song playMusic, Song pauseMusic, Song gameOverMusic, Song winMusic,
@@ -106,7 +109,9 @@ namespace Screens
             MediaPlayer.Volume = VOLUME;
             MediaPlayer.IsRepeating = true;
         }
+        #endregion
 
+        #region Methods
         public override void Update(GameTime gameTime)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.Milliseconds;
@@ -297,5 +302,6 @@ namespace Screens
             }
             spriteBatch.End();
         }
+        #endregion
     }
 }

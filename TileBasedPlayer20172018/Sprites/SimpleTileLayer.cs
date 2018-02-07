@@ -10,6 +10,7 @@ namespace Tiling
 {
     public class SimpleTileLayer : DrawableGameComponent
     {
+        #region Properties
         string _layername;
         public int TileWidth;
         public int TileHeight;
@@ -46,6 +47,9 @@ namespace Tiling
                 _tileRefs = value;
             }
         }
+        #endregion
+
+        #region Constructor
         public SimpleTileLayer(Game game,
             string[] tileNames, int[,] tileMap,
                         List<TileRef> _tileRefs, int tileWidth, int tileHeight) : base(game)
@@ -78,6 +82,9 @@ namespace Tiling
                 }
 
         }
+        #endregion
+
+        #region Methods
         public override void Draw(GameTime gameTime)
         {
             if (_tileSheet == null) return;
@@ -119,5 +126,6 @@ namespace Tiling
             }
             return foundTiles;
         }
+        #endregion
     }
 }

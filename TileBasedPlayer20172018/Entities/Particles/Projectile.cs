@@ -19,6 +19,7 @@ namespace Tiler
 {
     public class Projectile : RotatingSprite
     {
+        #region Properties
         public enum PROJECTILE_STATUS
         {
             Idle,
@@ -34,19 +35,12 @@ namespace Tiler
         private Vector2 Target;
         private Vector2 StartPosition;
         public Vector2 PreviousPosition;
-        public Vector2 CentrePos
-        {
-            get
-            {
-                return PixelPosition + new Vector2(FrameWidth / 2, FrameHeight / 2);
-            }
-        }
-        public int Velocity = 15;
+        public int Velocity = 25; // Default bullet speed
         public Vector2 Direction;
         private Random damageRate = new Random();
-        private int sentryDamageRate = 35;
-        private int playerDamageRate = 10;
-        private float explosionLifeSpan = 2f; // Default explosion life in seconds
+        public int sentryDamageRate = 35;
+        public int playerDamageRate = 10;
+        public float explosionLifeSpan = 2f; // Default explosion life in seconds
         private const float FLYING_LIFE_SPAN = 1f; // Default flight life in seconds
         private float timer = 0;
         public float flyTimer = 0;
@@ -65,9 +59,12 @@ namespace Tiler
         public bool ShootSoundPlayed = false;
         public int ProjectileWidth = 12;
         public int ProjectileHeight = 2;
+        #endregion
 
+        #region Constructor
         public Projectile(Game game, string ParentName, Vector2 projectilePosition, List<TileRef> sheetRefs, 
-            int frameWidth, int frameHeight, float layerDepth, Vector2 direction, SoundEffect sndShoot, SoundEffect sndPierce)
+            int frameWidth, int frameHeight, float layerDepth, Vector2 direction, 
+            int speed, SoundEffect sndShoot, SoundEffect sndPierce)
             : base(game, projectilePosition, sheetRefs, frameWidth, frameHeight, layerDepth)
         {
             Parent = ParentName;
@@ -77,26 +74,13 @@ namespace Tiler
             StartPosition = projectilePosition;
             _sndShoot = sndShoot;
             _sndPierce = sndPierce;
-            if (Parent.ToUpper() == "SENTRY") Velocity /= 3;
-        }
+            Velocity = speed;
 
-        #region LifeSpan Overload Method
-        public Projectile(Game game, string ParentName, Vector2 projectilePosition, List<TileRef> sheetRefs,
-            int frameWidth, int frameHeight, float layerDepth, Vector2 direction, SoundEffect sndShoot, SoundEffect sndPierce, 
-            float lifeSpanIn)
-            : base(game, projectilePosition, sheetRefs, frameWidth, frameHeight, layerDepth)
-        {
-            Parent = ParentName;
-            Target = Vector2.Zero;
-            Direction = direction;
-            DrawOrder = 50;
-            explosionLifeSpan = lifeSpanIn;
-            _sndShoot = sndShoot;
-            _sndPierce = sndPierce;
-            if (Parent.ToUpper() == "SENTRY") Velocity /= 3;
+            if (Parent.ToUpper() == "SENTRY") Velocity /= 4;
         }
         #endregion
 
+        #region Methods
         public override void Update(GameTime gameTime)
         {
             if (Helper.CurrentGameStatus == GameStatus.PLAYING)
@@ -256,5 +240,6 @@ namespace Tiler
 
             return myBound.Intersects(otherBound);
         }
+        #endregion
     }
 }

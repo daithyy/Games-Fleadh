@@ -18,8 +18,9 @@ namespace Tiler
 {
     public class SentryTurret : RotatingSprite
     {
+        #region Properties
         float volumeVelocity = 0;
-        float collisionRadius = 400;
+        public int DetectRadius = 400;
         float turnSpeed = 0.015f;
         const float WIDTH_IN = 11f; // Width in from the left for the sprites origin
         float angleOfRotationPrev;
@@ -33,14 +34,6 @@ namespace Tiler
         public static int Count = 0; // Keeps track of amount of Sentries created
         private bool isDead = false;
         private float explosionTimer = 0f;
-
-        public Vector2 CentrePos
-        {
-            get
-            {
-                return PixelPosition + new Vector2(FrameWidth / 2, FrameHeight / 2);
-            }
-        }
         private Vector2 trueOrigin
         {
             get
@@ -48,7 +41,9 @@ namespace Tiler
                 return new Vector2(((FrameWidth / 2) - WIDTH_IN), (FrameHeight / 2));
             }
         }
+        #endregion
 
+        #region Constructor
         public SentryTurret(Game game, Vector2 sentryPosition,
             List<TileRef> sheetRefs, int frameWidth, int frameHeight, float layerDepth, string nameIn,
             float angle,
@@ -75,7 +70,9 @@ namespace Tiler
             TurnSoundInstance.Play();
             #endregion
         }
+        #endregion
 
+        #region Methods
         public override void Update(GameTime gameTime)
         {
             if (Helper.CurrentGameStatus == GameStatus.PLAYING)
@@ -129,7 +126,7 @@ namespace Tiler
         {
             float distance = Math.Abs(Vector2.Distance(this.CentrePos, player.CentrePos));
 
-            if (distance <= collisionRadius)
+            if (distance <= DetectRadius)
                 return true;
             else
                 return false;
@@ -217,5 +214,6 @@ namespace Tiler
                 TurnSoundInstance.Volume = 0f;
             }
         }
+        #endregion
     }
 }
