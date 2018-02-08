@@ -75,8 +75,6 @@ namespace Tiler
             _sndShoot = sndShoot;
             _sndPierce = sndPierce;
             Velocity = speed;
-
-            if (Parent.ToUpper() == "SENTRY") Velocity /= 4;
         }
         #endregion
 
@@ -182,7 +180,7 @@ namespace Tiler
 
                 if (CollideWith(player))
                 {
-                    playerDamageRate = damageRate.Next(5, 15);
+                    //playerDamageRate = damageRate.Next(5, 15);
                     flyTimer = 0f;
                     projectileState = PROJECTILE_STATUS.Exploding;
                     player.Health -= playerDamageRate;
@@ -200,7 +198,7 @@ namespace Tiler
                 {
                     if (CollideWith(otherSentry))
                     {
-                        sentryDamageRate = damageRate.Next(30, 40);
+                        //sentryDamageRate = damageRate.Next(30, 40);
                         flyTimer = 0f;
                         projectileState = PROJECTILE_STATUS.Exploding;
                         otherSentry.Health -= sentryDamageRate;

@@ -23,8 +23,8 @@ namespace TileBasedPlayer20172018
         public readonly GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        private int _width = 1280;
-        private int _height = 768;
+        private int _width = 800;
+        private int _height = 480;
 
         private Color BackgroundColor = new Color(185, 132, 62);
 
@@ -131,19 +131,21 @@ namespace TileBasedPlayer20172018
             Content.Load<SoundEffect>("audio/TankExplosion"));
 
             // Add Tank Projectile
+            const int PLAYER_BULLET_SPD = 25;
+
             Projectile bullet = new Projectile(this, "PLAYER", tankPlayerTurret.CentrePos, new List<TileRef>()
             {
                 new TileRef(10, 2, 0),
-            }, 64, 64, 0f, tankPlayerTurret.Direction, 25,
+            }, 64, 64, 0f, tankPlayerTurret.Direction, PLAYER_BULLET_SPD,
             Content.Load<SoundEffect>("audio/TankShoot"),
             Content.Load<SoundEffect>("audio/TankArmorPierce"));
-            #endregion
 
             tankPlayerTurret.AddProjectile(bullet);
             Services.AddService(bullet);
 
             Services.AddService(tankPlayer);
             Services.AddService(tankPlayerTurret);
+            #endregion
 
             #region Load Animated Sprites
             MuzzleFlash muzzleFlash = new MuzzleFlash(this, tankPlayerTurret.PixelPosition, new List<TileRef>()
@@ -396,7 +398,7 @@ namespace TileBasedPlayer20172018
             #endregion
 
             #region Create Sentry Tank Projectiles
-            const int ENEMY_BULLET_SPD = 25;
+            int ENEMY_BULLET_SPD = tankPlayerTurret.Bullet.Velocity / 4;
 
             Projectile enemyBulletOne = new Projectile(this, "SENTRY", new Vector2(0,0), new List<TileRef>()
             {
@@ -505,16 +507,41 @@ namespace TileBasedPlayer20172018
 
             for (int i = 0; i < SentryTurrets.Count; i++)
             {
+                sentryProjectiles[i].explosionLifeSpan = bullet.explosionLifeSpan * 2;
                 SentryTurrets[i].AddProjectile(sentryProjectiles[i]);
             }
             #endregion
 
             #region Add PowerUps
-            PowerUp Heal = new PowerUp(this, new Vector2(200,192), new List<TileRef>()
-            {
-                new TileRef(4,3,0),
-            }, 64, 64, 0f, 0, PowerUp.PowerUpType.Heal, 1, 25,
-            Content.Load<SoundEffect>(@"audio/Resupply"));
+            //PowerUp Speed = new PowerUp(this, new Vector2(200, 192), new List<TileRef>()
+            //{
+            //    new TileRef(4,3,0),
+            //}, 64, 64, 0f, 5, PowerUp.PowerUpType.SpeedBoost, 0, 2,
+            //Content.Load<SoundEffect>(@"audio/Resupply"));
+
+            //PowerUp Heal = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
+            //{
+            //    new TileRef(4,3,0),
+            //}, 64, 64, 0f, 1, PowerUp.PowerUpType.Heal, 50, 1,
+            //Content.Load<SoundEffect>(@"audio/Resupply"));
+
+            //PowerUp DefenseBoost = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
+            //{
+            //    new TileRef(4,3,0),
+            //}, 64, 64, 0f, 60, PowerUp.PowerUpType.DefenseBoost, 0, 2,
+            //Content.Load<SoundEffect>(@"audio/Resupply"));
+
+            //PowerUp ExtraDamage = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
+            //{
+            //    new TileRef(4,3,0),
+            //}, 64, 64, 0f, 60, PowerUp.PowerUpType.ExtraDamage, 0, 2,
+            //Content.Load<SoundEffect>(@"audio/Resupply"));
+
+            //PowerUp Camouflage = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
+            //{
+            //    new TileRef(4,3,0),
+            //}, 64, 64, 0f, 5, PowerUp.PowerUpType.Camouflage, 0, 0,
+            //Content.Load<SoundEffect>(@"audio/Resupply"));
             #endregion
 
             // Add Crosshair

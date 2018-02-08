@@ -47,7 +47,9 @@ namespace PowerUps
         public enum PowerUpStatus
         {
             Activated,
-            Deactivated
+            Deactivated,
+            ExecuteOnce,
+            Depleted
         }
 
         private PowerUpType Type;
@@ -63,6 +65,8 @@ namespace PowerUps
 
         // Store important variables.
         private Vector2 defaultMaxVelocity; // Default player speed.
+        private Vector2 defaultPlayerAcceleration;
+        private Vector2 defaultPlayerDeceleration;
         private int defaultPlayerDamageRate; // Default player damage rate.
         private int defaultSentryDamageRate; // Default sentry damage rate.
         private int defaultRadius; // Player spotted radius.
@@ -71,7 +75,7 @@ namespace PowerUps
         #region Constructors
         public PowerUp(Game game, Vector2 position, List<TileRef>sheetRefs, 
             int frameWidth, int frameHeight, float layerDepth,
-            float maxLifeTime, PowerUpType type, float multiplier, int amount,
+            float maxLifeTime, PowerUpType type, int amount, float multiplier,
             SoundEffect pickupSnd)
             : base(game, position, sheetRefs, frameWidth, frameHeight, layerDepth)
         {
@@ -81,6 +85,33 @@ namespace PowerUps
             this.MaxLifeTime = maxLifeTime;
             this.Factor = multiplier;
             this.Amount = amount;
+            this.State = PowerUpStatus.Deactivated;
+
+            #region Get Default Values
+            TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+            TilePlayerTurret playerTurret = (TilePlayerTurret)Game.Services.GetService(typeof(TilePlayerTurret));
+            List<SentryTurret> sentryTurrets = (List<SentryTurret>)Game.Services.GetService(typeof(List<SentryTurret>));
+
+            if (player != null)
+            {
+                defaultMaxVelocity = player.MaxVelocity;
+                defaultPlayerAcceleration = player.Acceleration;
+                defaultPlayerDeceleration = player.Deceleration;
+            }
+
+            foreach (SentryTurret turret in sentryTurrets)
+            {
+                if (turret != null)
+                {
+                    // Finds first enemy tank in list that's not NULL and takes those as default values.
+                    defaultPlayerDamageRate = turret.Bullet.playerDamageRate;
+                    defaultRadius = turret.DetectRadius;
+                    break;
+                }
+            }
+
+            if (playerTurret != null) defaultSentryDamageRate = playerTurret.Bullet.sentryDamageRate;
+            #endregion
 
             #region Handle Audio
             this.pickupSnd = pickupSnd;
@@ -99,7 +130,7 @@ namespace PowerUps
             }
         }
 
-        public void Deactivate(TilePlayer other, TilePlayerTurret otherTurret, SentryTurret sentryTurret)
+        public void Deactivate(TilePlayer other, TilePlayerTurret otherTurret, List<SentryTurret> sentryTurrets)
         {
             switch (Type)
             {
@@ -107,42 +138,64 @@ namespace PowerUps
                     // Do nothing on deactivation
                     break;
                 case PowerUpType.DefenseBoost:
-                    sentryTurret.Bullet.playerDamageRate = defaultPlayerDamageRate;
+                    foreach (SentryTurret turret in sentryTurrets)
+                    {
+                        if (turret != null)
+                            turret.Bullet.playerDamageRate = defaultPlayerDamageRate;
+                    }
                     break;
                 case PowerUpType.SpeedBoost:
                     other.MaxVelocity = defaultMaxVelocity;
+                    other.Acceleration = defaultPlayerAcceleration;
+                    other.Deceleration = defaultPlayerDeceleration;
                     break;
                 case PowerUpType.ExtraDamage:
                     otherTurret.Bullet.sentryDamageRate = defaultSentryDamageRate;
                     break;
                 case PowerUpType.Camouflage:
-                    sentryTurret.DetectRadius = defaultRadius;
+                    foreach (SentryTurret turret in sentryTurrets)
+                    {
+                        if (turret != null)
+                            turret.DetectRadius = defaultRadius;
+                    }
                     break;
             }
         }
 
-        private void Affect(TilePlayer other, TilePlayerTurret otherTurret, SentryTurret sentryTurret)
+        private void Affect(TilePlayer other, TilePlayerTurret otherTurret, List<SentryTurret> sentryTurrets)
         {
             switch (Type)
             {
                 case PowerUpType.Heal:
                     other.Health += Amount * (int)Factor;
-                    State = PowerUpStatus.Deactivated;
+                    State = PowerUpStatus.Depleted;
                     break;
                 case PowerUpType.DefenseBoost:
-                    sentryTurret.Bullet.playerDamageRate = defaultPlayerDamageRate;
-                    sentryTurret.Bullet.playerDamageRate = sentryTurret.Bullet.playerDamageRate / (int)Factor;
+                    foreach (SentryTurret turret in sentryTurrets)
+                    {
+                        if (turret != null)
+                            turret.Bullet.playerDamageRate /= (int)Factor;
+                    }
+                    State = PowerUpStatus.ExecuteOnce;
                     break;
                 case PowerUpType.SpeedBoost:
-                    defaultMaxVelocity = other.MaxVelocity;
-                    other.MaxVelocity = new Vector2(other.MaxVelocity.X * Factor, other.MaxVelocity.Y * Factor);
+                    // Accelerate slowly, gain more speed and stop your tracks faster!
+                    other.MaxVelocity *= Factor;
+                    //other.Acceleration = other.Acceleration * Factor;
+                    other.Deceleration *= Factor;
+                    State = PowerUpStatus.ExecuteOnce;
                     break;
                 case PowerUpType.ExtraDamage:
-                    otherTurret.Bullet.sentryDamageRate = Amount * (int)Factor;
+                    otherTurret.Bullet.sentryDamageRate *= (int)Factor;
+                    State = PowerUpStatus.ExecuteOnce;
                     break;
                 case PowerUpType.Camouflage:
-                    defaultRadius = sentryTurret.DetectRadius;
-                    sentryTurret.DetectRadius = Amount * (int)Factor;
+                    foreach (SentryTurret turret in sentryTurrets)
+                    {
+                        if (turret != null)
+                            turret.DetectRadius = Amount * (int)Factor;
+                    }
+                    State = PowerUpStatus.ExecuteOnce;
                     break;
             }
         }
@@ -153,32 +206,29 @@ namespace PowerUps
             {
                 TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
                 TilePlayerTurret playerTurret = (TilePlayerTurret)Game.Services.GetService(typeof(TilePlayerTurret));
-                SentryTurret sentryTurret = (SentryTurret)Game.Services.GetService(typeof(SentryTurret));
+                List<SentryTurret> sentryTurrets = (List<SentryTurret>)Game.Services.GetService(typeof(List<SentryTurret>));
 
-                if (player != null && playerTurret != null && sentryTurret != null) return;
-
-                if (State == PowerUpStatus.Deactivated)
+                if (player != null && playerTurret != null)
                 {
-                    Deactivate(player, playerTurret, sentryTurret);
-                    return; // SKIP !
-                }
-
-                if (player != null && CollisionDetect(player))
-                {
-                    Activate();
-                }
-
-                if (State == PowerUpStatus.Activated)
-                {
-                    Duration += (float)gametime.ElapsedGameTime.TotalSeconds;
-
-                    if (Duration >= MaxLifeTime)
+                    if (State == PowerUpStatus.Deactivated && CollisionDetect(player))
                     {
-                        State = PowerUpStatus.Deactivated;
+                        Activate();
+                    }
+
+                    if (State == PowerUpStatus.Activated || State == PowerUpStatus.ExecuteOnce)
+                    {
+                        Duration += (float)gametime.ElapsedGameTime.TotalSeconds;
+
+                        if (State != PowerUpStatus.ExecuteOnce)
+                            Affect(player, playerTurret, sentryTurrets);
+
+                        if (Duration >= MaxLifeTime)
+                        {
+                            State = PowerUpStatus.Depleted;
+                            Deactivate(player, playerTurret, sentryTurrets);
+                        }
                     }
                 }
-
-                Affect(player, playerTurret, sentryTurret);
 
                 base.Update(gametime);
             }
@@ -186,9 +236,10 @@ namespace PowerUps
 
         public override void Draw(GameTime gameTime)
         {
-
-
-            base.Draw(gameTime);
+            if (State == PowerUpStatus.Deactivated)
+            {
+                base.Draw(gameTime);
+            }  
         }
         #endregion
     }
