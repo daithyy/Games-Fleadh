@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Tiler;
 using Tiling;
 using CameraNS;
-using Engine.Engines;
+using InputEngine;
 using Screens;
 using Helpers;
 using AnimatedSprite;
@@ -94,7 +94,7 @@ namespace TileBasedPlayer20172018
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
-            IsMouseVisible = false;
+            IsMouseVisible = true;
             IsFixedTimeStep = true;
 
             Window.Title = "Tile Based Tank Game - 2D Game Programming Assignment";
@@ -105,7 +105,8 @@ namespace TileBasedPlayer20172018
 
         protected override void Initialize()
         {
-            new InputEngine(this);
+            //new InputEngine(this);
+            new InputManager(this);
 
             // Add Camera
             CurrentCamera = new Camera(this, Vector2.Zero,

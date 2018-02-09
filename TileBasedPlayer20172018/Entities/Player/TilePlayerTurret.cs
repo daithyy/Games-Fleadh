@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 
-using Engine.Engines;
+using InputEngine;
 using AnimatedSprite;
 using Tiling;
 using CameraNS;
@@ -24,9 +24,8 @@ namespace Tiler
         private const float WIDTH_IN = 11f; // Width in from the left for the sprites origin
         private float angleOfRotationPrev;
         public Projectile Bullet;
-        public Vector2 CrosshairPosition;
         public Vector2 Direction;
-        private Vector2 originToRotate
+        public Vector2 rotateOrigin
         {
             get
             {
@@ -49,7 +48,7 @@ namespace Tiler
                 : base(game, playerPosition, sheetRefs, frameWidth, frameHeight, layerDepth)
         {
             DrawOrder = 70;
-            origin = originToRotate;
+            origin = rotateOrigin;
 
             #region Turret Audio
             this.ExplosionSound = explosionSound;
@@ -80,11 +79,9 @@ namespace Tiler
                         Track(player.PixelPosition + new Vector2(WIDTH_IN, 0f));
                     }
 
-                    CrosshairPosition = ((InputEngine.MousePosition) + Camera.CamPos);
-
                     angleOfRotationPrev = this.angleOfRotation;
 
-                    this.angleOfRotation = TurnToFace(this.CentrePos - new Vector2(WIDTH_IN, 0f), CrosshairPosition, this.angleOfRotation, turnSpeed);
+                    this.angleOfRotation = TurnToFace(this.PixelPosition - new Vector2(WIDTH_IN, 0), Crosshair.Position, this.angleOfRotation, turnSpeed);
 
                     Direction = new Vector2((float)Math.Cos(this.angleOfRotation), (float)Math.Sin(this.angleOfRotation));
 
@@ -139,7 +136,7 @@ namespace Tiler
                     // Send this direction to the projectile
                     Bullet.GetDirection(Direction);
                     // Shoot at the specified position
-                    Bullet.Shoot(CrosshairPosition - new Vector2(FrameWidth / 2, FrameHeight / 2));
+                    Bullet.Shoot(Crosshair.Position - new Vector2(FrameWidth / 2, FrameHeight / 2));
                     // Draw muzzleflash
                     muzzleFlash.angleOfRotation = this.angleOfRotation;
                     muzzleFlash.PixelPosition = this.PixelPosition - new Vector2(10,0) + (this.Direction * (FrameWidth - 10));

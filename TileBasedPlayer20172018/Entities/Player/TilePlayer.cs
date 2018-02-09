@@ -10,6 +10,7 @@ using System.Text;
 
 using Tiling;
 using Helpers;
+using InputEngine;
 
 namespace Tiler
 {
@@ -102,7 +103,7 @@ namespace Tiler
 
         public void Movement()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            if (InputManager.IsKeyHeld(Keys.S))
             {
                 Velocity -= Acceleration;
             }
@@ -110,7 +111,7 @@ namespace Tiler
             {
                 Velocity += Deceleration;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.W))
+            else if (InputManager.IsKeyHeld(Keys.W))
             {
                 Velocity += Acceleration;
             }
@@ -119,14 +120,16 @@ namespace Tiler
                 Velocity -= Deceleration;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            if (InputManager.IsKeyHeld(Keys.A))
             {
                 this.angleOfRotation -= turnSpeed;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D))
+            else if (InputManager.IsKeyHeld(Keys.D))
             {
                 this.angleOfRotation += turnSpeed;
             }
+
+
         }
 
         public void PlaySounds()

@@ -1,5 +1,4 @@
-﻿using Engine.Engines;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -8,8 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using Helpers;
 using Tiler;
+using InputEngine;
 
 namespace Screens
 {
@@ -132,7 +133,7 @@ namespace Screens
                     }
 
                     // Check Input
-                    if (InputEngine.IsKeyPressed(ActivationKey))
+                    if (InputManager.IsKeyPressed(ActivationKey))
                     {
                         Active = !Active;
                         BlinkPlay.Play();
@@ -150,7 +151,7 @@ namespace Screens
                     }
 
                     // Check Input
-                    if (InputEngine.IsKeyPressed(PauseKey))
+                    if (InputManager.IsKeyPressed(PauseKey))
                     {
                         Active = !Active;
                         BlinkPause.Play();
@@ -192,7 +193,7 @@ namespace Screens
                     }
 
                     // Check Input
-                    if (InputEngine.IsKeyPressed(PauseKey))
+                    if (InputManager.IsKeyPressed(PauseKey))
                     {
                         Active = !Active;
                         BlinkPause.Play();
