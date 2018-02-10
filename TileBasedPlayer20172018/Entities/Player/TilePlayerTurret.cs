@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 
-using InputEngine;
+using InputManager;
 using AnimatedSprite;
 using Tiling;
 using CameraNS;
@@ -81,8 +81,10 @@ namespace Tiler
 
                     angleOfRotationPrev = this.angleOfRotation;
 
-                    this.angleOfRotation = TurnToFace(this.PixelPosition - new Vector2(WIDTH_IN, 0), Crosshair.Position, this.angleOfRotation, turnSpeed);
+                    // Alternate controls.
+                    HandleTurns();
 
+                    // Get direction for projectiles.
                     Direction = new Vector2((float)Math.Cos(this.angleOfRotation), (float)Math.Sin(this.angleOfRotation));
 
                     Fire(gameTime);
@@ -102,6 +104,36 @@ namespace Tiler
             }
         }
 
+        private void HandleTurns()
+        {
+            switch (InputEngine.UsingKeyboard)
+            {
+                case true:
+                    #region Handle Mouse Movement
+                    this.angleOfRotation = TurnToFace(
+                        this.PixelPosition - new Vector2(WIDTH_IN, 0),
+                        Crosshair.Position, this.angleOfRotation, turnSpeed);
+                    #endregion
+                    break;
+                case false:
+                    #region Handle Stick Movement
+                    Vector2 stickDirection = new Vector2(InputEngine.CurrentPadState.ThumbSticks.Right.X,
+                                                         -InputEngine.CurrentPadState.ThumbSticks.Right.Y);
+
+                    this.angleOfRotation = TurnToFace(
+                        this.PixelPosition - new Vector2(WIDTH_IN, 0),
+                        this.PixelPosition + (stickDirection * this.PixelPosition),
+                        this.angleOfRotation, turnSpeed);
+
+                    if (stickDirection == Vector2.Zero)
+                        this.angleOfRotation = TurnToFace(
+                        this.PixelPosition - new Vector2(WIDTH_IN),
+                        this.Direction, this.angleOfRotation, turnSpeed);
+                    #endregion
+                    break;
+            }
+        }
+
         public void Track(Vector2 followPos)
         {
             this.PixelPosition = followPos;
@@ -114,6 +146,13 @@ namespace Tiler
         public void AddProjectile(Projectile loadedBullet)
         {
             Bullet = loadedBullet;
+        }
+
+        private bool InputShoot()
+        {
+            if (InputEngine.IsMouseLeftHeld() || InputEngine.IsButtonHeld(Buttons.RightTrigger))
+                return true;
+            else return false;
         }
 
         public void Fire(GameTime gameTime)
@@ -129,9 +168,10 @@ namespace Tiler
             {
                 MuzzleFlash muzzleFlash = (MuzzleFlash)Game.Services.GetService(typeof(MuzzleFlash));
 
-                if (Mouse.GetState().LeftButton == ButtonState.Pressed
+                if (InputShoot()
                     && Bullet.ProjectileState == Projectile.PROJECTILE_STATUS.Idle
-                    && this.angleOfRotation != 0 && Math.Round(this.angleOfRotationPrev,2) == Math.Round(this.angleOfRotation,2))
+                    && this.angleOfRotation != 0 
+                    && Math.Round(this.angleOfRotationPrev,2) == Math.Round(this.angleOfRotation,2))
                 {
                     // Send this direction to the projectile
                     Bullet.GetDirection(Direction);

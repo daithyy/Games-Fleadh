@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="Engines\Camera.cs" />
     <Compile Include="Engines\Collider.cs" />
-    <Compile Include="Engines\InputManager.cs" />
     <Compile Include="Sprites\Particles\BulletExplosion.cs" />
     <Compile Include="Sprites\Particles\Explosion.cs" />
     <Compile Include="Sprites\Particles\MuzzleFlash.cs" />

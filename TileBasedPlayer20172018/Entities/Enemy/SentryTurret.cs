@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 
-using Engine.Engines;
+using InputManager;
 using AnimatedSprite;
 using Tiling;
 using Helpers;

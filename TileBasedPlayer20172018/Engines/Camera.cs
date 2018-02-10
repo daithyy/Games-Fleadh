@@ -1,5 +1,5 @@
 ﻿using AnimatedSprite;
-using Engine.Engines;
+using InputManager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;

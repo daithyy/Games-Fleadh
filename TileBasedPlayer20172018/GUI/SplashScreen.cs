@@ -10,7 +10,7 @@ using System.Text;
 
 using Helpers;
 using Tiler;
-using InputEngine;
+using InputManager;
 
 namespace Screens
 {
@@ -133,7 +133,7 @@ namespace Screens
                     }
 
                     // Check Input
-                    if (InputManager.IsKeyPressed(ActivationKey))
+                    if (InputEngine.IsKeyPressed(ActivationKey))
                     {
                         Active = !Active;
                         BlinkPlay.Play();
@@ -151,7 +151,7 @@ namespace Screens
                     }
 
                     // Check Input
-                    if (InputManager.IsKeyPressed(PauseKey))
+                    if (InputEngine.IsKeyPressed(PauseKey))
                     {
                         Active = !Active;
                         BlinkPause.Play();
@@ -193,7 +193,7 @@ namespace Screens
                     }
 
                     // Check Input
-                    if (InputManager.IsKeyPressed(PauseKey))
+                    if (InputEngine.IsKeyPressed(PauseKey))
                     {
                         Active = !Active;
                         BlinkPause.Play();

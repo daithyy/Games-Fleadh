@@ -9,13 +9,12 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 #endif
 
-namespace Engine.Engines
+namespace InputManager
 {
     public enum Direction { None, Up, Down, Left, Right }
 
     public class InputEngine : GameComponent
     {
-
         // You could make this user-configurable.
         const float Deadzone = 0.8f;
         const float DiagonalAvoidance = 0.2f;
@@ -43,7 +42,6 @@ namespace Engine.Engines
 #endif
 #if WINDOWS
 
-
         private static GamePadState previousPadState;
         private static GamePadState currentPadState;
 
@@ -57,6 +55,8 @@ namespace Engine.Engines
 
         private static MouseState previousMouseState;
         private static MouseState currentMouseState;
+
+        public static bool UsingKeyboard = true;
 #endif
         public InputEngine(Game _game)
             : base(_game)
@@ -177,6 +177,8 @@ namespace Engine.Engines
 
             KeysPressedInLastFrame.Clear();
             CheckForTextInput();
+
+            UpdateControls();
 #endif
             base.Update(gametime);
         }
@@ -263,8 +265,6 @@ namespace Engine.Engines
             get { return previousMouseState; }
         }
 
-
-
         public static bool IsMouseLeftClick()
         {
             if (currentMouseState.LeftButton == ButtonState.Released && previousMouseState.LeftButton == ButtonState.Pressed)
@@ -314,7 +314,60 @@ namespace Engine.Engines
                 previousPadState = value;
             }
         }
-#endif
 
+        public static bool IsPadInputChanged(bool ignoreThumbsticks)
+        {
+            if ((currentPadState.IsConnected) && (currentPadState.PacketNumber != previousPadState.PacketNumber))
+            {
+                // Ignore thumbstick movement.
+                if (ignoreThumbsticks == true
+                    && ((currentPadState.ThumbSticks.Left.Length() != previousPadState.ThumbSticks.Left.Length())
+                    && (currentPadState.ThumbSticks.Right.Length() != previousPadState.ThumbSticks.Right.Length()))
+                    )
+                    return false;
+                return true;
+            }
+            return false;
+        }
+
+        private static List<Keys> PressedKeys = new List<Keys>()
+        {
+            #region Used Keys
+            Keys.W,
+            Keys.S,
+            Keys.A,
+            Keys.D,
+            Keys.Enter,
+            Keys.Escape,
+            Keys.Space
+            #endregion
+        };
+
+        public static bool IsKeyInputChanged()
+        {
+            foreach (var key in PressedKeys)
+            {
+                if (IsKeyPressed(key) || IsKeyHeld(key))
+                {
+                    return true;
+                }
+                else return false;
+            }
+            return false;
+        }
+
+        private void UpdateControls()
+        {
+            if (IsPadInputChanged(false))
+            {
+                UsingKeyboard = false;
+            }
+
+            if (CurrentMouseState != PreviousMouseState || IsKeyInputChanged())
+            {
+                UsingKeyboard = true;
+            }
+        }
+#endif
     }
 }

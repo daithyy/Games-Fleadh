@@ -10,7 +10,7 @@ using System.Text;
 
 using Tiling;
 using Helpers;
-using InputEngine;
+using InputManager;
 
 namespace Tiler
 {
@@ -19,7 +19,6 @@ namespace Tiler
         #region Properties
         //List<TileRef> images = new List<TileRef>() { new TileRef(15, 2, 0) };
         //TileRef currentFrame;
-
         float turnSpeed = 0.025f;
         float volumeVelocity = 0;
         float pitchVelocity = -1;
@@ -103,33 +102,54 @@ namespace Tiler
 
         public void Movement()
         {
-            if (InputManager.IsKeyHeld(Keys.S))
+            switch (InputEngine.UsingKeyboard)
             {
-                Velocity -= Acceleration;
-            }
-            else if (Velocity.X < 0)
-            {
-                Velocity += Deceleration;
-            }
-            else if (InputManager.IsKeyHeld(Keys.W))
-            {
-                Velocity += Acceleration;
-            }
-            else if (Velocity.X > 0)
-            {
-                Velocity -= Deceleration;
-            }
+                case true:
+                    #region Handle Keyboard Movement
+                    if (InputEngine.IsKeyHeld(Keys.S))
+                    {
+                        Velocity -= Acceleration;
+                    }
+                    else if (Velocity.X < 0)
+                    {
+                        Velocity += Deceleration;
+                    }
+                    else if (InputEngine.IsKeyHeld(Keys.W))
+                    {
+                        Velocity += Acceleration;
+                    }
+                    else if (Velocity.X > 0)
+                    {
+                        Velocity -= Deceleration;
+                    }
 
-            if (InputManager.IsKeyHeld(Keys.A))
-            {
-                this.angleOfRotation -= turnSpeed;
-            }
-            else if (InputManager.IsKeyHeld(Keys.D))
-            {
-                this.angleOfRotation += turnSpeed;
-            }
+                    if (InputEngine.IsKeyHeld(Keys.A))
+                    {
+                        this.angleOfRotation -= turnSpeed;
+                    }
+                    else if (InputEngine.IsKeyHeld(Keys.D))
+                    {
+                        this.angleOfRotation += turnSpeed;
+                    }
+                    #endregion
+                    break;
+                case false:
+                    #region Handle Controller Movement
+                    Velocity += InputEngine.CurrentPadState.ThumbSticks.Left.Y * Acceleration;
 
+                    if (Velocity.X < 0)
+                    {
+                        Velocity += Deceleration / 2;
+                    }
+                    else if (Velocity.X > 0)
+                    {
+                        Velocity -= Deceleration / 2;
+                    }
 
+                    this.angleOfRotation += InputEngine.CurrentPadState.ThumbSticks.Left.X * (turnSpeed * 2);
+                    #endregion
+                    break;
+            }
         }
 
         public void PlaySounds()

@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Tiler;
 using Tiling;
 using CameraNS;
-using InputEngine;
+using InputManager;
 using Screens;
 using Helpers;
 using AnimatedSprite;
@@ -94,10 +94,10 @@ namespace TileBasedPlayer20172018
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
-            IsMouseVisible = true;
+            IsMouseVisible = false;
             IsFixedTimeStep = true;
 
-            Window.Title = "Tile Based Tank Game - 2D Game Programming Assignment";
+            Window.Title = "Steel Wrath";
             Window.AllowAltF4 = false;
 
             Content.RootDirectory = "Content";
@@ -105,8 +105,7 @@ namespace TileBasedPlayer20172018
 
         protected override void Initialize()
         {
-            //new InputEngine(this);
-            new InputManager(this);
+            new InputEngine(this);
 
             // Add Camera
             CurrentCamera = new Camera(this, Vector2.Zero,
