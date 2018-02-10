@@ -29,16 +29,17 @@ namespace Tiler
         {
             TilePlayerTurret playerTurret = (TilePlayerTurret)Game.Services.GetService(typeof(TilePlayerTurret));
             Position = playerTurret.PixelPosition + (playerTurret.Direction * new Vector2(AIM_RADIUS));
+            PixelPosition = Position;
         }
 
         private void MoveWithMouse()
         {
             Vector2 MousePos = InputEngine.MousePosition - new Vector2(FrameWidth / 2, FrameHeight / 2);
-            Vector2 TruePosition = (MousePos + Camera.CamPos);
+            Position = (MousePos + Camera.CamPos);
+            Vector2 TransformPosition = ContainTurretAngle(Position);
 
-            Vector2 TransformPosition = ContainTurretAngle(TruePosition);
             TransformPosition += TankPosition;
-            Position = TransformPosition;
+            PixelPosition = TransformPosition;
         }
 
         private Vector2 ContainTurretAngle(Vector2 CrosshairPosition)
@@ -61,8 +62,6 @@ namespace Tiler
             {
                 MoveWithRadius();
             }
-
-            PixelPosition = Position;
 
             base.Update(gameTime);
         }
