@@ -117,18 +117,13 @@ namespace Tiler
                     break;
                 case false:
                     #region Handle Stick Movement
-                    Vector2 stickDirection = new Vector2(InputEngine.CurrentPadState.ThumbSticks.Right.X,
-                                                         -InputEngine.CurrentPadState.ThumbSticks.Right.Y);
-
                     this.angleOfRotation = TurnToFace(
                         this.PixelPosition - new Vector2(WIDTH_IN, 0),
-                        this.PixelPosition + (stickDirection * this.PixelPosition),
+                        this.PixelPosition + (InputEngine.SmoothThumbStick * this.PixelPosition),
                         this.angleOfRotation, turnSpeed);
 
-                    if (stickDirection == Vector2.Zero)
-                        this.angleOfRotation = TurnToFace(
-                        this.PixelPosition - new Vector2(WIDTH_IN),
-                        this.Direction, this.angleOfRotation, turnSpeed);
+                    if (InputEngine.SmoothThumbStick == Vector2.Zero)
+                        this.angleOfRotation = angleOfRotationPrev;
                     #endregion
                     break;
             }

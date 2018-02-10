@@ -11,11 +11,9 @@ using Microsoft.Xna.Framework.Input.Touch;
 
 namespace InputManager
 {
-    public enum Direction { None, Up, Down, Left, Right }
-
     public class InputEngine : GameComponent
     {
-        // You could make this user-configurable.
+        // User-configurable.
         const float Deadzone = 0.8f;
         const float DiagonalAvoidance = 0.2f;
 
@@ -49,12 +47,12 @@ namespace InputManager
         private static KeyboardState currentKeyState;
 
         private static Vector2 previousMousePos;
-
-
         private static Vector2 currentMousePos;
 
         private static MouseState previousMouseState;
         private static MouseState currentMouseState;
+
+        private static Vector2 thumbStick;
 
         public static bool UsingKeyboard = true;
 #endif
@@ -74,37 +72,23 @@ namespace InputManager
             _game.Components.Add(this);
         }
 
-        public static Direction GetDirection(Vector2 gamepadThumbStick)
+        private Vector2 ApplyDeadZone(GamePadThumbSticks ThumbStick)
         {
-            // Get the length and prevent something from happening
-            // if it's in our deadzone.
-            var length = gamepadThumbStick.Length();
-            if (length < Deadzone)
-                return Direction.None;
+            // Scaled Radial Dead Zone
+            Vector2 stickDirection = new Vector2(ThumbStick.Right.X,
+                                                -ThumbStick.Right.Y);
 
-            var absX = Math.Abs(gamepadThumbStick.X);
-            var absY = Math.Abs(gamepadThumbStick.Y);
-            var absDiff = Math.Abs(absX - absY);
-
-            // We don't like values that are too close to each other
-            // i.e. borderline diagonal.
-            if (absDiff < length * DiagonalAvoidance)
-                return Direction.None;
-
-            if (absX > absY)
+            if (stickDirection.Length() < Deadzone)
             {
-                if (gamepadThumbStick.X > 0)
-                    return Direction.Right;
-                else
-                    return Direction.Left;
+                stickDirection = Vector2.Zero;
             }
             else
             {
-                if (gamepadThumbStick.Y > 0)
-                    return Direction.Up;
-                else
-                    return Direction.Down;
+                stickDirection.Normalize();
+                stickDirection *= ((stickDirection.Length() - Deadzone) / (1 - Deadzone));
             }
+
+            return stickDirection;
         }
 
         public static void ClearState()
@@ -179,6 +163,7 @@ namespace InputManager
             CheckForTextInput();
 
             UpdateControls();
+            thumbStick = ApplyDeadZone(currentPadState.ThumbSticks);
 #endif
             base.Update(gametime);
         }
@@ -313,6 +298,12 @@ namespace InputManager
             {
                 previousPadState = value;
             }
+        }
+
+        public static Vector2 SmoothThumbStick
+        {
+            get { return thumbStick; }
+            set { thumbStick = value; }
         }
 
         public static bool IsPadInputChanged(bool ignoreThumbsticks)
