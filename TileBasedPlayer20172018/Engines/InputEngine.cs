@@ -14,8 +14,8 @@ namespace InputManager
     public class InputEngine : GameComponent
     {
         // User-configurable.
-        const float Deadzone = 0.8f;
-        const float DiagonalAvoidance = 0.2f;
+        const float Deadzone = 0.25f;
+        //const float DiagonalAvoidance = 0.2f;
 
         public static Color clearColor;
 #if ANDROID

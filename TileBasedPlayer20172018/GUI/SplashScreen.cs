@@ -23,7 +23,7 @@ namespace Screens
         Texture2D _txWin;
         public const float VOLUME = 0.6f;
         public bool Active { get; set; }
-        public Texture2D txMain
+        private Texture2D txMain
         {
             get
             {
@@ -35,7 +35,7 @@ namespace Screens
                 _txMain = value;
             }
         }
-        public Texture2D txPause
+        private Texture2D txPause
         {
             get
             {
@@ -47,29 +47,31 @@ namespace Screens
                 _txPause = value;
             }
         }
-        public Texture2D txGameOver
+        private Texture2D txGameOver
         {
             get { return _txGameOver; }
             set { _txGameOver = value; }
         }
-        public Texture2D txWin
+        private Texture2D txWin
         {
             get { return _txGameOver; }
             set { _txGameOver = value; }
         }
-        public Song MenuTrack { get; set; }
-        public Song BackingTrack { get; set; }
-        public Song PauseTrack { get; set; }
-        public Song GameOverTrack { get; set; }
-        public Song WinTrack { get; set; }
-        public SoundEffect BlinkPlay { get; set; }
-        public SoundEffect BlinkPause { get; set; }
+        private Song MenuTrack { get; set; }
+        private Song BackingTrack { get; set; }
+        private Song PauseTrack { get; set; }
+        private Song GameOverTrack { get; set; }
+        private Song WinTrack { get; set; }
+        private SoundEffect BlinkPlay { get; set; }
+        private SoundEffect BlinkPause { get; set; }
         public Vector2 Position { get; set; }
-        public Keys PauseKey;
-        public Keys ActivationKey;
+        private Keys PauseKey;
+        private Buttons PauseButton;
+        private Keys ActivationKey;
+        private Buttons ActivationButton;
         public ActiveScreen CurrentScreen;
         public GameCondition CurrentGameCondition;
-        public SpriteFont Font;
+        private SpriteFont Font;
         public float TimeRemaining;
         private float TrackPlayCount = 0; // To stop Game Over track loop
         public Color FontColor = new Color(243, 208, 168);
@@ -82,7 +84,8 @@ namespace Screens
         public SplashScreen(Game game, Vector2 pos, float timeLeft,
             Texture2D txMain, Texture2D txPause, Texture2D txGameOver, Texture2D txWin,
             Song menuMusic, Song playMusic, Song pauseMusic, Song gameOverMusic, Song winMusic,
-            Keys pauseKey, Keys activateKey, SpriteFont fontIn, SoundEffect blinkPlay, SoundEffect blinkPause) : base(game)
+            Keys pauseKey, Keys activateKey, Buttons activateButton, Buttons pauseButton, 
+            SpriteFont fontIn, SoundEffect blinkPlay, SoundEffect blinkPause) : base(game)
         {
             game.Components.Add(this);
             DrawOrder = 1000;
@@ -101,7 +104,9 @@ namespace Screens
             #endregion
             Position = pos;
             ActivationKey = activateKey;
+            ActivationButton = activateButton;
             PauseKey = pauseKey;
+            PauseButton = pauseButton;
             Font = fontIn;
             TimeRemaining = timeLeft;
             CurrentScreen = ActiveScreen.MAIN;
@@ -133,7 +138,8 @@ namespace Screens
                     }
 
                     // Check Input
-                    if (InputEngine.IsKeyPressed(ActivationKey))
+                    if (InputEngine.IsKeyPressed(ActivationKey) ||
+                        InputEngine.IsButtonPressed(ActivationButton))
                     {
                         Active = !Active;
                         BlinkPlay.Play();
@@ -151,7 +157,8 @@ namespace Screens
                     }
 
                     // Check Input
-                    if (InputEngine.IsKeyPressed(PauseKey))
+                    if (InputEngine.IsKeyPressed(PauseKey) ||
+                        InputEngine.IsButtonPressed(PauseButton))
                     {
                         Active = !Active;
                         BlinkPause.Play();
@@ -193,7 +200,8 @@ namespace Screens
                     }
 
                     // Check Input
-                    if (InputEngine.IsKeyPressed(PauseKey))
+                    if (InputEngine.IsKeyPressed(PauseKey) ||
+                        InputEngine.IsButtonPressed(PauseButton))
                     {
                         Active = !Active;
                         BlinkPause.Play();

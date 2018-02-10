@@ -600,6 +600,8 @@ namespace TileBasedPlayer20172018
                             Content.Load<Song>("audio/Win"),
                             Keys.P, 
                             Keys.Enter,
+                            Buttons.A,
+                            Buttons.Start,
                             Content.Load<SpriteFont>("fonts/font"),
                             Content.Load<SoundEffect>("audio/BlinkPlay"),
                             Content.Load<SoundEffect>("audio/BlinkPause"));

@@ -69,7 +69,7 @@ namespace Tiler
         public override void Draw(GameTime gameTime)
         {
             //if (InputEngine.UsingKeyboard)
-                base.Draw(gameTime);
+            base.Draw(gameTime);
         }
     }
 }
