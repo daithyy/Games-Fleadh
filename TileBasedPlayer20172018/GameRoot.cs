@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
+using Penumbra;
 
 using Tiler;
 using Tiling;
@@ -22,6 +23,7 @@ namespace TileBasedPlayer20172018
     {
         public readonly GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        PenumbraComponent penumbra;
 
         private int _width = 800;
         private int _height = 480;
@@ -101,6 +103,13 @@ namespace TileBasedPlayer20172018
             Window.AllowAltF4 = false;
 
             Content.RootDirectory = "Content";
+
+            penumbra = new PenumbraComponent(this)
+            {
+                AmbientColor = new Color(new Vector3(0.1f))
+            };
+            Components.Add(penumbra);
+            Services.AddService(penumbra);
         }
 
         protected override void Initialize()
@@ -544,16 +553,22 @@ namespace TileBasedPlayer20172018
             //Content.Load<SoundEffect>(@"audio/Resupply"));
             #endregion
 
-            // Add Crosshair
+            #region Add Crosshair
             new Crosshair(this, new Vector2(0, 0), new List<TileRef>()
             {
                 new TileRef(10, 3, 0),
             }, 64, 64, 0f);
+            #endregion
 
-            // Set Collisions
+            #region Set Collisions
             SetCollider(TileType.DIRT);
             SetCollider(TileType.METAL);
             SetTrigger(TileType.DIRT2); // For WIN condition
+            #endregion
+
+            #region Add Lights
+            penumbra.Lights.Add(tankPlayer.Light);
+            #endregion
 
             base.Initialize();
         }
@@ -562,6 +577,8 @@ namespace TileBasedPlayer20172018
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Helper.graphicsDevice = GraphicsDevice;
+
+            penumbra.Transform = Camera.CurrentCameraTranslation;
 
             // Add SpriteBatch to services, it can be called anywhere.
             Services.AddService(spriteBatch);
@@ -624,6 +641,7 @@ namespace TileBasedPlayer20172018
 
         protected override void Draw(GameTime gameTime)
         {
+            penumbra.BeginDraw();
             GraphicsDevice.Clear(BackgroundColor);
 
             base.Draw(gameTime);

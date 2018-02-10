@@ -1,16 +1,19 @@
-﻿using AnimatedSprite;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Input;
+using Penumbra;
+
+using AnimatedSprite;
 using Tiling;
 using Helpers;
 using InputManager;
+using CameraNS;
 
 namespace Tiler
 {
@@ -33,6 +36,12 @@ namespace Tiler
         SoundEffectInstance HumSoundInstance;
         SoundEffectInstance TrackSoundInstance;
         HealthBar healthBar;
+        public Light Light { get; } = new PointLight
+        {
+            Scale = new Vector2(800),
+            Color = Color.White,
+            ShadowType = ShadowType.Solid
+        };
         #endregion
 
         #region Constructor
@@ -68,6 +77,8 @@ namespace Tiler
             if (Helper.CurrentGameStatus == GameStatus.PLAYING)
             {
                 PreviousPosition = PixelPosition;
+
+                Light.Position = new Vector2(CentrePos.X, CentrePos.Y) - Camera.CamPos;
 
                 Movement();
 

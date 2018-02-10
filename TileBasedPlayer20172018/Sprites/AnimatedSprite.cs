@@ -189,7 +189,7 @@ namespace AnimatedSprite
         public override void Draw(GameTime gameTime)
         {
             SpriteBatch spriteBatch = Game.Services.GetService<SpriteBatch>();
-
+            
             // This means you can only use one spritesheet in the entire game, to save on resources
             Texture2D SpriteSheet = Game.Services.GetService<Texture2D>();
 
@@ -204,6 +204,8 @@ namespace AnimatedSprite
                     Scale, SpriteEffects.None, spriteDepth);
                 spriteBatch.End();
             }
+
+            
 
             base.Draw(gameTime);
         }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Penumbra;
 
 namespace Tiling
 {
@@ -87,6 +88,9 @@ namespace Tiling
         #region Methods
         public override void Draw(GameTime gameTime)
         {
+            PenumbraComponent Penumbra = Game.Services.GetService<PenumbraComponent>();
+            Penumbra.BeginDraw();
+            
             if (_tileSheet == null) return;
             SpriteBatch sp = Game.Services.GetService<SpriteBatch>();
 
@@ -105,6 +109,8 @@ namespace Tiling
                     t.TileWidth, t.TileHeight), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
             }
             sp.End();
+
+            Penumbra.Draw(gameTime);
             base.Draw(gameTime);
         }
         public static List<Tile> GetNamedTiles(string name)
