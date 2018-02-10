@@ -1,11 +1,14 @@
-﻿using AnimatedSprite;
-using CameraNS;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Penumbra;
+
+using AnimatedSprite;
+using CameraNS;
 
 namespace Tiler
 {
@@ -15,7 +18,6 @@ namespace Tiler
         public int tileX;
         public int tileY;
         public Texture2D texture;
-
         public Vector2 WorldPosition
         {
             get
@@ -24,7 +26,6 @@ namespace Tiler
             }
 
         }
-
         public Rectangle CollisionField
         {
             get
@@ -32,6 +33,7 @@ namespace Tiler
                 return new Rectangle(WorldPosition.ToPoint(), new Point(texture.Width, texture.Height));
             }
         }
+        private Hull Shadow;
         #endregion
 
         #region Constructor
@@ -43,6 +45,16 @@ namespace Tiler
             tileY = tly;
             DrawOrder = 2;
             this.Visible = false;
+
+            Shadow = new Hull(
+                new Vector2(1.0f),
+                new Vector2(-1.0f, 1.0f),
+                new Vector2(-1.0f),
+                new Vector2(1.0f, -1.0f));
+            Shadow.Scale = new Vector2(texture.Width / 2, texture.Height / 2);
+
+            PenumbraComponent penumbra = Game.Services.GetService<PenumbraComponent>();
+            penumbra.Hulls.Add(Shadow);
         }
         #endregion
 
@@ -54,6 +66,8 @@ namespace Tiler
 
             CollideWithPlayer(p);
             CollideWithProjectile(projectile);
+
+            Shadow.Position = (WorldPosition / 2) + new Vector2(WorldPosition.X / 2, WorldPosition.Y / 2) + new Vector2(texture.Width / 2, texture.Height / 2) - Camera.CamPos;
 
             base.Update(gameTime);
         }

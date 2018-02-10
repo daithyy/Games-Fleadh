@@ -68,6 +68,9 @@ namespace Tiler
             TrackSoundInstance.IsLooped = true;
             TrackSoundInstance.Play();
             #endregion
+
+            PenumbraComponent penumbra = Game.Services.GetService<PenumbraComponent>();
+            penumbra.Lights.Add(Light);
         }
         #endregion
 

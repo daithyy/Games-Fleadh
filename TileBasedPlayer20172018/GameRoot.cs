@@ -29,6 +29,7 @@ namespace TileBasedPlayer20172018
         private int _height = 480;
 
         private Color BackgroundColor = new Color(185, 132, 62);
+        private const float WORLD_BRIGHTNESS = 0.2f;
 
         private Camera CurrentCamera;
         public static SplashScreen MainScreen;
@@ -106,7 +107,7 @@ namespace TileBasedPlayer20172018
 
             penumbra = new PenumbraComponent(this)
             {
-                AmbientColor = new Color(new Vector3(0.1f))
+                AmbientColor = new Color(new Vector3(WORLD_BRIGHTNESS))
             };
             Components.Add(penumbra);
             Services.AddService(penumbra);
@@ -564,10 +565,6 @@ namespace TileBasedPlayer20172018
             SetCollider(TileType.DIRT);
             SetCollider(TileType.METAL);
             SetTrigger(TileType.DIRT2); // For WIN condition
-            #endregion
-
-            #region Add Lights
-            penumbra.Lights.Add(tankPlayer.Light);
             #endregion
 
             base.Initialize();
