@@ -36,10 +36,19 @@ namespace Tiler
         SoundEffectInstance HumSoundInstance;
         SoundEffectInstance TrackSoundInstance;
         HealthBar healthBar;
-        public Light Light { get; } = new PointLight
+        public Light HeadLights { get; } = new Spotlight
         {
-            Scale = new Vector2(800),
-            Color = Color.White,
+            Scale = new Vector2(275,500),
+            Radius = 1f,
+            Intensity = 0.25f,
+            Color = new Color(153,255,255),
+            ShadowType = ShadowType.Illuminated
+        };
+        public Light OrbLight { get; } = new PointLight
+        {
+            Scale = new Vector2(500),
+            Intensity = 0.5f,
+            Color = Color.LightCyan,
             ShadowType = ShadowType.Solid
         };
         #endregion
@@ -70,7 +79,8 @@ namespace Tiler
             #endregion
 
             PenumbraComponent penumbra = Game.Services.GetService<PenumbraComponent>();
-            penumbra.Lights.Add(Light);
+            penumbra.Lights.Add(HeadLights);
+            penumbra.Lights.Add(OrbLight);
         }
         #endregion
 
@@ -81,7 +91,16 @@ namespace Tiler
             {
                 PreviousPosition = PixelPosition;
 
-                Light.Position = new Vector2(CentrePos.X, CentrePos.Y) - Camera.CamPos;
+                Vector2 PlayerLightPos = new Vector2(CentrePos.X, CentrePos.Y) - Camera.CamPos;
+                OrbLight.Position = PlayerLightPos;
+
+                if (Velocity != Vector2.Zero)
+                    HeadLights.Enabled = true;
+                else
+                    HeadLights.Enabled = false;
+
+                HeadLights.Position = PlayerLightPos;
+                HeadLights.Rotation = this.angleOfRotation;
 
                 Movement();
 

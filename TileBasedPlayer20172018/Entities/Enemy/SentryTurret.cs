@@ -13,6 +13,7 @@ using InputManager;
 using AnimatedSprite;
 using Tiling;
 using Helpers;
+using CameraNS;
 
 namespace Tiler
 {
@@ -187,13 +188,19 @@ namespace Tiler
             }
             else
             {
-                if (explosionTimer < 0.75f)
+                float maxExplosionTime = 0.75f;
+
+                if (explosionTimer < maxExplosionTime)
                 {
                     TankExplosion Explosion = (TankExplosion)Game.Services.GetService(typeof(TankExplosion));
 
                     explosionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                     Explosion.PixelPosition = this.PixelPosition - new Vector2(10, -2);
                     Explosion.Visible = true;
+                    Vector2 LightPosition = new Vector2(CentrePos.X, CentrePos.Y) - Camera.CamPos;
+                    Explosion.OrbLight.Position = LightPosition;
+                    if (explosionTimer < maxExplosionTime - maxExplosionTime + 0.1f)
+                    Explosion.OrbLight.Intensity = 0.25f;
                 }
             }
         }

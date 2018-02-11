@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -29,7 +30,7 @@ namespace TileBasedPlayer20172018
         private int _height = 480;
 
         private Color BackgroundColor = new Color(185, 132, 62);
-        private const float WORLD_BRIGHTNESS = 0.2f;
+        private const float WORLD_BRIGHTNESS = 0.1f;
 
         private Camera CurrentCamera;
         public static SplashScreen MainScreen;
@@ -115,6 +116,12 @@ namespace TileBasedPlayer20172018
 
         protected override void Initialize()
         {
+            Window.Position = new Point(
+                (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2) - 
+                (graphics.PreferredBackBufferWidth / 2), 
+                (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2) - 
+                (graphics.PreferredBackBufferHeight / 2));
+
             new InputEngine(this);
 
             // Add Camera
@@ -624,7 +631,7 @@ namespace TileBasedPlayer20172018
 
         protected override void UnloadContent()
         {
-
+            penumbra.Dispose();
         }
 
         protected override void Update(GameTime gameTime)

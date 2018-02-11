@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
+using Penumbra;
 
 using AnimatedSprite;
 using Tiling;
@@ -58,6 +59,14 @@ namespace Tiler
         public bool ShootSoundPlayed = false;
         public int ProjectileWidth = 12;
         public int ProjectileHeight = 2;
+        public Light OrbLight { get; } = new PointLight
+        {
+            Scale = new Vector2(200),
+            Intensity = 0.25f,
+            Color = Color.Orange,
+            ShadowType = ShadowType.Illuminated
+        };
+        private Vector2 defaultScale = new Vector2(200f);
         #endregion
 
         #region Constructor
@@ -74,6 +83,10 @@ namespace Tiler
             _sndShoot = sndShoot;
             _sndPierce = sndPierce;
             Velocity = speed;
+
+            PenumbraComponent penumbra = Game.Services.GetService<PenumbraComponent>();
+            penumbra.Lights.Add(OrbLight);
+            OrbLight.Enabled = false;
         }
         #endregion
 
@@ -83,11 +96,13 @@ namespace Tiler
             if (Helper.CurrentGameStatus == GameStatus.PLAYING)
             {
                 PreviousPosition = PixelPosition;
+                OrbLight.Position = new Vector2(CentrePos.X, CentrePos.Y) - Camera.CamPos;
 
                 switch (projectileState)
                 {
                     case PROJECTILE_STATUS.Idle:
                         this.Visible = false;
+                        OrbLight.Enabled = false;
                         break;
 
                     case PROJECTILE_STATUS.Firing:
@@ -96,6 +111,8 @@ namespace Tiler
                         this.Visible = true;
                         this.gotDirection = false;
                         this.PixelPosition += (Direction * Velocity);
+                        OrbLight.Enabled = true;
+                        OrbLight.Scale = defaultScale;
 
                         FaceThis(gameTime);
 
@@ -112,8 +129,13 @@ namespace Tiler
                     case PROJECTILE_STATUS.Exploding:
                         this.Visible = false;
                         ShootSoundPlayed = false;
+                        
+                        OrbLight.Scale = defaultScale * 2;
 
                         timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                        if (timer > explosionLifeSpan - explosionLifeSpan + 0.1f)
+                            OrbLight.Enabled = false;
 
                         if (timer > explosionLifeSpan)
                         {
