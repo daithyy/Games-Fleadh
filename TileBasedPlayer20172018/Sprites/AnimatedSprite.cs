@@ -14,6 +14,8 @@ namespace AnimatedSprite
     {
         #region Properties
         private bool visible = true;
+        private float alpha;
+        public float Alpha { get { return alpha; } set { alpha = value; } }
         protected Vector2 origin;
         public float angleOfRotation;
         protected float spriteDepth = 6f;
@@ -128,6 +130,7 @@ namespace AnimatedSprite
             origin = new Vector2(FrameWidth / 2, FrameHeight / 2);
             angleOfRotation = 0;
             CurrentFrame = 0;
+            Alpha = 1f;
             g.Components.Add(this);
         }
         #endregion
@@ -200,7 +203,7 @@ namespace AnimatedSprite
                 spriteBatch.Draw(SpriteSheet,
                     PixelPosition + origin,
                     sourceRectangle,
-                    Color.White, angleOfRotation, origin,
+                    Color.White * Alpha, angleOfRotation, origin,
                     Scale, SpriteEffects.None, spriteDepth);
                 spriteBatch.End();
             }

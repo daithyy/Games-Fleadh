@@ -89,6 +89,10 @@ namespace Tiler
                         if (this.Name == sentry.Name && sentry != null)
                         {
                             AddSelfToBody(sentry.PixelPosition + new Vector2(WIDTH_IN, 0f));
+                            sentry.DetectRadius = this.DetectRadius;
+                            this.Alpha = sentry.Alpha;
+                            healthBar.Alpha = this.Alpha;
+                            //this.Visible = sentry.Visible;
                         }
                     }
 
@@ -199,7 +203,7 @@ namespace Tiler
                     Explosion.Visible = true;
                     Vector2 LightPosition = new Vector2(CentrePos.X, CentrePos.Y) - Camera.CamPos;
                     Explosion.OrbLight.Position = LightPosition;
-                    if (explosionTimer < maxExplosionTime - maxExplosionTime + 0.1f)
+                    if (explosionTimer < maxExplosionTime - maxExplosionTime + 0.3f)
                     Explosion.OrbLight.Intensity = 0.25f;
                 }
             }

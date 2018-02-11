@@ -219,93 +219,97 @@ namespace TileBasedPlayer20172018
             const float ANGLE_DIAG_LEFT = 2.4f; // Minus for up left
             const float ANGLE_DIAG_RIGHT = 0.75f; // Minus for up right
 
-            Sentry enemyOne = new Sentry(this, new Vector2(639, 325), new List<TileRef>()
+            // Y = 325
+            Sentry enemyOne = new Sentry(this, new Vector2(700, 200), new List<TileRef>()
             {
                 new TileRef(10, 4, 0),
-            }, 64, 64, 0f, "Enemy Tank 1", -ANGLE_DIAG_LEFT);
+            }, 64, 64, 0f, "Enemy Tank 1",
+            Content.Load<SoundEffect>("audio/PlayerTankHum"),
+            Content.Load<SoundEffect>("audio/PlayerTankTracks"), 
+            - ANGLE_DIAG_LEFT);
 
-            Sentry enemyTwo = new Sentry(this, new Vector2(1180, 237), new List<TileRef>()
-            {
-                new TileRef(10, 4, 0),
-            }, 64, 64, 0f, "Enemy Tank 2", ANGLE_VERTICAL);
+            //Sentry enemyTwo = new Sentry(this, new Vector2(1180, 237), new List<TileRef>()
+            //{
+            //    new TileRef(10, 4, 0),
+            //}, 64, 64, 0f, "Enemy Tank 2", ANGLE_VERTICAL);
 
-            Sentry enemyThree = new Sentry(this, new Vector2(2020, 295), new List<TileRef>()
-            {
-                new TileRef(10, 4, 0),
-            }, 64, 64, 0f, "Enemy Tank 3", ANGLE_VERTICAL);
+            //Sentry enemyThree = new Sentry(this, new Vector2(2020, 295), new List<TileRef>()
+            //{
+            //    new TileRef(10, 4, 0),
+            //}, 64, 64, 0f, "Enemy Tank 3", ANGLE_VERTICAL);
 
-            Sentry enemyFour = new Sentry(this, new Vector2(2617, 549), new List<TileRef>()
-            {
-                new TileRef(10, 4, 0),
-            }, 64, 64, 0f, "Enemy Tank 4", ANGLE_DIAG_LEFT);
+            //Sentry enemyFour = new Sentry(this, new Vector2(2617, 549), new List<TileRef>()
+            //{
+            //    new TileRef(10, 4, 0),
+            //}, 64, 64, 0f, "Enemy Tank 4", ANGLE_DIAG_LEFT);
 
-            Sentry enemyFive = new Sentry(this, new Vector2(3490, 42), new List<TileRef>()
-            {
-                new TileRef(10, 4, 0),
-            }, 64, 64, 0f, "Enemy Tank 5", ANGLE_DIAG_LEFT);
+            //Sentry enemyFive = new Sentry(this, new Vector2(3490, 42), new List<TileRef>()
+            //{
+            //    new TileRef(10, 4, 0),
+            //}, 64, 64, 0f, "Enemy Tank 5", ANGLE_DIAG_LEFT);
 
-            Sentry enemySix = new Sentry(this, new Vector2(3609, 318), new List<TileRef>()
-            {
-                new TileRef(10, 4, 0),
-            }, 64, 64, 0f, "Enemy Tank 6", ANGLE_HORIZONTAL);
+            //Sentry enemySix = new Sentry(this, new Vector2(3609, 318), new List<TileRef>()
+            //{
+            //    new TileRef(10, 4, 0),
+            //}, 64, 64, 0f, "Enemy Tank 6", ANGLE_HORIZONTAL);
 
-            Sentry enemySeven = new Sentry(this, new Vector2(2882, 49), new List<TileRef>()
-            {
-                new TileRef(10, 4, 0),
-            }, 64, 64, 0f, "Enemy Tank 7", ANGLE_VERTICAL);
+            //Sentry enemySeven = new Sentry(this, new Vector2(2882, 49), new List<TileRef>()
+            //{
+            //    new TileRef(10, 4, 0),
+            //}, 64, 64, 0f, "Enemy Tank 7", ANGLE_VERTICAL);
 
-            Sentry enemyEight = new Sentry(this, new Vector2(3390, 860), new List<TileRef>()
-            {
-                new TileRef(10, 4, 0),
-            }, 64, 64, 0f, "Enemy Tank 8", -ANGLE_HORIZONTAL);
+            //Sentry enemyEight = new Sentry(this, new Vector2(3390, 860), new List<TileRef>()
+            //{
+            //    new TileRef(10, 4, 0),
+            //}, 64, 64, 0f, "Enemy Tank 8", -ANGLE_HORIZONTAL);
 
-            Sentry enemyNine = new Sentry(this, new Vector2(3455, 1442), new List<TileRef>()
-            {
-                new TileRef(10, 4, 0),
-            }, 64, 64, 0f, "Enemy Tank 9", ANGLE_DIAG_LEFT);
+            //Sentry enemyNine = new Sentry(this, new Vector2(3455, 1442), new List<TileRef>()
+            //{
+            //    new TileRef(10, 4, 0),
+            //}, 64, 64, 0f, "Enemy Tank 9", ANGLE_DIAG_LEFT);
 
-            Sentry enemyTen = new Sentry(this, new Vector2(2845, 1760), new List<TileRef>()
-            {
-                new TileRef(10, 4, 0),
-            }, 64, 64, 0f, "Enemy Tank 10", -ANGLE_HORIZONTAL);
+            //Sentry enemyTen = new Sentry(this, new Vector2(2845, 1760), new List<TileRef>()
+            //{
+            //    new TileRef(10, 4, 0),
+            //}, 64, 64, 0f, "Enemy Tank 10", -ANGLE_HORIZONTAL);
 
-            Sentry enemyEleven = new Sentry(this, new Vector2(2316, 1345), new List<TileRef>()
-            {
-                new TileRef(10, 4, 0),
-            }, 64, 64, 0f, "Enemy Tank 11", -ANGLE_HORIZONTAL);
+            //Sentry enemyEleven = new Sentry(this, new Vector2(2316, 1345), new List<TileRef>()
+            //{
+            //    new TileRef(10, 4, 0),
+            //}, 64, 64, 0f, "Enemy Tank 11", -ANGLE_HORIZONTAL);
 
-            Sentry enemyTwelve = new Sentry(this, new Vector2(54, 1916), new List<TileRef>()
-            {
-                new TileRef(10, 4, 0),
-            }, 64, 64, 0f, "Enemy Tank 12", -ANGLE_DIAG_RIGHT);
+            //Sentry enemyTwelve = new Sentry(this, new Vector2(54, 1916), new List<TileRef>()
+            //{
+            //    new TileRef(10, 4, 0),
+            //}, 64, 64, 0f, "Enemy Tank 12", -ANGLE_DIAG_RIGHT);
 
-            Sentry enemyThirteen = new Sentry(this, new Vector2(175, 1188), new List<TileRef>()
-            {
-                new TileRef(10, 4, 0),
-            }, 64, 64, 0f, "Enemy Tank 13", ANGLE_DIAG_RIGHT);
+            //Sentry enemyThirteen = new Sentry(this, new Vector2(175, 1188), new List<TileRef>()
+            //{
+            //    new TileRef(10, 4, 0),
+            //}, 64, 64, 0f, "Enemy Tank 13", ANGLE_DIAG_RIGHT);
 
-            Sentry enemyFourteen = new Sentry(this, new Vector2(45, 766), new List<TileRef>()
-            {
-                new TileRef(10, 4, 0),
-            }, 64, 64, 0f, "Enemy Tank 14", 0f);
+            //Sentry enemyFourteen = new Sentry(this, new Vector2(45, 766), new List<TileRef>()
+            //{
+            //    new TileRef(10, 4, 0),
+            //}, 64, 64, 0f, "Enemy Tank 14", 0f);
 
             #endregion
 
             #region Add Sentry's to List
             Sentries.Add(enemyOne);
-            Sentries.Add(enemyTwo);
-            Sentries.Add(enemyThree);
-            Sentries.Add(enemyFour);
-            Sentries.Add(enemyFive);
-            Sentries.Add(enemySix);
-            Sentries.Add(enemySeven);
-            Sentries.Add(enemyEight);
-            Sentries.Add(enemyNine);
-            Sentries.Add(enemyTen);
-            Sentries.Add(enemyEleven);
-            Sentries.Add(enemyTwelve);
-            Sentries.Add(enemyThirteen);
-            Sentries.Add(enemyFourteen);
+            //Sentries.Add(enemyTwo);
+            //Sentries.Add(enemyThree);
+            //Sentries.Add(enemyFour);
+            //Sentries.Add(enemyFive);
+            //Sentries.Add(enemySix);
+            //Sentries.Add(enemySeven);
+            //Sentries.Add(enemyEight);
+            //Sentries.Add(enemyNine);
+            //Sentries.Add(enemyTen);
+            //Sentries.Add(enemyEleven);
+            //Sentries.Add(enemyTwelve);
+            //Sentries.Add(enemyThirteen);
+            //Sentries.Add(enemyFourteen);
 
             Services.AddService(Sentries);
             #endregion
@@ -318,101 +322,101 @@ namespace TileBasedPlayer20172018
             }, 64, 64, 0f, "Enemy Tank 1", -ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
             Content.Load<SoundEffect>("audio/TankExplosion"));
 
-            SentryTurret enemyTurretTwo = new SentryTurret(this, enemyTwo.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(10, 5, 0),
-            }, 64, 64, 0f, "Enemy Tank 2", ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
-            Content.Load<SoundEffect>("audio/TankExplosion"));
+            //SentryTurret enemyTurretTwo = new SentryTurret(this, enemyTwo.PixelPosition, new List<TileRef>()
+            //{
+            //    new TileRef(10, 5, 0),
+            //}, 64, 64, 0f, "Enemy Tank 2", ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
+            //Content.Load<SoundEffect>("audio/TankExplosion"));
 
-            SentryTurret enemyTurretThree = new SentryTurret(this, enemyThree.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(10, 5, 0),
-            }, 64, 64, 0f, "Enemy Tank 3", ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
-            Content.Load<SoundEffect>("audio/TankExplosion"));
+            //SentryTurret enemyTurretThree = new SentryTurret(this, enemyThree.PixelPosition, new List<TileRef>()
+            //{
+            //    new TileRef(10, 5, 0),
+            //}, 64, 64, 0f, "Enemy Tank 3", ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
+            //Content.Load<SoundEffect>("audio/TankExplosion"));
 
-            SentryTurret enemyTurretFour = new SentryTurret(this, enemyFour.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(10, 5, 0),
-            }, 64, 64, 0f, "Enemy Tank 4", -ANGLE_HORIZONTAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
-            Content.Load<SoundEffect>("audio/TankExplosion"));
+            //SentryTurret enemyTurretFour = new SentryTurret(this, enemyFour.PixelPosition, new List<TileRef>()
+            //{
+            //    new TileRef(10, 5, 0),
+            //}, 64, 64, 0f, "Enemy Tank 4", -ANGLE_HORIZONTAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
+            //Content.Load<SoundEffect>("audio/TankExplosion"));
 
-            SentryTurret enemyTurretFive = new SentryTurret(this, enemyFive.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(10, 5, 0),
-            }, 64, 64, 0f, "Enemy Tank 5", -ANGLE_HORIZONTAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
-            Content.Load<SoundEffect>("audio/TankExplosion"));
+            //SentryTurret enemyTurretFive = new SentryTurret(this, enemyFive.PixelPosition, new List<TileRef>()
+            //{
+            //    new TileRef(10, 5, 0),
+            //}, 64, 64, 0f, "Enemy Tank 5", -ANGLE_HORIZONTAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
+            //Content.Load<SoundEffect>("audio/TankExplosion"));
 
-            SentryTurret enemyTurretSix = new SentryTurret(this, enemySix.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(10, 5, 0),
-            }, 64, 64, 0f, "Enemy Tank 6", -ANGLE_HORIZONTAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
-            Content.Load<SoundEffect>("audio/TankExplosion"));
+            //SentryTurret enemyTurretSix = new SentryTurret(this, enemySix.PixelPosition, new List<TileRef>()
+            //{
+            //    new TileRef(10, 5, 0),
+            //}, 64, 64, 0f, "Enemy Tank 6", -ANGLE_HORIZONTAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
+            //Content.Load<SoundEffect>("audio/TankExplosion"));
 
-            SentryTurret enemyTurretSeven = new SentryTurret(this, enemySeven.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(10, 5, 0),
-            }, 64, 64, 0f, "Enemy Tank 7", ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
-            Content.Load<SoundEffect>("audio/TankExplosion"));
+            //SentryTurret enemyTurretSeven = new SentryTurret(this, enemySeven.PixelPosition, new List<TileRef>()
+            //{
+            //    new TileRef(10, 5, 0),
+            //}, 64, 64, 0f, "Enemy Tank 7", ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
+            //Content.Load<SoundEffect>("audio/TankExplosion"));
 
-            SentryTurret enemyTurretEight = new SentryTurret(this, enemyEight.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(10, 5, 0),
-            }, 64, 64, 0f, "Enemy Tank 8", -ANGLE_HORIZONTAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
-            Content.Load<SoundEffect>("audio/TankExplosion"));
+            //SentryTurret enemyTurretEight = new SentryTurret(this, enemyEight.PixelPosition, new List<TileRef>()
+            //{
+            //    new TileRef(10, 5, 0),
+            //}, 64, 64, 0f, "Enemy Tank 8", -ANGLE_HORIZONTAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
+            //Content.Load<SoundEffect>("audio/TankExplosion"));
 
-            SentryTurret enemyTurretNine = new SentryTurret(this, enemyNine.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(10, 5, 0),
-            }, 64, 64, 0f, "Enemy Tank 9", ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
-            Content.Load<SoundEffect>("audio/TankExplosion"));
+            //SentryTurret enemyTurretNine = new SentryTurret(this, enemyNine.PixelPosition, new List<TileRef>()
+            //{
+            //    new TileRef(10, 5, 0),
+            //}, 64, 64, 0f, "Enemy Tank 9", ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
+            //Content.Load<SoundEffect>("audio/TankExplosion"));
 
-            SentryTurret enemyTurretTen = new SentryTurret(this, enemyTen.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(10, 5, 0),
-            }, 64, 64, 0f, "Enemy Tank 10", -ANGLE_HORIZONTAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
-            Content.Load<SoundEffect>("audio/TankExplosion"));
+            //SentryTurret enemyTurretTen = new SentryTurret(this, enemyTen.PixelPosition, new List<TileRef>()
+            //{
+            //    new TileRef(10, 5, 0),
+            //}, 64, 64, 0f, "Enemy Tank 10", -ANGLE_HORIZONTAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
+            //Content.Load<SoundEffect>("audio/TankExplosion"));
 
-            SentryTurret enemyTurretEleven = new SentryTurret(this, enemyEleven.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(10, 5, 0),
-            }, 64, 64, 0f, "Enemy Tank 11", -ANGLE_HORIZONTAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
-            Content.Load<SoundEffect>("audio/TankExplosion"));
+            //SentryTurret enemyTurretEleven = new SentryTurret(this, enemyEleven.PixelPosition, new List<TileRef>()
+            //{
+            //    new TileRef(10, 5, 0),
+            //}, 64, 64, 0f, "Enemy Tank 11", -ANGLE_HORIZONTAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
+            //Content.Load<SoundEffect>("audio/TankExplosion"));
 
-            SentryTurret enemyTurretTwelve = new SentryTurret(this, enemyTwelve.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(10, 5, 0),
-            }, 64, 64, 0f, "Enemy Tank 12", -ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
-            Content.Load<SoundEffect>("audio/TankExplosion"));
+            //SentryTurret enemyTurretTwelve = new SentryTurret(this, enemyTwelve.PixelPosition, new List<TileRef>()
+            //{
+            //    new TileRef(10, 5, 0),
+            //}, 64, 64, 0f, "Enemy Tank 12", -ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
+            //Content.Load<SoundEffect>("audio/TankExplosion"));
 
-            SentryTurret enemyTurretThirteen = new SentryTurret(this, enemyThirteen.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(10, 5, 0),
-            }, 64, 64, 0f, "Enemy Tank 13", ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
-            Content.Load<SoundEffect>("audio/TankExplosion"));
+            //SentryTurret enemyTurretThirteen = new SentryTurret(this, enemyThirteen.PixelPosition, new List<TileRef>()
+            //{
+            //    new TileRef(10, 5, 0),
+            //}, 64, 64, 0f, "Enemy Tank 13", ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
+            //Content.Load<SoundEffect>("audio/TankExplosion"));
 
-            SentryTurret enemyTurretFourteen = new SentryTurret(this, enemyFourteen.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(10, 5, 0),
-            }, 64, 64, 0f, "Enemy Tank 14", 0f, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
-            Content.Load<SoundEffect>("audio/TankExplosion"));
+            //SentryTurret enemyTurretFourteen = new SentryTurret(this, enemyFourteen.PixelPosition, new List<TileRef>()
+            //{
+            //    new TileRef(10, 5, 0),
+            //}, 64, 64, 0f, "Enemy Tank 14", 0f, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
+            //Content.Load<SoundEffect>("audio/TankExplosion"));
 
             #endregion
 
             #region Add Sentry Turrets to List
             SentryTurrets.Add(enemyTurretOne);
-            SentryTurrets.Add(enemyTurretTwo);
-            SentryTurrets.Add(enemyTurretThree);
-            SentryTurrets.Add(enemyTurretFour);
-            SentryTurrets.Add(enemyTurretFive);
-            SentryTurrets.Add(enemyTurretSix);
-            SentryTurrets.Add(enemyTurretSeven);
-            SentryTurrets.Add(enemyTurretEight);
-            SentryTurrets.Add(enemyTurretNine);
-            SentryTurrets.Add(enemyTurretTen);
-            SentryTurrets.Add(enemyTurretEleven);
-            SentryTurrets.Add(enemyTurretTwelve);
-            SentryTurrets.Add(enemyTurretThirteen);
-            SentryTurrets.Add(enemyTurretFourteen);
+            //SentryTurrets.Add(enemyTurretTwo);
+            //SentryTurrets.Add(enemyTurretThree);
+            //SentryTurrets.Add(enemyTurretFour);
+            //SentryTurrets.Add(enemyTurretFive);
+            //SentryTurrets.Add(enemyTurretSix);
+            //SentryTurrets.Add(enemyTurretSeven);
+            //SentryTurrets.Add(enemyTurretEight);
+            //SentryTurrets.Add(enemyTurretNine);
+            //SentryTurrets.Add(enemyTurretTen);
+            //SentryTurrets.Add(enemyTurretEleven);
+            //SentryTurrets.Add(enemyTurretTwelve);
+            //SentryTurrets.Add(enemyTurretThirteen);
+            //SentryTurrets.Add(enemyTurretFourteen);
 
             Services.AddService(SentryTurrets);
             #endregion
@@ -427,103 +431,104 @@ namespace TileBasedPlayer20172018
             Content.Load<SoundEffect>("audio/SentryTankShoot"),
             Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            Projectile enemyBulletTwo = new Projectile(this, "SENTRY", new Vector2(0,0), new List<TileRef>()
-            {
-                new TileRef(10, 2, 0),
-            }, 64, 64, 0f, enemyTurretTwo.Direction, ENEMY_BULLET_SPD,
-            Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
-            Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            //Projectile enemyBulletTwo = new Projectile(this, "SENTRY", new Vector2(0,0), new List<TileRef>()
+            //{
+            //    new TileRef(10, 2, 0),
+            //}, 64, 64, 0f, enemyTurretTwo.Direction, ENEMY_BULLET_SPD,
+            //Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
+            //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            Projectile enemyBulletThree = new Projectile(this, "SENTRY", new Vector2(0,0), new List<TileRef>()
-            {
-                new TileRef(10, 2, 0),
-            }, 64, 64, 0f, enemyTurretThree.Direction, ENEMY_BULLET_SPD,
-            Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
-            Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            //Projectile enemyBulletThree = new Projectile(this, "SENTRY", new Vector2(0,0), new List<TileRef>()
+            //{
+            //    new TileRef(10, 2, 0),
+            //}, 64, 64, 0f, enemyTurretThree.Direction, ENEMY_BULLET_SPD,
+            //Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
+            //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            Projectile enemyBulletFour = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
-            {
-                new TileRef(10, 2, 0),
-            }, 64, 64, 0f, enemyTurretFour.Direction, ENEMY_BULLET_SPD,
-            Content.Load<SoundEffect>("audio/SentryTankShoot"),
-            Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            //Projectile enemyBulletFour = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
+            //{
+            //    new TileRef(10, 2, 0),
+            //}, 64, 64, 0f, enemyTurretFour.Direction, ENEMY_BULLET_SPD,
+            //Content.Load<SoundEffect>("audio/SentryTankShoot"),
+            //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            Projectile enemyBulletFive = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
-            {
-                new TileRef(10, 2, 0),
-            }, 64, 64, 0f, enemyTurretFive.Direction, ENEMY_BULLET_SPD,
-            Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
-            Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            //Projectile enemyBulletFive = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
+            //{
+            //    new TileRef(10, 2, 0),
+            //}, 64, 64, 0f, enemyTurretFive.Direction, ENEMY_BULLET_SPD,
+            //Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
+            //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            Projectile enemyBulletSix = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
-            {
-                new TileRef(10, 2, 0),
-            }, 64, 64, 0f, enemyTurretSix.Direction, ENEMY_BULLET_SPD,
-            Content.Load<SoundEffect>("audio/SentryTankShoot"),
-            Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            //Projectile enemyBulletSix = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
+            //{
+            //    new TileRef(10, 2, 0),
+            //}, 64, 64, 0f, enemyTurretSix.Direction, ENEMY_BULLET_SPD,
+            //Content.Load<SoundEffect>("audio/SentryTankShoot"),
+            //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            Projectile enemyBulletSeven = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
-            {
-                new TileRef(10, 2, 0),
-            }, 64, 64, 0f, enemyTurretSeven.Direction, ENEMY_BULLET_SPD,
-            Content.Load<SoundEffect>("audio/SentryTankShoot"),
-            Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            //Projectile enemyBulletSeven = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
+            //{
+            //    new TileRef(10, 2, 0),
+            //}, 64, 64, 0f, enemyTurretSeven.Direction, ENEMY_BULLET_SPD,
+            //Content.Load<SoundEffect>("audio/SentryTankShoot"),
+            //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            Projectile enemyBulletEight = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
-            {
-                new TileRef(10, 2, 0),
-            }, 64, 64, 0f, enemyTurretEight.Direction, ENEMY_BULLET_SPD,
-            Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
-            Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            //Projectile enemyBulletEight = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
+            //{
+            //    new TileRef(10, 2, 0),
+            //}, 64, 64, 0f, enemyTurretEight.Direction, ENEMY_BULLET_SPD,
+            //Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
+            //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            Projectile enemyBulletNine = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
-            {
-                new TileRef(10, 2, 0),
-            }, 64, 64, 0f, enemyTurretNine.Direction, ENEMY_BULLET_SPD,
-            Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
-            Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            //Projectile enemyBulletNine = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
+            //{
+            //    new TileRef(10, 2, 0),
+            //}, 64, 64, 0f, enemyTurretNine.Direction, ENEMY_BULLET_SPD,
+            //Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
+            //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            Projectile enemyBulletTen = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
-            {
-                new TileRef(10, 2, 0),
-            }, 64, 64, 0f, enemyTurretTen.Direction, ENEMY_BULLET_SPD,
-            Content.Load<SoundEffect>("audio/SentryTankShoot"),
-            Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            //Projectile enemyBulletTen = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
+            //{
+            //    new TileRef(10, 2, 0),
+            //}, 64, 64, 0f, enemyTurretTen.Direction, ENEMY_BULLET_SPD,
+            //Content.Load<SoundEffect>("audio/SentryTankShoot"),
+            //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            Projectile enemyBulletEleven = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
-            {
-                new TileRef(10, 2, 0),
-            }, 64, 64, 0f, enemyTurretEleven.Direction, ENEMY_BULLET_SPD,
-            Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
-            Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            //Projectile enemyBulletEleven = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
+            //{
+            //    new TileRef(10, 2, 0),
+            //}, 64, 64, 0f, enemyTurretEleven.Direction, ENEMY_BULLET_SPD,
+            //Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
+            //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            Projectile enemyBulletTwelve = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
-            {
-                new TileRef(10, 2, 0),
-            }, 64, 64, 0f, enemyTurretTwelve.Direction, ENEMY_BULLET_SPD,
-            Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
-            Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            //Projectile enemyBulletTwelve = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
+            //{
+            //    new TileRef(10, 2, 0),
+            //}, 64, 64, 0f, enemyTurretTwelve.Direction, ENEMY_BULLET_SPD,
+            //Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
+            //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            Projectile enemyBulletThirteen = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
-            {
-                new TileRef(10, 2, 0),
-            }, 64, 64, 0f, enemyTurretThirteen.Direction, ENEMY_BULLET_SPD,
-            Content.Load<SoundEffect>("audio/SentryTankShoot"),
-            Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            //Projectile enemyBulletThirteen = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
+            //{
+            //    new TileRef(10, 2, 0),
+            //}, 64, 64, 0f, enemyTurretThirteen.Direction, ENEMY_BULLET_SPD,
+            //Content.Load<SoundEffect>("audio/SentryTankShoot"),
+            //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            Projectile enemyBulletFourteen = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
-            {
-                new TileRef(10, 2, 0),
-            }, 64, 64, 0f, enemyTurretFourteen.Direction, ENEMY_BULLET_SPD,
-            Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
-            Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            //Projectile enemyBulletFourteen = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
+            //{
+            //    new TileRef(10, 2, 0),
+            //}, 64, 64, 0f, enemyTurretFourteen.Direction, ENEMY_BULLET_SPD,
+            //Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
+            //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
             List<Projectile> sentryProjectiles = new List<Projectile>()
-            { enemyBulletOne, enemyBulletTwo, enemyBulletThree,
-              enemyBulletFour, enemyBulletFive, enemyBulletSix,
-              enemyBulletFive, enemyBulletSeven, enemyBulletEight,
-              enemyBulletNine, enemyBulletTen, enemyBulletEleven,
-              enemyBulletTwelve, enemyBulletThirteen, enemyBulletFourteen };
+            { enemyBulletOne//, enemyBulletTwo, enemyBulletThree,
+              //enemyBulletFour, enemyBulletFive, enemyBulletSix,
+              //enemyBulletFive, enemyBulletSeven, enemyBulletEight,
+              //enemyBulletNine, enemyBulletTen, enemyBulletEleven,
+              //enemyBulletTwelve, enemyBulletThirteen, enemyBulletFourteen
+            };
 
             for (int i = 0; i < SentryTurrets.Count; i++)
             {

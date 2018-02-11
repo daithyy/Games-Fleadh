@@ -27,6 +27,7 @@ namespace Helpers
                                 (int)position.Y, (health / 2), 5);
             }
         }
+        public float Alpha = 0f;
         #endregion
 
         #region Constructor
@@ -47,11 +48,11 @@ namespace Helpers
             spriteBatch.Begin(SpriteSortMode.Immediate,
                     BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Camera.CurrentCameraTranslation);
             if (health > 60)
-                spriteBatch.Draw(txHealthBar, HealthRect, HealthyColor);
+                spriteBatch.Draw(txHealthBar, HealthRect, HealthyColor * Alpha);
             else if (health > 30 && health <= 60)
-                spriteBatch.Draw(txHealthBar, HealthRect, WarningColor);
+                spriteBatch.Draw(txHealthBar, HealthRect, WarningColor * Alpha);
             else if (health > 0 && health <= 30)
-                spriteBatch.Draw(txHealthBar, HealthRect, CriticalColor);
+                spriteBatch.Draw(txHealthBar, HealthRect, CriticalColor * Alpha);
             spriteBatch.End();
         }
         #endregion
