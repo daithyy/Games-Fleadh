@@ -108,7 +108,10 @@ namespace TileBasedPlayer20172018
 
             penumbra = new PenumbraComponent(this)
             {
-                AmbientColor = new Color(new Vector3(WORLD_BRIGHTNESS))
+                //AmbientColor = new Color(new Vector3(WORLD_BRIGHTNESS)) // NO HUE
+                //AmbientColor = new Color(22, 30, 38) // LIGHT GRAY BLUE
+                AmbientColor = new Color(15, 27, 38) // DARKER GRAY BLUE
+                //AmbientColor = new Color(26, 15, 38) // PURPLE
             };
             Components.Add(penumbra);
             Services.AddService(penumbra);
