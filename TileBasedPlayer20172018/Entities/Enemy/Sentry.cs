@@ -8,6 +8,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
+using Pathfinding_Demo.Engine.AI;
+
+using InputManager;
 using Tiling;
 using AnimatedSprite;
 using Helpers;
@@ -20,6 +23,12 @@ namespace Tiler
         public string Name;
         public int DetectRadius;
         private const float fadeAmount = 0.05f;
+        public int speed = 2;
+
+        AstarThreadWorker astarThreadWorkerTemp, astarThreadWorker;
+        List<Vector2> WayPointsList;
+
+        WayPoint wayPoint;
         #endregion
 
         #region Constructor
@@ -33,14 +42,75 @@ namespace Tiler
             Name = nameIn;
             this.angleOfRotation = angle;
 
+            WayPointsList = new List<Vector2>();
+
+            wayPoint = new WayPoint();
+
             OrbLight.Scale = new Vector2(120);
             OrbLight.Color = Color.HotPink;
 
             Alpha = 0f;
         }
         #endregion
-        
+
         #region Methods
+        void Astar(GameTime gameTime, int[,] map, string UnitID, List<Sentry> Units)
+        {
+            if (InputEngine.IsMouseRightClick())
+            {
+                astarThreadWorker = null;
+                AstarManager.AddNewThreadWorker(
+                    new Node(new Vector2((int)PixelPosition.X / FrameWidth, (int)PixelPosition.Y / FrameHeight)), 
+                    new Node(new Vector2(
+                        (int)InputEngine.MousePosition.X / FrameWidth, 
+                        (int)InputEngine.MousePosition.Y / FrameHeight)), Game, map, false, UnitID);
+            }
+
+            AstarManager.AstarThreadWorkerResults.TryPeek(out astarThreadWorkerTemp);
+
+            if (astarThreadWorkerTemp != null)
+                if (astarThreadWorkerTemp.WorkerIDNumber == UnitID)
+                {
+                    AstarManager.AstarThreadWorkerResults.TryDequeue(out astarThreadWorker);
+
+                    if (astarThreadWorker != null)
+                    {
+                        wayPoint = new WayPoint();
+
+                        WayPointsList = astarThreadWorker.astar.GetFinalPath();
+
+                        for (int i = 0; i < WayPointsList.Count; i++)
+                            WayPointsList[i] = new Vector2(WayPointsList[i].X * 16, WayPointsList[i].Y * 16);
+                    }
+                }
+
+            if (WayPointsList.Count > 0)
+            {
+                List<Sentry> Sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
+                Avoidence(gameTime, Sentries, UnitID);
+                wayPoint.MoveTo(gameTime, this, WayPointsList, 2f);
+            }
+        }
+
+        void Avoidence(GameTime gameTime, List<Sentry> Units, string UnitID)
+        {
+            for (int i = 0; i < Units.Count; i++)
+            {
+                if (Units[i].BoundingRectangle.Intersects(BoundingRectangle))
+                {
+                    float Distance1 = Vector2.Distance(PixelPosition, WayPointsList[WayPointsList.Count - 1]);
+                    float Distance2 = Vector2.Distance(Units[i].PixelPosition, WayPointsList[WayPointsList.Count - 1]);
+
+                    if (Distance1 > Distance2)
+                    {
+                        Vector2 OppositeDirection = Units[i].PixelPosition - PixelPosition;
+                        OppositeDirection.Normalize();
+                        PixelPosition -= OppositeDirection * (float)(speed * gameTime.ElapsedGameTime.TotalMilliseconds);
+                    }
+                }
+            }
+        }
+
         private bool IsSpotted()
         {
             TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
@@ -52,8 +122,16 @@ namespace Tiler
             else
                 return false;
         }
+
         public override void Update(GameTime gameTime)
         {
+            int[,] tileMap = (int[,])Game.Services.GetService(typeof(int[,]));
+            List<Sentry> Sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
+
+            #region Handle Movement Logic
+            Astar(gameTime, tileMap, Name, Sentries);
+            #endregion
+
             if (IsSpotted())
             {
                 Alpha += fadeAmount;

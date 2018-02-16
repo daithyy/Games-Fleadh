@@ -79,6 +79,7 @@ namespace CameraNS
         public override void Update(GameTime gameTime)
         {
             TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+            Sentry sentry = (Sentry)Game.Services.GetService(typeof(Sentry));
 
             #region Camera Shake Logic
             if (shaking)
@@ -117,7 +118,8 @@ namespace CameraNS
 
             if (player != null)
             {
-                Follow((player.CentrePos + (player.Direction * CameraSpread)), Game.GraphicsDevice.Viewport, CameraSpeed);
+                //Follow((player.CentrePos + (player.Direction * CameraSpread)), Game.GraphicsDevice.Viewport, CameraSpeed);
+                Follow(sentry.CentrePos, Game.GraphicsDevice.Viewport, CameraSpeed);
 
                 #region Clamp player within bounds
                 player.PixelPosition = Vector2.Clamp(player.PixelPosition, Vector2.Zero,
