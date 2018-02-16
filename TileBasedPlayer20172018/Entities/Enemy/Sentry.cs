@@ -12,6 +12,7 @@ using Pathfinding_Demo.Engine.AI;
 
 using InputManager;
 using Tiling;
+using CameraNS;
 using AnimatedSprite;
 using Helpers;
 
@@ -62,8 +63,8 @@ namespace Tiler
                 AstarManager.AddNewThreadWorker(
                     new Node(new Vector2((int)PixelPosition.X / FrameWidth, (int)PixelPosition.Y / FrameHeight)), 
                     new Node(new Vector2(
-                        (int)InputEngine.MousePosition.X / FrameWidth, 
-                        (int)InputEngine.MousePosition.Y / FrameHeight)), Game, layer, false, UnitID);
+                        (int)(InputEngine.MousePosition.X + Camera.CamPos.X) / FrameWidth, 
+                        (int)(InputEngine.MousePosition.Y + Camera.CamPos.Y) / FrameHeight)), Game, layer, false, UnitID);
             }
 
             AstarManager.AstarThreadWorkerResults.TryPeek(out astarThreadWorkerTemp);

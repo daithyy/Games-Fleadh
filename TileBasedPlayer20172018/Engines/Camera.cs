@@ -120,7 +120,7 @@ namespace CameraNS
             {
                 if (Target != null)
                 {
-                    //Follow(Target, Game.GraphicsDevice.Viewport, CameraSpeed);
+                    Follow(Target, Game.GraphicsDevice.Viewport, CameraSpeed);
                 }
                 else
                 {
