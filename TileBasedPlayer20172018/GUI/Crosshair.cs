@@ -17,6 +17,7 @@ namespace Tiler
         public static Vector2 Position;
         private Vector2 TankPosition;
         private const float AIM_RADIUS = 200;
+        public bool Disabled;
 
         public Crosshair(Game game, Vector2 userPosition,
             List<TileRef> sheetRefs, int frameWidth, int frameHeight, float layerDepth)
@@ -25,28 +26,24 @@ namespace Tiler
             DrawOrder = 100;
         }
 
-        private void MoveWithRadius()
+        private void MoveWithRadius(TilePlayerTurret playerTurret)
         {
-            TilePlayerTurret playerTurret = (TilePlayerTurret)Game.Services.GetService(typeof(TilePlayerTurret));
             Position = playerTurret.PixelPosition + (playerTurret.Direction * new Vector2(AIM_RADIUS));
             PixelPosition = Position;
         }
 
-        private void MoveWithMouse()
+        private void MoveWithMouse(TilePlayer player, TilePlayerTurret playerTurret)
         {
             Vector2 MousePos = InputEngine.MousePosition - new Vector2(FrameWidth / 2, FrameHeight / 2);
             Position = (MousePos + Camera.CamPos);
-            Vector2 TransformPosition = ContainTurretAngle(Position);
+            Vector2 TransformPosition = ContainTurretAngle(player, playerTurret, Position);
 
             TransformPosition += TankPosition;
             PixelPosition = TransformPosition;
         }
 
-        private Vector2 ContainTurretAngle(Vector2 CrosshairPosition)
+        private Vector2 ContainTurretAngle(TilePlayer player, TilePlayerTurret playerTurret, Vector2 CrosshairPosition)
         {
-            TilePlayerTurret playerTurret = (TilePlayerTurret)Game.Services.GetService(typeof(TilePlayerTurret));
-            TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
-
             TankPosition = player.PixelPosition;
 
             return ((playerTurret.Direction * Vector2.Distance(TankPosition, CrosshairPosition)));
@@ -54,22 +51,31 @@ namespace Tiler
 
         public override void Update(GameTime gameTime)
         {
-            if (InputEngine.UsingKeyboard)
+            if (!Disabled)
             {
-                MoveWithMouse();
-            }
-            else
-            {
-                MoveWithRadius();
-            }
+                TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+                TilePlayerTurret playerTurret = (TilePlayerTurret)Game.Services.GetService(typeof(TilePlayerTurret));
 
-            base.Update(gameTime);
+                if (InputEngine.UsingKeyboard)
+                {
+                    MoveWithMouse(player, playerTurret);
+                }
+                else
+                {
+                    MoveWithRadius(playerTurret);
+                }
+
+                Disabled = playerTurret.IsDead;
+
+                base.Update(gameTime);
+            }
         }
 
         public override void Draw(GameTime gameTime)
         {
             //if (InputEngine.UsingKeyboard)
-            base.Draw(gameTime);
+            if (!Disabled)
+                base.Draw(gameTime);
         }
     }
 }

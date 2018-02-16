@@ -3,6 +3,7 @@ using InputManager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Penumbra;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,12 @@ namespace CameraNS
     {
         #region Properties
         static Vector2 _camPos = Vector2.Zero;
-        public static Vector2 _worldBound;
+        public static Vector2 WorldBound;
         public float CameraSpeed = 0.03f;
         public float CameraSpread = 120f;
+        public static float Rotation = 0f;
+        public static float Zoom = 1f;
+        private const float ZOOM_SPEED = 0.01f;
 
         // Only one Random object needed
         private static readonly Random random = new Random();
@@ -39,9 +43,9 @@ namespace CameraNS
         {
             get
             {
-                return Matrix.CreateTranslation(new Vector3(
-                    -CamPos,
-                    0));
+                return Matrix.CreateTranslation(new Vector3(-CamPos, 0)) *
+                       Matrix.CreateRotationZ(Rotation) *
+                       Matrix.CreateScale(Zoom, Zoom, 1);
             }
         }
 
@@ -67,7 +71,7 @@ namespace CameraNS
         {
             game.Components.Add(this);
             CamPos = startPos;
-            _worldBound = bound;
+            WorldBound = bound;
         }
         #endregion
 
@@ -117,15 +121,27 @@ namespace CameraNS
 
                 #region Clamp player within bounds
                 player.PixelPosition = Vector2.Clamp(player.PixelPosition, Vector2.Zero,
-                                                new Vector2(_worldBound.X - player.BoundingRectangle.Width,
-                                                            _worldBound.Y - player.BoundingRectangle.Height));
+                                                new Vector2(WorldBound.X - player.BoundingRectangle.Width,
+                                                            WorldBound.Y - player.BoundingRectangle.Height));
                 #endregion
+
+                if (player.Health <= 0)
+                    DeathCam(player);
             }
 
             // TILE GRID FIX
             //CamPos = new Vector2((int)CamPos.X, (int)CamPos.Y);
 
             base.Update(gameTime);
+        }
+
+        private void DeathCam(TilePlayer player)
+        {
+            PenumbraComponent Penumbra = Game.Services.GetService<PenumbraComponent>();
+            Zoom += ZOOM_SPEED * (ZOOM_SPEED * 2);
+            CamPos += new Vector2(Zoom * 2, Zoom * 2);
+            Penumbra.Lights.Clear();
+            Penumbra.Hulls.Clear();
         }
 
         public static void Follow(Vector2 followPos, Viewport v, float cameraSpeed)
@@ -136,7 +152,7 @@ namespace CameraNS
             // Add smoothness
             Vector2 delta = ((followPos - centerScreen) - _camPos); // Distance from following position to camera
             _camPos += Vector2.Multiply(delta, cameraSpeed); // Now move the camera by 3%
-            _camPos = Vector2.Clamp(_camPos, Vector2.Zero, _worldBound - new Vector2(v.Width, v.Height));
+            _camPos = Vector2.Clamp(_camPos, Vector2.Zero, WorldBound - new Vector2(v.Width, v.Height));
         }
 
         /// <summary>

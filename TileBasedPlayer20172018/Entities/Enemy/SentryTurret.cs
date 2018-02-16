@@ -204,7 +204,7 @@ namespace Tiler
                     Vector2 LightPosition = new Vector2(CentrePos.X, CentrePos.Y) - Camera.CamPos;
                     Explosion.OrbLight.Position = LightPosition;
                     if (explosionTimer < maxExplosionTime - maxExplosionTime + 0.3f)
-                    Explosion.OrbLight.Intensity = 0.25f;
+                        Explosion.OrbLight.Intensity = 0.25f;
                 }
             }
         }

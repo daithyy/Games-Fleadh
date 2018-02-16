@@ -66,25 +66,36 @@ namespace Tiler
             {
                 healthBar.Alpha -= FADE_AMOUNT;
             }
+
+            healthBar.Alpha = MathHelper.Clamp(healthBar.Alpha, 0, 2);
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (Velocity != Vector2.Zero)
-                HeadLights.Enabled = true;
+            if (Health > 0)
+            {
+                if (Velocity != Vector2.Zero)
+                    HeadLights.Enabled = true;
+                else
+                    HeadLights.Enabled = false;
+
+                HeadLights.Position = TankLightPos;
+                HeadLights.Rotation = this.angleOfRotation;
+
+                Movement();
+
+                PlaySounds();
+
+                ToggleHealthBar();
+
+                base.Update(gameTime);
+            }
             else
+            {
+                this.healthBar.Enabled = false;
+                StopSounds();
                 HeadLights.Enabled = false;
-
-            HeadLights.Position = TankLightPos;
-            HeadLights.Rotation = this.angleOfRotation;
-
-            Movement();
-
-            PlaySounds();
-
-            ToggleHealthBar();
-
-            base.Update(gameTime);
+            }
         }
 
         public override void Draw(GameTime gameTime)

@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Penumbra;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,7 @@ using System.Text;
 using Helpers;
 using Tiler;
 using InputManager;
+using CameraNS;
 
 namespace Screens
 {
@@ -173,9 +176,9 @@ namespace Screens
                     else
                     {
                         MediaPlayer.Stop();
-                        Active = !Active;
-                        CurrentGameCondition = GameCondition.LOSE;
-                        CurrentScreen = ActiveScreen.LOSE;
+                        //Active = !Active;
+                        //CurrentGameCondition = GameCondition.LOSE;
+                        //CurrentScreen = ActiveScreen.LOSE;
                     }
 
                     if (CurrentGameCondition == GameCondition.WIN)
@@ -274,7 +277,6 @@ namespace Screens
 
                 if (TimeRemaining / 1000 <= 10)
                 {
-
                     spriteBatch.DrawString(Font,
                     String.Format("{0}", Convert.ToInt32(TimeRemaining / 1000)) + " seconds",
                     new Vector2(Game.Window.ClientBounds.Width / 2 -

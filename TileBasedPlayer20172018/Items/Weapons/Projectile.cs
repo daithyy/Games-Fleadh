@@ -40,6 +40,7 @@ namespace Tiler
         private Random damageRate = new Random();
         public int sentryDamageRate = 35;
         public int playerDamageRate = 10;
+        //public int playerDamageRate = 10;
         public float explosionLifeSpan = 2f; // Default explosion life in seconds
         private const float FLYING_LIFE_SPAN = 1f; // Default flight life in seconds
         private float timer = 0;
@@ -185,8 +186,8 @@ namespace Tiler
         {
             // Projectile is out of tile map bounds
             if (this.PixelPosition.X < 0 || this.PixelPosition.Y < 0
-                || this.PixelPosition.X > CameraNS.Camera._worldBound.X
-                || this.PixelPosition.Y > CameraNS.Camera._worldBound.Y
+                || this.PixelPosition.X > Camera.WorldBound.X
+                || this.PixelPosition.Y > Camera.WorldBound.Y
                 || flyTimer > FLYING_LIFE_SPAN)
             {
                 flyTimer = 0f;

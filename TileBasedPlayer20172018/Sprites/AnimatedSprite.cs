@@ -208,8 +208,6 @@ namespace AnimatedSprite
                 spriteBatch.End();
             }
 
-            
-
             base.Draw(gameTime);
         }
         #endregion

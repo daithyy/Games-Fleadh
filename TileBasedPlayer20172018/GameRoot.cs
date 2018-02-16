@@ -647,6 +647,11 @@ namespace TileBasedPlayer20172018
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            TilePlayer player = (TilePlayer)Services.GetService(typeof(TilePlayer));
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                player.Health = 0;
+
             if (this.IsActive)
                 base.Update(gameTime);
         }

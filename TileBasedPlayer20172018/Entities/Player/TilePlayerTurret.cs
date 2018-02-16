@@ -37,7 +37,8 @@ namespace Tiler
         private SoundEffect ShellReload;
         private SoundEffect TankTurnSound;
         private SoundEffectInstance TurnSoundInstance;
-        private bool IsDead = false;
+        public bool IsDead = false;
+        private float explosionTimer = 0f;
         #endregion
 
         #region Constructor
@@ -65,43 +66,15 @@ namespace Tiler
         #endregion
 
         #region Methods
-        public override void Update(GameTime gameTime)
+        public void Destroy()
         {
-            if (Helper.CurrentGameStatus == GameStatus.PLAYING)
-            {
-                if (!IsDead)
-                {
-                    TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
-
-                    // Props this turret onto the underside tank body if it exists
-                    if (player != null)
-                    {
-                        Track(player.PixelPosition + new Vector2(WIDTH_IN, 0f));
-                    }
-
-                    angleOfRotationPrev = this.angleOfRotation;
-
-                    // Alternate controls.
-                    HandleTurns();
-
-                    // Get direction for projectiles.
-                    Direction = new Vector2((float)Math.Cos(this.angleOfRotation), (float)Math.Sin(this.angleOfRotation));
-
-                    Fire(gameTime);
-                    PlaySounds();
-
-                    base.Update(gameTime);
-                }
-                else
-                {
-                    ExplosionSound.Play();
-                    IsDead = true;
-                }
-            }
-            else
-            {
-                TurnSoundInstance.Stop();
-            }
+            TurnSoundInstance.Stop();
+            ExplosionSound.Play();
+            IsDead = true;
+        }
+        public void AddProjectile(Projectile loadedBullet)
+        {
+            Bullet = loadedBullet;
         }
 
         private void HandleTurns()
@@ -129,20 +102,6 @@ namespace Tiler
             }
         }
 
-        public void Track(Vector2 followPos)
-        {
-            this.PixelPosition = followPos;
-        }
-        public override void Draw(GameTime gameTime)
-        {
-            base.Draw(gameTime);
-        }
-
-        public void AddProjectile(Projectile loadedBullet)
-        {
-            Bullet = loadedBullet;
-        }
-
         private bool InputShoot()
         {
             if (InputEngine.IsMouseLeftHeld() || InputEngine.IsButtonHeld(Buttons.RightTrigger))
@@ -165,8 +124,8 @@ namespace Tiler
 
                 if (InputShoot()
                     && Bullet.ProjectileState == Projectile.PROJECTILE_STATUS.Idle
-                    && this.angleOfRotation != 0 
-                    && Math.Round(this.angleOfRotationPrev,2) == Math.Round(this.angleOfRotation,2))
+                    && this.angleOfRotation != 0
+                    && Math.Round(this.angleOfRotationPrev, 2) == Math.Round(this.angleOfRotation, 2))
                 {
                     // Send this direction to the projectile
                     Bullet.GetDirection(Direction);
@@ -174,7 +133,7 @@ namespace Tiler
                     Bullet.Shoot(Crosshair.Position - new Vector2(FrameWidth / 2, FrameHeight / 2));
                     // Draw muzzleflash
                     muzzleFlash.angleOfRotation = this.angleOfRotation;
-                    muzzleFlash.PixelPosition = this.PixelPosition - new Vector2(10,0) + (this.Direction * (FrameWidth - 10));
+                    muzzleFlash.PixelPosition = this.PixelPosition - new Vector2(10, 0) + (this.Direction * (FrameWidth - 10));
                     muzzleFlash.Visible = true;
                     muzzleFlash.Draw(gameTime);
                     // Play sounds
@@ -204,6 +163,75 @@ namespace Tiler
             else
             {
                 TurnSoundInstance.Volume = 0f;
+            }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (Helper.CurrentGameStatus == GameStatus.PLAYING)
+            {
+                TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+
+                if (player.Health > 0 && !IsDead)
+                {
+                    // Props this turret onto the underside tank body if it exists
+                    if (player != null)
+                    {
+                        Track(player.PixelPosition + new Vector2(WIDTH_IN, 0f));
+                    }
+
+                    angleOfRotationPrev = this.angleOfRotation;
+
+                    // Alternate controls.
+                    HandleTurns();
+
+                    // Get direction for projectiles.
+                    Direction = new Vector2((float)Math.Cos(this.angleOfRotation), (float)Math.Sin(this.angleOfRotation));
+
+                    Fire(gameTime);
+                    PlaySounds();
+
+                    base.Update(gameTime);
+                }
+                else if (!IsDead)
+                {
+                    Destroy();
+                }
+            }
+            else
+            {
+                TurnSoundInstance.Stop();
+            }
+        }
+
+        public void Track(Vector2 followPos)
+        {
+            this.PixelPosition = followPos;
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            if (!IsDead)
+            {
+                base.Draw(gameTime);
+            }
+            else
+            {
+                TankExplosion Explosion = (TankExplosion)Game.Services.GetService(typeof(TankExplosion));
+
+                float maxExplosionTime = 0.75f;
+                if (explosionTimer < maxExplosionTime)
+                {
+                    explosionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    Explosion.PixelPosition = this.PixelPosition - new Vector2(10, -2);
+                    Explosion.Visible = true;
+                    Vector2 LightPosition = new Vector2(CentrePos.X, CentrePos.Y) - Camera.CamPos;
+                    Explosion.OrbLight.Position = LightPosition;
+                    if (explosionTimer < maxExplosionTime - maxExplosionTime + 0.3f)
+                        Explosion.OrbLight.Intensity = 0.25f;
+                }
+                else
+                    Explosion.Visible = false;
             }
         }
         #endregion
