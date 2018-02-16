@@ -98,7 +98,7 @@ namespace TileBasedPlayer20172018
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
-            IsMouseVisible = false;
+            IsMouseVisible = true;
             IsFixedTimeStep = true;
 
             Window.Title = "Steel Wrath";
@@ -584,8 +584,6 @@ namespace TileBasedPlayer20172018
             SetTrigger(TileType.DIRT2); // For WIN condition
             #endregion
 
-            Services.AddService(tileMap);
-
             base.Initialize();
         }
 
@@ -615,7 +613,8 @@ namespace TileBasedPlayer20172018
             TileRefs.Add(new TileRef(3, 1, 10)); // Metal 4
             TileRefs.Add(new TileRef(4, 2, 11)); // Dirt (Trigger)
 
-            SimpleTileLayer Map = new SimpleTileLayer(this, backTileNames, tileMap, TileRefs, tileWidth, tileHeight);
+            SimpleTileLayer Layer = new SimpleTileLayer(this, backTileNames, tileMap, TileRefs, tileWidth, tileHeight);
+            Services.AddService(Layer);
 
             // This code is used to find tiles of a specific type
             //List<Tile> tileFound = SimpleTileLayer.GetNamedTiles(backTileNames[(int)TileType.GREENBOX]);
@@ -652,6 +651,9 @@ namespace TileBasedPlayer20172018
                 Exit();
 
             TilePlayer player = (TilePlayer)Services.GetService(typeof(TilePlayer));
+            Sentry sentry = (Sentry)Services.GetService(typeof(Sentry));
+
+            Camera.Target = sentry.CentrePos;
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
                 player.Health = 0;

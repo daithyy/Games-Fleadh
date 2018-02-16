@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Microsoft.Xna.Framework;
+using Tiling;
 using Tiler;
 
 namespace Pathfinding_Demo.Engine.AI
@@ -19,8 +20,7 @@ namespace Pathfinding_Demo.Engine.AI
         Node StartingNode, TargetNode;
 
         Game game;
-        List<Collider> Colliders;
-        int[,] map;
+        SimpleTileLayer layer;
 
         public bool ReachedTarget;
 
@@ -30,21 +30,21 @@ namespace Pathfinding_Demo.Engine.AI
 
         public bool DisableDiagonalPathfinding;
 
-        public Astar(Node StartingNode, Node TargetNode, Game game, int[,] map, bool DisableDiagonalPathfinding)
+        public Astar(Node StartingNode, Node TargetNode, Game game, SimpleTileLayer layer, bool DisableDiagonalPathfinding)
         {
             this.StartingNode = StartingNode;
             this.TargetNode = TargetNode;
-            this.map = map;
+            this.layer = layer;
             this.game = game;
             this.DisableDiagonalPathfinding = DisableDiagonalPathfinding;
         }
 
         void CreateNodeList()
         {
-            Nodes = new Node[(int)map.GetLength(1), (int)map.GetLength(0)];
+            Nodes = new Node[(int)layer.MapWidth, (int)layer.MapHeight];
 
-            for (int y = 0; y < map.GetLength(0); y++)
-                for (int x = 0; x < map.GetLength(1); x++)
+            for (int y = 0; y < layer.MapHeight; y++)
+                for (int x = 0; x < layer.MapWidth; x++)
                     Nodes[x, y] = new Node(new Vector2(x, y));
         }
 

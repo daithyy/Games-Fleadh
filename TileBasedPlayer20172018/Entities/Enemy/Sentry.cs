@@ -23,7 +23,7 @@ namespace Tiler
         public string Name;
         public int DetectRadius;
         private const float fadeAmount = 0.05f;
-        public int speed = 2;
+        public float speed = 0.1f;
 
         AstarThreadWorker astarThreadWorkerTemp, astarThreadWorker;
         List<Vector2> WayPointsList;
@@ -49,12 +49,12 @@ namespace Tiler
             OrbLight.Scale = new Vector2(120);
             OrbLight.Color = Color.HotPink;
 
-            Alpha = 0f;
+            Alpha = 1f;
         }
         #endregion
 
         #region Methods
-        void Astar(GameTime gameTime, int[,] map, string UnitID, List<Sentry> Units)
+        void Astar(GameTime gameTime, SimpleTileLayer layer, string UnitID, List<Sentry> Units)
         {
             if (InputEngine.IsMouseRightClick())
             {
@@ -63,7 +63,7 @@ namespace Tiler
                     new Node(new Vector2((int)PixelPosition.X / FrameWidth, (int)PixelPosition.Y / FrameHeight)), 
                     new Node(new Vector2(
                         (int)InputEngine.MousePosition.X / FrameWidth, 
-                        (int)InputEngine.MousePosition.Y / FrameHeight)), Game, map, false, UnitID);
+                        (int)InputEngine.MousePosition.Y / FrameHeight)), Game, layer, false, UnitID);
             }
 
             AstarManager.AstarThreadWorkerResults.TryPeek(out astarThreadWorkerTemp);
@@ -80,19 +80,19 @@ namespace Tiler
                         WayPointsList = astarThreadWorker.astar.GetFinalPath();
 
                         for (int i = 0; i < WayPointsList.Count; i++)
-                            WayPointsList[i] = new Vector2(WayPointsList[i].X * 16, WayPointsList[i].Y * 16);
+                            WayPointsList[i] = new Vector2(WayPointsList[i].X * FrameWidth, WayPointsList[i].Y * FrameHeight);
                     }
                 }
 
             if (WayPointsList.Count > 0)
             {
                 List<Sentry> Sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
-                Avoidence(gameTime, Sentries, UnitID);
-                wayPoint.MoveTo(gameTime, this, WayPointsList, 2f);
+                Avoidance(gameTime, Sentries, UnitID);
+                wayPoint.MoveTo(gameTime, this, WayPointsList, speed);
             }
         }
 
-        void Avoidence(GameTime gameTime, List<Sentry> Units, string UnitID)
+        void Avoidance(GameTime gameTime, List<Sentry> Units, string UnitID)
         {
             for (int i = 0; i < Units.Count; i++)
             {
@@ -125,24 +125,24 @@ namespace Tiler
 
         public override void Update(GameTime gameTime)
         {
-            int[,] tileMap = (int[,])Game.Services.GetService(typeof(int[,]));
+            SimpleTileLayer tileMap = (SimpleTileLayer)Game.Services.GetService(typeof(SimpleTileLayer));
             List<Sentry> Sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
 
             #region Handle Movement Logic
             Astar(gameTime, tileMap, Name, Sentries);
             #endregion
 
-            if (IsSpotted())
-            {
-                Alpha += fadeAmount;
-                OrbLight.Enabled = true;
-            }
-            else
-            {
-                if (Alpha > 0)
-                    Alpha -= fadeAmount;
-                OrbLight.Enabled = false;
-            }
+            //if (IsSpotted())
+            //{
+            //    Alpha += fadeAmount;
+            //    OrbLight.Enabled = true;
+            //}
+            //else
+            //{
+            //    if (Alpha > 0)
+            //        Alpha -= fadeAmount;
+            //    OrbLight.Enabled = false;
+            //}
 
             Alpha = MathHelper.Clamp(Alpha, 0, 2);
 

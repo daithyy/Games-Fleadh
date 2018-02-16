@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 
 using Microsoft.Xna.Framework;
+using Tiling;
 
 namespace Pathfinding_Demo.Engine.AI
 {
@@ -28,11 +29,11 @@ namespace Pathfinding_Demo.Engine.AI
         /// <param name="map">Map class.</param>
         /// <param name="DisableDiagonalPathfinding">If true, the A* algorithm will not search the path in diagonal direction.</param>
         /// <param name="WorkerIDNumber">ID number for this worker thread so you can get the results back.</param>
-        public static void AddNewThreadWorker(Node StartingNode, Node TargetNode, Game game, int[,] map, bool DisableDiagonalPathfinding, string WorkerIDNumber)
+        public static void AddNewThreadWorker(Node StartingNode, Node TargetNode, Game game, SimpleTileLayer layer, bool DisableDiagonalPathfinding, string WorkerIDNumber)
         {
             ThreadPool.QueueUserWorkItem(new WaitCallback(delegate
             {
-                AstarThreadWorker astarWorker = new AstarThreadWorker(StartingNode, TargetNode, game, map, DisableDiagonalPathfinding, WorkerIDNumber);
+                AstarThreadWorker astarWorker = new AstarThreadWorker(StartingNode, TargetNode, game, layer, DisableDiagonalPathfinding, WorkerIDNumber);
                 AstarThreadWorkerResults.Enqueue(astarWorker);
             }));
         }

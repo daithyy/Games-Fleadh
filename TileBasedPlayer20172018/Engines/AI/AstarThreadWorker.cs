@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Microsoft.Xna.Framework;
+using Tiling;
 
 namespace Pathfinding_Demo.Engine.AI
 {
@@ -31,16 +32,16 @@ namespace Pathfinding_Demo.Engine.AI
         /// <param name="map">Map class.</param>
         /// <param name="DisableDiagonalPathfinding">If true, the A* algorithm will not search the path in diagonal direction.</param>
         /// <param name="WorkerIDNumber">ID number for this worker thread so you can get the results back.</param>
-        public AstarThreadWorker(Node StartingNode, Node TargetNode, Game game, int[,] map, bool DisableDiagonalPathfinding, string WorkerIDNumber)
+        public AstarThreadWorker(Node StartingNode, Node TargetNode, Game game, SimpleTileLayer layer, bool DisableDiagonalPathfinding, string WorkerIDNumber)
         {
-            if (StartingNode.Position.X > map.GetLength(1) || StartingNode.Position.Y > map.GetLength(0))
+            if (StartingNode.Position.X > layer.MapWidth || StartingNode.Position.Y > layer.MapHeight)
                 throw new Exception("StartingNode size cannot be bigger than map array size. Please make sure the StartingNode position is in array coordinates not pixel coordinates.");
 
-            if (TargetNode.Position.X > map.GetLength(1) || TargetNode.Position.Y > map.GetLength(0))
+            if (TargetNode.Position.X > layer.MapWidth || TargetNode.Position.Y > layer.MapHeight)
                 throw new Exception("TargetNode size cannot be bigger than map array size. Please make sure the TargetNode position is in array coordinates not pixel coordinates.");
 
             this.WorkerIDNumber = WorkerIDNumber;
-            astar = new Astar(StartingNode, TargetNode, game, map, DisableDiagonalPathfinding);
+            astar = new Astar(StartingNode, TargetNode, game, layer, DisableDiagonalPathfinding);
             astar.FindPath(game);
         }
     }

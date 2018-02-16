@@ -47,7 +47,7 @@ namespace Pathfinding_Demo.Engine.AI
         #endregion
 
         /// <summary>
-        /// Node constractor.
+        /// Node constructor.
         /// </summary>
         /// <param name="Position">Node position.</param>
         public Node(Vector2 Position)

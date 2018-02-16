@@ -19,7 +19,8 @@ namespace CameraNS
     class Camera : GameComponent
     {
         #region Properties
-        static Vector2 _camPos = Vector2.Zero;
+        public static Vector2 Target;
+        public static Vector2 _camPos = Vector2.Zero;
         public static Vector2 WorldBound;
         public float CameraSpeed = 0.03f;
         public float CameraSpread = 120f;
@@ -78,8 +79,7 @@ namespace CameraNS
         #region Methods
         public override void Update(GameTime gameTime)
         {
-            TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
-            Sentry sentry = (Sentry)Game.Services.GetService(typeof(Sentry));
+            TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));            
 
             #region Camera Shake Logic
             if (shaking)
@@ -118,8 +118,14 @@ namespace CameraNS
 
             if (player != null)
             {
-                //Follow((player.CentrePos + (player.Direction * CameraSpread)), Game.GraphicsDevice.Viewport, CameraSpeed);
-                Follow(sentry.CentrePos, Game.GraphicsDevice.Viewport, CameraSpeed);
+                if (Target != null)
+                {
+                    //Follow(Target, Game.GraphicsDevice.Viewport, CameraSpeed);
+                }
+                else
+                {
+                    //Follow((player.CentrePos + (player.Direction * CameraSpread)), Game.GraphicsDevice.Viewport, CameraSpeed);
+                }
 
                 #region Clamp player within bounds
                 player.PixelPosition = Vector2.Clamp(player.PixelPosition, Vector2.Zero,
