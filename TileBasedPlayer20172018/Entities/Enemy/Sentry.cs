@@ -108,11 +108,11 @@ namespace Tiler
             if (Health > HealthBar.WarningLevel)
             {
                 SentryState = State.Attack;
-                WayPoint.freezeRadius = 100; // Get closer
+                WayPoint.freezeRadius = 150; // Get closer
             }
             else if (Health > HealthBar.CriticalLevel && Health <= HealthBar.WarningLevel)
             {
-                WayPoint.freezeRadius = 200; // Keep distance
+                WayPoint.freezeRadius = 250; // Keep distance
             }
             else if (Health > 0 && Health <= HealthBar.CriticalLevel)
             {

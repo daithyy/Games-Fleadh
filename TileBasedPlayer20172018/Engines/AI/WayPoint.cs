@@ -21,23 +21,52 @@ namespace Pathfinding_Demo.Engine.AI
             {
                 if (!ReachedDestination)
                 {
+                    #region Get distance to Target
                     float Distance = Vector2.Distance(tank.PixelPosition, DestinationWaypoint[WayPointIndex]);
                     Vector2 Direction = DestinationWaypoint[WayPointIndex] - tank.PixelPosition;
                     Direction.Normalize();
+                    #endregion
 
-                    if (Distance > Direction.Length())
+                    #region Get distance away from Target
+                    float DistanceAway = Vector2.Distance(-tank.PixelPosition, -DestinationWaypoint[WayPointIndex]);
+                    Vector2 DirectionAway = -DestinationWaypoint[WayPointIndex] + tank.PixelPosition;
+                    DirectionAway.Normalize();
+                    #endregion
+
+                    switch (tank.SentryState)
                     {
-                        tank.angleOfRotation = RotatingSprite.TurnToFace(
-                            tank.PixelPosition, 
-                            (tank.PixelPosition + Direction),
-                            tank.angleOfRotation, tank.turnSpeed);
+                        case Sentry.State.Patrol:
+                            #region Move to Exact Location
+                            if (Distance > Direction.Length())
+                            {
+                                tank.angleOfRotation = RotatingSprite.TurnToFace(
+                                    tank.PixelPosition,
+                                    (tank.PixelPosition + Direction),
+                                    tank.angleOfRotation, tank.turnSpeed);
 
-                        switch (tank.SentryState)
-                        {
-                            case Sentry.State.Patrol:
                                 tank.Velocity += tank.Acceleration;
-                                break;
-                            case Sentry.State.Attack:
+                            }
+                            else
+                            {
+                                if (WayPointIndex >= DestinationWaypoint.Count - 1)
+                                {
+                                    tank.PixelPosition += Direction;
+                                    ReachedDestination = true;
+                                }
+                                else
+                                    WayPointIndex++;
+                            }
+                            #endregion
+                            break;
+                        case Sentry.State.Attack:
+                            #region Move around outside Detection Radius
+                            if (Distance > Direction.Length())
+                            {
+                                tank.angleOfRotation = RotatingSprite.TurnToFace(
+                                    tank.PixelPosition,
+                                    (tank.PixelPosition + Direction),
+                                    tank.angleOfRotation, tank.turnSpeed);
+
                                 if (Vector2.Distance(tank.PixelPosition, tank.Target) > freezeRadius)
                                     tank.Velocity += tank.Acceleration;
                                 else
@@ -61,22 +90,43 @@ namespace Pathfinding_Demo.Engine.AI
                                     }
                                     //tank.Velocity -= tank.Deceleration * 4; // Tank moves back when you advance!
                                 }
-                                break;
-                            case Sentry.State.Flee:
+                            }
+                            else
+                            {
+                                if (WayPointIndex >= DestinationWaypoint.Count - 1)
+                                {
+                                    tank.PixelPosition += Direction;
+                                    ReachedDestination = true;
+                                }
+                                else
+                                    WayPointIndex++;
+                            }
+                            #endregion
+                            break;
+                        case Sentry.State.Flee:
+                            #region Move away from Target
+                            if (DistanceAway > DirectionAway.Length())
+                            {
+                                tank.angleOfRotation = RotatingSprite.TurnToFace(
+                                    tank.PixelPosition,
+                                    (tank.PixelPosition + DirectionAway),
+                                    tank.angleOfRotation, tank.turnSpeed);
+
                                 if (Vector2.Distance(tank.PixelPosition, tank.Target) > 0)
                                     tank.Velocity += tank.Acceleration;
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        if (WayPointIndex >= DestinationWaypoint.Count - 1)
-                        {
-                            tank.PixelPosition += Direction;
-                            ReachedDestination = true;
-                        }
-                        else
-                            WayPointIndex++;
+                            }
+                            else
+                            {
+                                if (WayPointIndex >= DestinationWaypoint.Count - 1)
+                                {
+                                    tank.PixelPosition += Direction;
+                                    ReachedDestination = true;
+                                }
+                                else
+                                    WayPointIndex++;
+                            }
+                            #endregion
+                            break;
                     }
                 }
             }
