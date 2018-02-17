@@ -74,53 +74,6 @@ namespace Tiler
         #endregion
 
         #region Methods
-        public override void Update(GameTime gameTime)
-        {
-            if (Helper.CurrentGameStatus == GameStatus.PLAYING)
-            {
-                if (Health > 0 && !isDead)
-                {
-                    TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
-                    List<Sentry> Sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
-
-                    foreach (Sentry sentry in Sentries)
-                    {
-                        // Props this turret onto the appropiate tank body
-                        if (this.Name == sentry.Name && sentry != null)
-                        {
-                            AddSelfToBody(sentry.PixelPosition + new Vector2(WIDTH_IN, 0f));
-                            sentry.DetectRadius = this.DetectRadius;
-                            this.Alpha = sentry.Alpha;
-                            healthBar.Alpha = this.Alpha;
-                            //this.Visible = sentry.Visible;
-                        }
-                    }
-
-                    angleOfRotationPrev = this.angleOfRotation;
-
-                    this.Direction = new Vector2((float)Math.Cos(this.angleOfRotation), (float)Math.Sin(this.angleOfRotation));
-
-                    Bullet.GetDirection(this.Direction);
-
-                    // Face and shoot at the player when player is within radius
-                    Detect(gameTime, player);
-                    PlaySounds();
-
-                    base.Update(gameTime);
-                }
-                else if (!isDead)
-                {
-                    TurnSoundInstance.Stop();
-                    Interlocked.Decrement(ref Count);
-                    ExplosionSound.Play();
-                    isDead = true;
-                }
-            }
-            else
-            {
-                TurnSoundInstance.Stop();
-            }
-        }
 
         public void AddProjectile(Projectile projectileIn)
         {
@@ -184,6 +137,71 @@ namespace Tiler
             this.PixelPosition = followPos;
         }
 
+        public void PlaySounds()
+        {
+            TurnSoundInstance.Play();
+
+            volumeVelocity = (turnSpeed * 4); // 0.06
+            volumeVelocity = MathHelper.Clamp(volumeVelocity, 0, 0.8f);
+
+            if (Math.Round(this.angleOfRotationPrev, 2) != Math.Round(this.angleOfRotation, 2))
+            {
+                TurnSoundInstance.Volume = volumeVelocity;
+            }
+            else
+            {
+                TurnSoundInstance.Volume = 0f;
+            }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (Helper.CurrentGameStatus == GameStatus.PLAYING)
+            {
+                if (Health > 0 && !isDead)
+                {
+                    TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+                    List<Sentry> Sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
+
+                    foreach (Sentry sentry in Sentries)
+                    {
+                        // Props this turret onto the appropiate tank body
+                        if (this.Name == sentry.Name && sentry != null)
+                        {
+                            AddSelfToBody(sentry.PixelPosition + new Vector2(WIDTH_IN, 0f));
+                            sentry.DetectRadius = this.DetectRadius;
+                            this.Alpha = sentry.Alpha;
+                            healthBar.Alpha = this.Alpha;
+                            //this.Visible = sentry.Visible;
+                        }
+                    }
+
+                    angleOfRotationPrev = this.angleOfRotation;
+
+                    this.Direction = new Vector2((float)Math.Cos(this.angleOfRotation), (float)Math.Sin(this.angleOfRotation));
+
+                    Bullet.GetDirection(this.Direction);
+
+                    // Face and shoot at the player when player is within radius
+                    Detect(gameTime, player);
+                    PlaySounds();
+
+                    base.Update(gameTime);
+                }
+                else if (!isDead)
+                {
+                    TurnSoundInstance.Stop();
+                    Interlocked.Decrement(ref Count);
+                    ExplosionSound.Play();
+                    isDead = true;
+                }
+            }
+            else
+            {
+                TurnSoundInstance.Stop();
+            }
+        }
+
         public override void Draw(GameTime gameTime)
         {
             if (Health > 0)
@@ -206,23 +224,6 @@ namespace Tiler
                     if (explosionTimer < maxExplosionTime - maxExplosionTime + 0.3f)
                         Explosion.OrbLight.Intensity = 0.25f;
                 }
-            }
-        }
-
-        public void PlaySounds()
-        {
-            TurnSoundInstance.Play();
-
-            volumeVelocity = (turnSpeed * 4); // 0.06
-            volumeVelocity = MathHelper.Clamp(volumeVelocity, 0, 0.8f);
-
-            if (Math.Round(this.angleOfRotationPrev, 2) != Math.Round(this.angleOfRotation, 2))
-            {
-                TurnSoundInstance.Volume = volumeVelocity;
-            }
-            else
-            {
-                TurnSoundInstance.Volume = 0f;
             }
         }
         #endregion

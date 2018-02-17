@@ -61,10 +61,12 @@ namespace Tiler
         #region Methods
         public override void Update(GameTime gameTime)
         {
+            Sentry s = (Sentry)Game.Services.GetService(typeof(Sentry));
             TilePlayer p = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
             Projectile projectile = (Projectile)Game.Services.GetService(typeof(Projectile));
 
-            CollideWithPlayer(p);
+            CollideWithTank(s);
+            CollideWithTank(p);
             CollideWithProjectile(projectile);
 
             Shadow.Position = (WorldPosition / 2) + new Vector2(WorldPosition.X / 2, WorldPosition.Y / 2) + new Vector2(texture.Width / 2, texture.Height / 2) - Camera.CamPos;
@@ -72,7 +74,7 @@ namespace Tiler
             base.Update(gameTime);
         }
 
-        private void CollideWithPlayer(TilePlayer obj)
+        private void CollideWithTank(Tank obj)
         {
             if (obj == null) return;
             else

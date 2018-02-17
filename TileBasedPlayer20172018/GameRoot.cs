@@ -311,6 +311,7 @@ namespace TileBasedPlayer20172018
             //Sentries.Add(enemyThirteen);
             //Sentries.Add(enemyFourteen);
 
+            Services.AddService(enemyOne);
             Services.AddService(Sentries);
             #endregion
 
@@ -577,6 +578,7 @@ namespace TileBasedPlayer20172018
             #endregion
 
             #region Set Collisions
+            Services.AddService(Colliders);
             SetCollider(TileType.DIRT);
             SetCollider(TileType.METAL);
             SetTrigger(TileType.DIRT2); // For WIN condition
@@ -611,7 +613,8 @@ namespace TileBasedPlayer20172018
             TileRefs.Add(new TileRef(3, 1, 10)); // Metal 4
             TileRefs.Add(new TileRef(4, 2, 11)); // Dirt (Trigger)
 
-            new SimpleTileLayer(this, backTileNames, tileMap, TileRefs, tileWidth, tileHeight);
+            SimpleTileLayer Layer = new SimpleTileLayer(this, backTileNames, tileMap, TileRefs, tileWidth, tileHeight);
+            Services.AddService(Layer);
 
             // This code is used to find tiles of a specific type
             //List<Tile> tileFound = SimpleTileLayer.GetNamedTiles(backTileNames[(int)TileType.GREENBOX]);

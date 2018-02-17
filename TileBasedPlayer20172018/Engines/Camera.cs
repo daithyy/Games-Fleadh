@@ -1,15 +1,8 @@
-﻿using AnimatedSprite;
-using InputManager;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Penumbra;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Tiler;
-using Tiling;
 
 namespace CameraNS
 {
@@ -19,7 +12,8 @@ namespace CameraNS
     class Camera : GameComponent
     {
         #region Properties
-        static Vector2 _camPos = Vector2.Zero;
+        public static Vector2 Target;
+        public static Vector2 _camPos = Vector2.Zero;
         public static Vector2 WorldBound;
         public float CameraSpeed = 0.03f;
         public float CameraSpread = 120f;
@@ -78,7 +72,7 @@ namespace CameraNS
         #region Methods
         public override void Update(GameTime gameTime)
         {
-            TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+            TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));            
 
             #region Camera Shake Logic
             if (shaking)
@@ -117,7 +111,14 @@ namespace CameraNS
 
             if (player != null)
             {
-                Follow((player.CentrePos + (player.Direction * CameraSpread)), Game.GraphicsDevice.Viewport, CameraSpeed);
+                if (Target != Vector2.Zero)
+                {
+                    Follow(Target, Game.GraphicsDevice.Viewport, CameraSpeed);
+                }
+                else
+                {
+                    Follow((player.CentrePos + (player.Direction * CameraSpread)), Game.GraphicsDevice.Viewport, CameraSpeed);
+                }
 
                 #region Clamp player within bounds
                 player.PixelPosition = Vector2.Clamp(player.PixelPosition, Vector2.Zero,
