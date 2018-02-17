@@ -25,10 +25,11 @@ namespace Tiler
         public int DetectRadius;
         private const float fadeAmount = 0.05f;
         public float speed = 0.1f;
+        private float updateTime = 0f;
 
         AstarThreadWorker astarThreadWorkerTemp, astarThreadWorker;
         List<Vector2> WayPointsList;
-
+        public Vector2 Target;
         WayPoint wayPoint;
         #endregion
 
@@ -42,6 +43,7 @@ namespace Tiler
             Health = 100;
             Name = nameIn;
             this.angleOfRotation = angle;
+            MaxVelocity /= 2;
 
             WayPointsList = new List<Vector2>();
 
@@ -55,20 +57,36 @@ namespace Tiler
         #endregion
 
         #region Methods
-        void Astar(GameTime gameTime, SimpleTileLayer layer, string UnitID, List<Sentry> Units)
+        private void Astar(GameTime gameTime, SimpleTileLayer layer, string UnitID, List<Sentry> Units)
         {
-            if (InputEngine.IsMouseRightClick())
+            TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+
+            Target = player.CentrePos;
+            //angleOfRotation = TurnToFace(PixelPosition, Target, angleOfRotation, turnSpeed);
+
+            #region Calculate Location
+            if (updateTime > 0.1f) // Check every two seconds
             {
                 astarThreadWorker = null;
                 AstarManager.AddNewThreadWorker(
-                    new Node(new Vector2((int)PixelPosition.X / FrameWidth, (int)PixelPosition.Y / FrameHeight)), 
                     new Node(new Vector2(
-                        (int)(InputEngine.MousePosition.X + Camera.CamPos.X) / FrameWidth, 
-                        (int)(InputEngine.MousePosition.Y + Camera.CamPos.Y) / FrameHeight)), Game, layer, false, UnitID);
+                        (int)(PixelPosition.X / FrameWidth), 
+                        (int)(PixelPosition.Y / FrameHeight))), 
+                    new Node(new Vector2(
+                        (int)(Target.X) / FrameWidth, 
+                        (int)(Target.Y) / FrameHeight)), 
+                    Game, layer, false, UnitID);
+                updateTime = 0f;
             }
+            else
+            {
+                updateTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            #endregion
 
             AstarManager.AstarThreadWorkerResults.TryPeek(out astarThreadWorkerTemp);
 
+            #region Add Location to WayPoints
             if (astarThreadWorkerTemp != null)
                 if (astarThreadWorkerTemp.WorkerIDNumber == UnitID)
                 {
@@ -81,19 +99,24 @@ namespace Tiler
                         WayPointsList = astarThreadWorker.astar.GetFinalPath();
 
                         for (int i = 0; i < WayPointsList.Count; i++)
-                            WayPointsList[i] = new Vector2(WayPointsList[i].X * FrameWidth, WayPointsList[i].Y * FrameHeight);
+                            WayPointsList[i] = new Vector2(
+                                WayPointsList[i].X * FrameWidth, 
+                                WayPointsList[i].Y * FrameHeight);
                     }
                 }
+            #endregion
 
+            #region Avoid Obstacles and Move to Target
             if (WayPointsList.Count > 0)
             {
                 List<Sentry> Sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
                 Avoidance(gameTime, Sentries, UnitID);
-                wayPoint.MoveTo(gameTime, this, WayPointsList, speed);
+                wayPoint.MoveTo(gameTime, this, WayPointsList);
             }
+            #endregion
         }
 
-        void Avoidance(GameTime gameTime, List<Sentry> Units, string UnitID)
+        private void Avoidance(GameTime gameTime, List<Sentry> Units, string UnitID)
         {
             for (int i = 0; i < Units.Count; i++)
             {
@@ -129,9 +152,7 @@ namespace Tiler
             SimpleTileLayer tileMap = (SimpleTileLayer)Game.Services.GetService(typeof(SimpleTileLayer));
             List<Sentry> Sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
 
-            #region Handle Movement Logic
             Astar(gameTime, tileMap, Name, Sentries);
-            #endregion
 
             //if (IsSpotted())
             //{

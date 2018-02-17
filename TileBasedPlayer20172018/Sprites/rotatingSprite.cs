@@ -88,7 +88,7 @@ namespace AnimatedSprite
             angleOfRotation = TurnToFace(Pos, PixelPosition, angleOfRotation, rotationSpeed);
         }
 
-        protected static float TurnToFace(Vector2 position, Vector2 faceThis,
+        public static float TurnToFace(Vector2 position, Vector2 faceThis,
             float currentAngle, float turnSpeed)
         {
             // The difference in the two points is 

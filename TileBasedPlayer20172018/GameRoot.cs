@@ -98,7 +98,7 @@ namespace TileBasedPlayer20172018
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
-            IsMouseVisible = true;
+            IsMouseVisible = false;
             IsFixedTimeStep = true;
 
             Window.Title = "Steel Wrath";
@@ -651,9 +651,6 @@ namespace TileBasedPlayer20172018
                 Exit();
 
             TilePlayer player = (TilePlayer)Services.GetService(typeof(TilePlayer));
-            Sentry sentry = (Sentry)Services.GetService(typeof(Sentry));
-
-            Camera.Target = sentry.CentrePos;
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
                 player.Health = 0;

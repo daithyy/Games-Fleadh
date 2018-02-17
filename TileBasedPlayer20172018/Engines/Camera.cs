@@ -1,15 +1,8 @@
-﻿using AnimatedSprite;
-using InputManager;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Penumbra;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Tiler;
-using Tiling;
 
 namespace CameraNS
 {
@@ -118,13 +111,13 @@ namespace CameraNS
 
             if (player != null)
             {
-                if (Target != null)
+                if (Target != Vector2.Zero)
                 {
                     Follow(Target, Game.GraphicsDevice.Viewport, CameraSpeed);
                 }
                 else
                 {
-                    //Follow((player.CentrePos + (player.Direction * CameraSpread)), Game.GraphicsDevice.Viewport, CameraSpeed);
+                    Follow((player.CentrePos + (player.Direction * CameraSpread)), Game.GraphicsDevice.Viewport, CameraSpeed);
                 }
 
                 #region Clamp player within bounds
