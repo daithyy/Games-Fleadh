@@ -26,6 +26,7 @@ namespace Tiler
         private const float fadeAmount = 0.05f;
         public float speed = 0.1f;
         private float updateTime = 0f;
+        public bool IsDead = false;
 
         AstarThreadWorker astarThreadWorkerTemp, astarThreadWorker;
         List<Vector2> WayPointsList;
@@ -62,7 +63,6 @@ namespace Tiler
             TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
 
             Target = player.CentrePos;
-            //angleOfRotation = TurnToFace(PixelPosition, Target, angleOfRotation, turnSpeed);
 
             #region Calculate Location
             if (updateTime > 0.1f) // Check every two seconds
@@ -152,7 +152,17 @@ namespace Tiler
             SimpleTileLayer tileMap = (SimpleTileLayer)Game.Services.GetService(typeof(SimpleTileLayer));
             List<Sentry> Sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
 
-            Astar(gameTime, tileMap, Name, Sentries);
+            if (!IsDead)
+            {
+                Astar(gameTime, tileMap, Name, Sentries);
+            }
+            else
+            {
+                if (Velocity.X > 0 && Velocity.Y > 0)
+                    Velocity -= Deceleration;
+                else
+                    Velocity = Vector2.Zero;
+            }
 
             //if (IsSpotted())
             //{

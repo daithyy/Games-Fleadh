@@ -33,7 +33,7 @@ namespace Tiler
         private SoundEffectInstance TurnSoundInstance;
         HealthBar healthBar;
         public static int Count = 0; // Keeps track of amount of Sentries created
-        private bool isDead = false;
+        public bool IsDead = false;
         private float explosionTimer = 0f;
         private Vector2 trueOrigin
         {
@@ -42,6 +42,7 @@ namespace Tiler
                 return new Vector2(((FrameWidth / 2) - WIDTH_IN), (FrameHeight / 2));
             }
         }
+        private Sentry parentBody;
         #endregion
 
         #region Constructor
@@ -74,6 +75,19 @@ namespace Tiler
         #endregion
 
         #region Methods
+        private void FindBody()
+        {
+            List<Sentry> Sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
+
+            foreach (Sentry sentry in Sentries)
+            {
+                // Find appropiate body with the same name
+                if (Name == sentry.Name && sentry != null)
+                {
+                    parentBody = sentry;
+                }
+            }
+        }
 
         public void AddProjectile(Projectile projectileIn)
         {
@@ -90,8 +104,10 @@ namespace Tiler
                 return false;
         }
 
-        private void Detect(GameTime gameTime, TilePlayer player)
+        private void Detect(GameTime gameTime)
         {
+            TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+
             if (IsInRadius(player))
             {
                 this.angleOfRotation = TurnToFace(this.CentrePos, player.CentrePos, this.angleOfRotation, turnSpeed);
@@ -158,42 +174,40 @@ namespace Tiler
         {
             if (Helper.CurrentGameStatus == GameStatus.PLAYING)
             {
-                if (Health > 0 && !isDead)
+                if (Health > 0 && !IsDead)
                 {
-                    TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
-                    List<Sentry> Sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
+                    FindBody();
 
-                    foreach (Sentry sentry in Sentries)
-                    {
-                        // Props this turret onto the appropiate tank body
-                        if (this.Name == sentry.Name && sentry != null)
-                        {
-                            AddSelfToBody(sentry.PixelPosition + new Vector2(WIDTH_IN, 0f));
-                            sentry.DetectRadius = this.DetectRadius;
-                            this.Alpha = sentry.Alpha;
-                            healthBar.Alpha = this.Alpha;
-                            //this.Visible = sentry.Visible;
-                        }
-                    }
+                    #region Share Properties
+                    // Props this turret onto the appropiate tank body
+                    AddSelfToBody(parentBody.PixelPosition + new Vector2(WIDTH_IN, 0f));
+
+                    // Share properties
+                    parentBody.DetectRadius = (this.DetectRadius * 2);
+                    Alpha = parentBody.Alpha;
+                    healthBar.Alpha = this.Alpha;
+                    //this.Visible = parentBody.Visible;
+                    #endregion
 
                     angleOfRotationPrev = this.angleOfRotation;
 
-                    this.Direction = new Vector2((float)Math.Cos(this.angleOfRotation), (float)Math.Sin(this.angleOfRotation));
-
+                    Direction = new Vector2((float)Math.Cos(this.angleOfRotation), (float)Math.Sin(this.angleOfRotation));
                     Bullet.GetDirection(this.Direction);
 
                     // Face and shoot at the player when player is within radius
-                    Detect(gameTime, player);
+                    Detect(gameTime);
+
                     PlaySounds();
 
                     base.Update(gameTime);
                 }
-                else if (!isDead)
+                else if (!IsDead)
                 {
                     TurnSoundInstance.Stop();
                     Interlocked.Decrement(ref Count);
                     ExplosionSound.Play();
-                    isDead = true;
+                    IsDead = true;
+                    parentBody.IsDead = true;
                 }
             }
             else

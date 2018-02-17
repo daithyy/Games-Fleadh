@@ -230,3 +230,15 @@
 /processorParam:Quality=Best
 /build:audio/Resupply.wav
 
+#begin audio/SentryTankHum.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/SentryTankHum.wav
+
+#begin audio/SentryTankTracks.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/SentryTankTracks.wav
+

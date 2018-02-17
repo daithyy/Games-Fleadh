@@ -224,14 +224,17 @@ namespace TileBasedPlayer20172018
             {
                 new TileRef(10, 4, 0),
             }, 64, 64, 0f, "Enemy Tank 1",
-            Content.Load<SoundEffect>("audio/PlayerTankHum"),
-            Content.Load<SoundEffect>("audio/PlayerTankTracks"), 
+            Content.Load<SoundEffect>("audio/SentryTankHum"),
+            Content.Load<SoundEffect>("audio/SentryTankTracks"), 
             - ANGLE_DIAG_LEFT);
 
-            //Sentry enemyTwo = new Sentry(this, new Vector2(1180, 237), new List<TileRef>()
-            //{
-            //    new TileRef(10, 4, 0),
-            //}, 64, 64, 0f, "Enemy Tank 2", ANGLE_VERTICAL);
+            Sentry enemyTwo = new Sentry(this, new Vector2(1180, 400), new List<TileRef>()
+            {
+                new TileRef(10, 4, 0),
+            }, 64, 64, 0f, "Enemy Tank 2",
+            Content.Load<SoundEffect>("audio/SentryTankHum"),
+            Content.Load<SoundEffect>("audio/SentryTankTracks"), 
+            ANGLE_VERTICAL);
 
             //Sentry enemyThree = new Sentry(this, new Vector2(2020, 295), new List<TileRef>()
             //{
@@ -297,7 +300,7 @@ namespace TileBasedPlayer20172018
 
             #region Add Sentry's to List
             Sentries.Add(enemyOne);
-            //Sentries.Add(enemyTwo);
+            Sentries.Add(enemyTwo);
             //Sentries.Add(enemyThree);
             //Sentries.Add(enemyFour);
             //Sentries.Add(enemyFive);
@@ -311,7 +314,6 @@ namespace TileBasedPlayer20172018
             //Sentries.Add(enemyThirteen);
             //Sentries.Add(enemyFourteen);
 
-            Services.AddService(enemyOne);
             Services.AddService(Sentries);
             #endregion
 
@@ -323,11 +325,11 @@ namespace TileBasedPlayer20172018
             }, 64, 64, 0f, "Enemy Tank 1", -ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
             Content.Load<SoundEffect>("audio/TankExplosion"));
 
-            //SentryTurret enemyTurretTwo = new SentryTurret(this, enemyTwo.PixelPosition, new List<TileRef>()
-            //{
-            //    new TileRef(10, 5, 0),
-            //}, 64, 64, 0f, "Enemy Tank 2", ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
-            //Content.Load<SoundEffect>("audio/TankExplosion"));
+            SentryTurret enemyTurretTwo = new SentryTurret(this, enemyTwo.PixelPosition, new List<TileRef>()
+            {
+                new TileRef(10, 5, 0),
+            }, 64, 64, 0f, "Enemy Tank 2", ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
+            Content.Load<SoundEffect>("audio/TankExplosion"));
 
             //SentryTurret enemyTurretThree = new SentryTurret(this, enemyThree.PixelPosition, new List<TileRef>()
             //{
@@ -405,7 +407,7 @@ namespace TileBasedPlayer20172018
 
             #region Add Sentry Turrets to List
             SentryTurrets.Add(enemyTurretOne);
-            //SentryTurrets.Add(enemyTurretTwo);
+            SentryTurrets.Add(enemyTurretTwo);
             //SentryTurrets.Add(enemyTurretThree);
             //SentryTurrets.Add(enemyTurretFour);
             //SentryTurrets.Add(enemyTurretFive);
@@ -432,12 +434,12 @@ namespace TileBasedPlayer20172018
             Content.Load<SoundEffect>("audio/SentryTankShoot"),
             Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            //Projectile enemyBulletTwo = new Projectile(this, "SENTRY", new Vector2(0,0), new List<TileRef>()
-            //{
-            //    new TileRef(10, 2, 0),
-            //}, 64, 64, 0f, enemyTurretTwo.Direction, ENEMY_BULLET_SPD,
-            //Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
-            //Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            Projectile enemyBulletTwo = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
+            {
+                new TileRef(10, 2, 0),
+            }, 64, 64, 0f, enemyTurretTwo.Direction, ENEMY_BULLET_SPD,
+            Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
+            Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
             //Projectile enemyBulletThree = new Projectile(this, "SENTRY", new Vector2(0,0), new List<TileRef>()
             //{
@@ -524,7 +526,7 @@ namespace TileBasedPlayer20172018
             //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
             List<Projectile> sentryProjectiles = new List<Projectile>()
-            { enemyBulletOne//, enemyBulletTwo, enemyBulletThree,
+            { enemyBulletOne, enemyBulletTwo//, enemyBulletThree,
               //enemyBulletFour, enemyBulletFive, enemyBulletSix,
               //enemyBulletFive, enemyBulletSeven, enemyBulletEight,
               //enemyBulletNine, enemyBulletTen, enemyBulletEleven,
