@@ -19,6 +19,8 @@ namespace Helpers
         public Color HealthyColor = new Color(243, 208, 168);
         public Color WarningColor = new Color(255, 142, 86);
         public Color CriticalColor = new Color(255, 86, 86);
+        public static int WarningLevel = 60;
+        public static int CriticalLevel = 30;
         public Rectangle HealthRect
         {
             get
@@ -47,11 +49,11 @@ namespace Helpers
 
             spriteBatch.Begin(SpriteSortMode.Immediate,
                     BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Camera.CurrentCameraTranslation);
-            if (health > 60)
+            if (health > WarningLevel)
                 spriteBatch.Draw(txHealthBar, HealthRect, HealthyColor * Alpha);
-            else if (health > 30 && health <= 60)
+            else if (health > CriticalLevel && health <= WarningLevel)
                 spriteBatch.Draw(txHealthBar, HealthRect, WarningColor * Alpha);
-            else if (health > 0 && health <= 30)
+            else if (health > 0 && health <= CriticalLevel)
                 spriteBatch.Draw(txHealthBar, HealthRect, CriticalColor * Alpha);
             spriteBatch.End();
         }

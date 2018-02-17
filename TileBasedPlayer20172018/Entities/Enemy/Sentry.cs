@@ -24,9 +24,24 @@ namespace Tiler
         public string Name;
         public int DetectRadius;
         private const float fadeAmount = 0.05f;
-        public float speed = 0.1f;
+        private float knockBack = 0.1f;
         private float updateTime = 0f;
+        private const float UPDATE_TIME_MAX = 0.1f;
+        private float patrolTime = 0f;
+        private const float PATROL_TIME_MAX = 10f; // 10 seconds
+        private float waitTime = 0f;
+        private const int WAIT_TIME_MAX = 5; // 5 seconds
         public bool IsDead = false;
+
+        public enum State
+        {
+            Wait,
+            Idle,
+            Patrol,
+            Attack,
+            Flee
+        }
+        public State SentryState;
 
         AstarThreadWorker astarThreadWorkerTemp, astarThreadWorker;
         List<Vector2> WayPointsList;
@@ -41,8 +56,8 @@ namespace Tiler
                 : base(game, startPosition, sheetRefs, frameWidth, frameHeight, layerDepth,
                       tankHumSound, tankTrackSound)
         {
-            Health = 100;
             Name = nameIn;
+            SentryState = State.Wait;
             this.angleOfRotation = angle;
             MaxVelocity /= 2;
 
@@ -53,19 +68,115 @@ namespace Tiler
             OrbLight.Scale = new Vector2(120);
             OrbLight.Color = Color.HotPink;
 
-            Alpha = 1f;
+            Alpha = 0f;
         }
         #endregion
 
         #region Methods
-        private void Astar(GameTime gameTime, SimpleTileLayer layer, string UnitID, List<Sentry> Units)
+        private void SlowDown()
         {
-            TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+            if (Velocity.X < 0)
+            {
+                Velocity += Deceleration;
+            }
+            else if (Velocity.X > 0)
+            {
+                Velocity -= Deceleration;
+            }
 
-            Target = player.CentrePos;
+            if (Velocity.Y < 0)
+            {
+                Velocity += Deceleration;
+            }
+            else if (Velocity.Y > 0)
+            {
+                Velocity -= Deceleration;
+            }
+        }
 
+        private Vector2 ChooseRandomLocation()
+        {
+            List<Tile> groundTiles = SimpleTileLayer.GetNamedTiles("ground");
+
+            return new Vector2(
+                groundTiles[Camera.random.Next(0, groundTiles.Count)].X * FrameWidth,
+                groundTiles[Camera.random.Next(0, groundTiles.Count)].Y * FrameHeight);
+        }
+
+        private void React()
+        {
+            if (Health > HealthBar.WarningLevel)
+            {
+                SentryState = State.Attack;
+                WayPoint.freezeRadius = 100; // Get closer
+            }
+            else if (Health > HealthBar.CriticalLevel && Health <= HealthBar.WarningLevel)
+            {
+                WayPoint.freezeRadius = 200; // Keep distance
+            }
+            else if (Health > 0 && Health <= HealthBar.CriticalLevel)
+            {
+                SentryState = State.Flee; // Escape
+            }
+        }
+
+        private void ChooseState(GameTime gameTime)
+        {
+            switch (SentryState)
+            {
+                case State.Wait:
+                    SlowDown();
+                    break;
+                case State.Idle:
+                    if (waitTime > Camera.random.Next(1, WAIT_TIME_MAX))
+                    {
+                        SentryState = State.Patrol;
+                        waitTime = 0f;
+                    }
+                    else
+                        waitTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    break;
+                case State.Patrol:
+                    if (patrolTime > PATROL_TIME_MAX)
+                    {
+                        Target = ChooseRandomLocation();
+                        patrolTime = 0f;
+                    }
+                    else
+                        patrolTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    HandleMovement(gameTime);
+                    break;
+                case State.Attack:
+                    HandleMovement(gameTime);
+                    break;
+                case State.Flee:
+                    HandleMovement(gameTime);
+                    break;
+            }
+        }
+
+        private void HandleMovement(GameTime gameTime)
+        {
+            SimpleTileLayer tileMap = (SimpleTileLayer)Game.Services.GetService(typeof(SimpleTileLayer));
+            List<Sentry> Sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
+
+            if (!IsDead)
+            {
+                PathFinding(gameTime, tileMap, Name, Sentries);
+            }
+            else
+            {
+                if (Velocity.X > 0 && Velocity.Y > 0)
+                    Velocity -= Deceleration;
+                else
+                    Velocity = Vector2.Zero;
+            }
+        }
+
+        private void PathFinding(GameTime gameTime, SimpleTileLayer layer, string UnitID, List<Sentry> Units)
+        {
             #region Calculate Location
-            if (updateTime > 0.1f) // Check every two seconds
+            if (updateTime > UPDATE_TIME_MAX) // Check every millisecond.
             {
                 astarThreadWorker = null;
                 AstarManager.AddNewThreadWorker(
@@ -109,15 +220,18 @@ namespace Tiler
             #region Avoid Obstacles and Move to Target
             if (WayPointsList.Count > 0)
             {
-                List<Sentry> Sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
-                Avoidance(gameTime, Sentries, UnitID);
-                wayPoint.MoveTo(gameTime, this, WayPointsList);
+                {
+                    Avoidance(gameTime, UnitID);
+                    wayPoint.MoveTo(gameTime, this, WayPointsList);
+                }
             }
             #endregion
         }
 
-        private void Avoidance(GameTime gameTime, List<Sentry> Units, string UnitID)
+        private void Avoidance(GameTime gameTime, string UnitID)
         {
+            List<Sentry> Units = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
+
             for (int i = 0; i < Units.Count; i++)
             {
                 if (Units[i].BoundingRectangle.Intersects(BoundingRectangle))
@@ -129,7 +243,7 @@ namespace Tiler
                     {
                         Vector2 OppositeDirection = Units[i].PixelPosition - PixelPosition;
                         OppositeDirection.Normalize();
-                        PixelPosition -= OppositeDirection * (float)(speed * gameTime.ElapsedGameTime.TotalMilliseconds);
+                        PixelPosition -= OppositeDirection * (float)(knockBack * gameTime.ElapsedGameTime.TotalMilliseconds);
                     }
                 }
             }
@@ -149,32 +263,28 @@ namespace Tiler
 
         public override void Update(GameTime gameTime)
         {
-            SimpleTileLayer tileMap = (SimpleTileLayer)Game.Services.GetService(typeof(SimpleTileLayer));
-            List<Sentry> Sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
+            ChooseState(gameTime);
 
-            if (!IsDead)
+            if (IsSpotted())
             {
-                Astar(gameTime, tileMap, Name, Sentries);
+                TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+
+                Target = player.CentrePos;
+                React();
+
+                // Show self
+                Alpha += fadeAmount;
+                OrbLight.Enabled = true;
             }
             else
             {
-                if (Velocity.X > 0 && Velocity.Y > 0)
-                    Velocity -= Deceleration;
-                else
-                    Velocity = Vector2.Zero;
-            }
+                SentryState = State.Wait;
 
-            //if (IsSpotted())
-            //{
-            //    Alpha += fadeAmount;
-            //    OrbLight.Enabled = true;
-            //}
-            //else
-            //{
-            //    if (Alpha > 0)
-            //        Alpha -= fadeAmount;
-            //    OrbLight.Enabled = false;
-            //}
+                // Hide
+                if (Alpha > 0)
+                    Alpha -= fadeAmount;
+                OrbLight.Enabled = false;
+            }
 
             Alpha = MathHelper.Clamp(Alpha, 0, 2);
 

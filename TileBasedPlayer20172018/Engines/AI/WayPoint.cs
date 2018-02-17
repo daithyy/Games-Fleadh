@@ -13,7 +13,7 @@ namespace Pathfinding_Demo.Engine.AI
     {
         public int WayPointIndex;
         public bool ReachedDestination;
-        public float freezeRadius = 200f; // Stay outside this radius from target
+        public static int freezeRadius = 200; // Stay outside this radius from target
 
         public void MoveTo(GameTime gameTime, Sentry tank, List<Vector2> DestinationWaypoint)
         {
@@ -29,32 +29,43 @@ namespace Pathfinding_Demo.Engine.AI
                     {
                         tank.angleOfRotation = RotatingSprite.TurnToFace(
                             tank.PixelPosition, 
-                            (tank.PixelPosition + Direction), 
+                            (tank.PixelPosition + Direction),
                             tank.angleOfRotation, tank.turnSpeed);
 
-                        if (Vector2.Distance(tank.PixelPosition, tank.Target) > freezeRadius)
-                            tank.Velocity += tank.Acceleration;
-                        else
+                        switch (tank.SentryState)
                         {
-                            if (tank.Velocity.X < Vector2.Zero.X)
-                            {
-                                tank.Velocity += tank.Deceleration;
-                            }
-                            else if (tank.Velocity.X > Vector2.Zero.X)
-                            {
-                                tank.Velocity -= tank.Deceleration;
-                            }
+                            case Sentry.State.Patrol:
+                                tank.Velocity += tank.Acceleration;
+                                break;
+                            case Sentry.State.Attack:
+                                if (Vector2.Distance(tank.PixelPosition, tank.Target) > freezeRadius)
+                                    tank.Velocity += tank.Acceleration;
+                                else
+                                {
+                                    if (tank.Velocity.X < Vector2.Zero.X)
+                                    {
+                                        tank.Velocity += tank.Deceleration;
+                                    }
+                                    else if (tank.Velocity.X > Vector2.Zero.X)
+                                    {
+                                        tank.Velocity -= tank.Deceleration;
+                                    }
 
-                            if (tank.Velocity.Y < Vector2.Zero.Y)
-                            {
-                                tank.Velocity += tank.Deceleration;
-                            }
-                            else if (tank.Velocity.Y > Vector2.Zero.Y)
-                            {
-                                tank.Velocity -= tank.Deceleration;
-                            }
-
-                            //tank.Velocity -= tank.Deceleration * 4; // Tank moves back when you advance!
+                                    if (tank.Velocity.Y < Vector2.Zero.Y)
+                                    {
+                                        tank.Velocity += tank.Deceleration;
+                                    }
+                                    else if (tank.Velocity.Y > Vector2.Zero.Y)
+                                    {
+                                        tank.Velocity -= tank.Deceleration;
+                                    }
+                                    //tank.Velocity -= tank.Deceleration * 4; // Tank moves back when you advance!
+                                }
+                                break;
+                            case Sentry.State.Flee:
+                                if (Vector2.Distance(tank.PixelPosition, tank.Target) > 0)
+                                    tank.Velocity += tank.Acceleration;
+                                break;
                         }
                     }
                     else

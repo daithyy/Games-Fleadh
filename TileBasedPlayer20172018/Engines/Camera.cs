@@ -22,7 +22,7 @@ namespace CameraNS
         private const float ZOOM_SPEED = 0.01f;
 
         // Only one Random object needed
-        private static readonly Random random = new Random();
+        public static readonly Random random = new Random();
         private bool shaking;
         // The maximum magnitude of our shake offset
         private float shakeMagnitude;

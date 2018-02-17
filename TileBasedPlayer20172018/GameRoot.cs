@@ -26,8 +26,8 @@ namespace TileBasedPlayer20172018
         SpriteBatch spriteBatch;
         PenumbraComponent penumbra;
 
-        private int _width = 800;
-        private int _height = 480;
+        private int _width = 1280;
+        private int _height = 720;
 
         private Color BackgroundColor = new Color(185, 132, 62);
         private const float WORLD_BRIGHTNESS = 0.1f;
@@ -41,9 +41,16 @@ namespace TileBasedPlayer20172018
         private List<SentryTurret> SentryTurrets = new List<SentryTurret>();
 
         #region Tile Settings
-        private string[] backTileNames = { "dirt", "ground", "metal", "ground2", "ground3", "ground4", "ground5", "ground7", "metal2", "metal3", "metal4", "dirt2" };
-        public enum TileType { DIRT, GROUND, METAL, GROUND2, GROUND3, GROUND4,
-                               GROUND5, GROUND7, METAL2, METAL3, METAL4, DIRT2 };
+        private string[] backTileNames = {
+            "dirt", "ground", "metal",
+            "ground2", "ground3", "ground4",
+            "ground5", "ground7", "metal2",
+            "metal3", "metal4", "dirt2" };
+        public enum TileType {
+            DIRT, GROUND, METAL,
+            GROUND2, GROUND3, GROUND4, 
+            GROUND5, GROUND7, METAL2,
+            METAL3, METAL4, DIRT2 };
         
         private int tileWidth = 64;
         private int tileHeight = 64;

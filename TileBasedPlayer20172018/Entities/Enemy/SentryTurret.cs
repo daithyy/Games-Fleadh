@@ -110,11 +110,13 @@ namespace Tiler
 
             if (IsInRadius(player))
             {
-                this.angleOfRotation = TurnToFace(this.CentrePos, player.CentrePos, this.angleOfRotation, turnSpeed);
+                angleOfRotation = TurnToFace(CentrePos, player.CentrePos, this.angleOfRotation, turnSpeed);
 
                 // Shoot at the player
                 FireAt(gameTime, player);
             }
+            else
+                angleOfRotation = TurnToFace(CentrePos, CentrePos + parentBody.Direction, angleOfRotation, turnSpeed);
         }
 
         public void FireAt(GameTime gameTime, TilePlayer player)
@@ -183,7 +185,8 @@ namespace Tiler
                     AddSelfToBody(parentBody.PixelPosition + new Vector2(WIDTH_IN, 0f));
 
                     // Share properties
-                    parentBody.DetectRadius = (this.DetectRadius * 2);
+                    parentBody.Health = this.Health;
+                    parentBody.DetectRadius = (this.DetectRadius + DetectRadius / 2);
                     Alpha = parentBody.Alpha;
                     healthBar.Alpha = this.Alpha;
                     //this.Visible = parentBody.Visible;
