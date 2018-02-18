@@ -151,8 +151,54 @@ namespace Tiler
                 if (projectileBounds.Intersects(CollisionField))
                 {
                     obj.PixelPosition = obj.PreviousPosition;
-                    obj.ProjectileState = Projectile.PROJECTILE_STATUS.Exploding;
-                    obj.flyTimer = 0f;
+                    obj.angleOfRotation = -obj.angleOfRotation;
+
+                    // Bounce
+                    #region Minkowski sum of B and A
+                    float w = 0.5f * (obj.BoundingRectangle.Width + CollisionField.Width);
+                    float h = 0.5f * (obj.BoundingRectangle.Height + CollisionField.Height);
+                    float dx = obj.BoundingRectangle.Center.X - CollisionField.Center.X;
+                    float dy = obj.BoundingRectangle.Center.Y - CollisionField.Center.Y;
+
+                    if (Math.Abs(dx) <= w && Math.Abs(dy) <= h)
+                    {
+                        /* collision! */
+                        float wy = w * dy;
+                        float hx = h * dx;
+
+                        if (wy > hx)
+                            if (wy > -hx)
+                            {
+                                /* collision at the top */
+                                obj.Direction.Y = -obj.Direction.Y;
+                                return;
+                            }
+                            else
+                            {
+                                /* on the left */
+                                obj.Direction.X = -obj.Direction.X;
+                                return;
+                            }
+                        else
+                        {
+                            if (wy > -hx)
+                            {
+                                /* on the right */
+                                obj.Direction.X = -obj.Direction.X;
+                                return;
+                            }
+                            else
+                            {
+                                /* at the bottom */
+                                obj.Direction.Y = -obj.Direction.Y;
+                                return;
+                            }
+                        }
+                    }
+                    #endregion
+
+                    //obj.ProjectileState = Projectile.PROJECTILE_STATUS.Exploding;
+                    //obj.flyTimer = 0f;
                 }
             }
         }

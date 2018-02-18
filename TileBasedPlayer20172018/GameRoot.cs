@@ -158,7 +158,7 @@ namespace TileBasedPlayer20172018
             Content.Load<SoundEffect>("audio/TankExplosion"));
 
             // Add Tank Projectile
-            const int PLAYER_BULLET_SPD = 25;
+            const int PLAYER_BULLET_SPD = 10;
 
             Projectile bullet = new Projectile(this, "PLAYER", tankPlayerTurret.CentrePos, new List<TileRef>()
             {
