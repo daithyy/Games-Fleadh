@@ -67,17 +67,17 @@ namespace TileBasedPlayer20172018
         {0,7,6,6,1,1,0,0,0,0,0,7,1,1,1,5,1,1,1,1,1,1,5,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,7,1,1,1,1,1,5,1,1,1,1,1,5,1,1,1,1,1,1,1,5,1,1,1,1,0,0,0,0,0,0,0,0,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,7,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,5,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,7,1,1,1,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,7,1,1,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,8,9,9,9,9,9,9,9,9,2,2,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,0,0},
         {0,0,1,1,1,1,1,1,1,5,1,1,1,1,1,1,2,8,9,9,9,9,9,9,9,9,2,2,1,1,1,1,2,2,2,2,1,1,1,1,1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,1,1,1,0,0},
-        {0,0,1,1,5,1,1,1,1,1,1,1,5,1,1,1,2,8,9,9,9,9,9,9,9,9,2,2,1,1,1,2,8,9,9,10,2,1,1,1,1,5,1,1,1,1,4,4,4,4,4,1,1,5,1,1,1,1,0,0},
+        {0,0,1,1,5,1,1,1,1,1,1,1,5,1,1,1,2,8,9,9,9,9,9,9,9,9,2,2,1,1,1,2,2,9,9,2,2,1,1,1,1,5,1,1,1,1,4,4,4,4,4,1,1,5,1,1,1,1,0,0},
         {0,0,1,1,1,1,1,1,5,1,1,1,1,1,1,1,2,8,9,9,9,9,9,9,9,9,2,1,1,1,1,2,8,9,9,10,2,1,1,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
         {0,0,1,1,5,1,1,1,1,5,1,1,1,1,1,1,2,8,9,9,9,9,9,9,9,9,2,1,1,1,1,2,8,9,9,10,2,1,1,1,1,1,1,1,1,5,1,1,1,1,1,1,2,2,2,1,1,1,0,0},
         {0,0,7,6,6,1,1,6,1,6,1,1,1,1,1,5,2,8,9,9,9,9,9,9,9,9,2,1,1,5,1,2,8,9,9,10,2,1,1,1,1,5,1,1,1,1,1,1,1,1,5,1,2,2,2,1,1,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,5,2,8,9,9,9,9,9,9,9,10,2,1,1,1,1,2,8,9,9,10,2,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,8,9,9,9,9,9,9,9,10,2,1,1,1,1,2,8,9,9,10,2,1,1,5,1,1,2,2,2,2,1,1,5,1,1,1,1,1,1,1,1,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,2,8,9,9,9,9,9,9,9,10,2,1,1,1,1,2,2,2,2,1,1,1,1,1,2,2,2,2,2,2,1,1,1,1,6,6,1,1,6,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,2,8,9,9,9,9,9,9,9,10,2,5,1,1,5,1,1,1,1,1,1,1,2,2,2,2,2,2,2,1,1,1,1,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,2,9,9,9,9,9,9,9,10,2,1,1,1,1,2,2,9,9,2,2,1,1,5,1,1,2,2,2,2,1,1,5,1,1,1,1,1,1,1,1,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,2,2,9,9,9,9,9,9,9,2,2,1,1,1,1,2,2,2,2,1,1,1,1,1,2,2,2,2,2,2,1,1,1,1,6,6,1,1,6,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,2,2,9,9,9,9,9,9,9,2,2,5,1,1,5,1,1,1,1,1,1,1,2,2,2,2,2,2,2,1,1,1,1,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,1,1,1,0,0,0,0,0,0,0,0,0,0},
         {0,0,1,1,1,1,1,5,1,1,1,0,0,1,1,5,1,1,1,1,1,1,1,5,1,1,1,1,1,1,1,1,5,1,1,1,1,2,2,2,2,2,2,2,2,2,2,1,1,1,0,0,0,0,0,0,0,0,0,0},
         {0,0,1,1,1,1,1,1,1,1,1,1,1,5,1,5,1,5,1,1,1,1,1,1,5,1,1,5,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,1,1,1,0,0,0,0,0,0,0,0,0,0},
@@ -235,13 +235,13 @@ namespace TileBasedPlayer20172018
             Content.Load<SoundEffect>("audio/SentryTankTracks"), 
             - ANGLE_DIAG_LEFT);
 
-            Sentry enemyTwo = new Sentry(this, new Vector2(1180, 400), new List<TileRef>()
-            {
-                new TileRef(10, 4, 0),
-            }, 64, 64, 0f, "Enemy Tank 2",
-            Content.Load<SoundEffect>("audio/SentryTankHum"),
-            Content.Load<SoundEffect>("audio/SentryTankTracks"), 
-            ANGLE_VERTICAL);
+            //Sentry enemyTwo = new Sentry(this, new Vector2(1180, 400), new List<TileRef>()
+            //{
+            //    new TileRef(10, 4, 0),
+            //}, 64, 64, 0f, "Enemy Tank 2",
+            //Content.Load<SoundEffect>("audio/SentryTankHum"),
+            //Content.Load<SoundEffect>("audio/SentryTankTracks"), 
+            //ANGLE_VERTICAL);
 
             //Sentry enemyThree = new Sentry(this, new Vector2(2020, 295), new List<TileRef>()
             //{
@@ -307,7 +307,7 @@ namespace TileBasedPlayer20172018
 
             #region Add Sentry's to List
             Sentries.Add(enemyOne);
-            Sentries.Add(enemyTwo);
+            //Sentries.Add(enemyTwo);
             //Sentries.Add(enemyThree);
             //Sentries.Add(enemyFour);
             //Sentries.Add(enemyFive);
@@ -332,11 +332,11 @@ namespace TileBasedPlayer20172018
             }, 64, 64, 0f, "Enemy Tank 1", -ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
             Content.Load<SoundEffect>("audio/TankExplosion"));
 
-            SentryTurret enemyTurretTwo = new SentryTurret(this, enemyTwo.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(10, 5, 0),
-            }, 64, 64, 0f, "Enemy Tank 2", ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
-            Content.Load<SoundEffect>("audio/TankExplosion"));
+            //SentryTurret enemyTurretTwo = new SentryTurret(this, enemyTwo.PixelPosition, new List<TileRef>()
+            //{
+            //    new TileRef(10, 5, 0),
+            //}, 64, 64, 0f, "Enemy Tank 2", ANGLE_VERTICAL, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
+            //Content.Load<SoundEffect>("audio/TankExplosion"));
 
             //SentryTurret enemyTurretThree = new SentryTurret(this, enemyThree.PixelPosition, new List<TileRef>()
             //{
@@ -414,7 +414,7 @@ namespace TileBasedPlayer20172018
 
             #region Add Sentry Turrets to List
             SentryTurrets.Add(enemyTurretOne);
-            SentryTurrets.Add(enemyTurretTwo);
+            //SentryTurrets.Add(enemyTurretTwo);
             //SentryTurrets.Add(enemyTurretThree);
             //SentryTurrets.Add(enemyTurretFour);
             //SentryTurrets.Add(enemyTurretFive);
@@ -441,12 +441,12 @@ namespace TileBasedPlayer20172018
             Content.Load<SoundEffect>("audio/SentryTankShoot"),
             Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            Projectile enemyBulletTwo = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
-            {
-                new TileRef(10, 2, 0),
-            }, 64, 64, 0f, enemyTurretTwo.Direction, ENEMY_BULLET_SPD,
-            Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
-            Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            //Projectile enemyBulletTwo = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
+            //{
+            //    new TileRef(10, 2, 0),
+            //}, 64, 64, 0f, enemyTurretTwo.Direction, ENEMY_BULLET_SPD,
+            //Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
+            //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
             //Projectile enemyBulletThree = new Projectile(this, "SENTRY", new Vector2(0,0), new List<TileRef>()
             //{
@@ -533,7 +533,7 @@ namespace TileBasedPlayer20172018
             //Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
             List<Projectile> sentryProjectiles = new List<Projectile>()
-            { enemyBulletOne, enemyBulletTwo//, enemyBulletThree,
+            { enemyBulletOne//, enemyBulletTwo, enemyBulletThree,
               //enemyBulletFour, enemyBulletFive, enemyBulletSix,
               //enemyBulletFive, enemyBulletSeven, enemyBulletEight,
               //enemyBulletNine, enemyBulletTen, enemyBulletEleven,

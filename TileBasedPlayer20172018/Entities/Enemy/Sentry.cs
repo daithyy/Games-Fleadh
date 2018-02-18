@@ -27,11 +27,11 @@ namespace Tiler
         private float knockBack = 0.1f;
         private float updateTime = 0f;
         private const float UPDATE_TIME_MAX = 0.1f;
-        private float patrolTime = 0f;
-        private const float PATROL_TIME_MAX = 10f; // 10 seconds
         private float waitTime = 0f;
         private const int WAIT_TIME_MAX = 5; // 5 seconds
         public bool IsDead = false;
+        public bool DestinationReached = false;
+        public bool CanMove = false;
 
         public enum State
         {
@@ -57,7 +57,7 @@ namespace Tiler
                       tankHumSound, tankTrackSound)
         {
             Name = nameIn;
-            SentryState = State.Wait;
+            SentryState = State.Idle;
             this.angleOfRotation = angle;
             MaxVelocity /= 2;
 
@@ -73,7 +73,7 @@ namespace Tiler
         #endregion
 
         #region Methods
-        private void SlowDown()
+        public void SlowDown()
         {
             if (Velocity.X < 0)
             {
@@ -94,13 +94,15 @@ namespace Tiler
             }
         }
 
-        private Vector2 ChooseRandomLocation()
+        private Vector2 ChooseRandomTile()
         {
             List<Tile> groundTiles = SimpleTileLayer.GetNamedTiles("ground");
 
-            return new Vector2(
+            Vector2 randomTilePosition = new Vector2(
                 groundTiles[Camera.random.Next(0, groundTiles.Count)].X * FrameWidth,
                 groundTiles[Camera.random.Next(0, groundTiles.Count)].Y * FrameHeight);
+
+            return randomTilePosition;
         }
 
         private void React()
@@ -112,6 +114,7 @@ namespace Tiler
             }
             else if (Health > HealthBar.CriticalLevel && Health <= HealthBar.WarningLevel)
             {
+                SentryState = State.Attack;
                 WayPoint.freezeRadius = 250; // Keep distance
             }
             else if (Health > 0 && Health <= HealthBar.CriticalLevel)
@@ -120,7 +123,7 @@ namespace Tiler
             }
         }
 
-        private void ChooseState(GameTime gameTime)
+        private void CheckState(GameTime gameTime)
         {
             switch (SentryState)
             {
@@ -128,6 +131,9 @@ namespace Tiler
                     SlowDown();
                     break;
                 case State.Idle:
+                    DestinationReached = false;
+                    SlowDown();
+
                     if (waitTime > Camera.random.Next(1, WAIT_TIME_MAX))
                     {
                         SentryState = State.Patrol;
@@ -137,13 +143,12 @@ namespace Tiler
                         waitTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case State.Patrol:
-                    if (patrolTime > PATROL_TIME_MAX)
+                    if (!CanMove)
                     {
-                        Target = ChooseRandomLocation();
-                        patrolTime = 0f;
+                        Target = ChooseRandomTile();
+                        CanMove = true;
                     }
-                    else
-                        patrolTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
                     HandleMovement(gameTime);
                     break;
                 case State.Attack:
@@ -160,7 +165,7 @@ namespace Tiler
             SimpleTileLayer tileMap = (SimpleTileLayer)Game.Services.GetService(typeof(SimpleTileLayer));
             List<Sentry> Sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
 
-            if (!IsDead)
+            if (!IsDead && !DestinationReached)
             {
                 PathFinding(gameTime, tileMap, Name, Sentries);
             }
@@ -220,10 +225,8 @@ namespace Tiler
             #region Avoid Obstacles and Move to Target
             if (WayPointsList.Count > 0)
             {
-                {
-                    Avoidance(gameTime, UnitID);
-                    wayPoint.MoveTo(gameTime, this, WayPointsList);
-                }
+                Avoidance(gameTime, UnitID);
+                wayPoint.MoveTo(gameTime, this, WayPointsList);
             }
             #endregion
         }
@@ -263,8 +266,6 @@ namespace Tiler
 
         public override void Update(GameTime gameTime)
         {
-            ChooseState(gameTime);
-
             if (IsSpotted())
             {
                 TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
@@ -278,7 +279,11 @@ namespace Tiler
             }
             else
             {
-                SentryState = State.Wait;
+                if (SentryState != State.Idle && SentryState != State.Patrol)
+                {
+                    SentryState = State.Idle;
+                    CanMove = false;
+                }
 
                 // Hide
                 if (Alpha > 0)
@@ -287,6 +292,8 @@ namespace Tiler
             }
 
             Alpha = MathHelper.Clamp(Alpha, 0, 2);
+
+            CheckState(gameTime);
 
             //PlaySounds();
 

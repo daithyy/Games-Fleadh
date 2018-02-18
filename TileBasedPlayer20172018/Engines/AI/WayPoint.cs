@@ -50,7 +50,11 @@ namespace Pathfinding_Demo.Engine.AI
                             {
                                 if (WayPointIndex >= DestinationWaypoint.Count - 1)
                                 {
+                                    tank.Velocity = Vector2.Zero;
                                     tank.PixelPosition += Direction;
+                                    tank.CanMove = false;
+                                    tank.DestinationReached = true;
+                                    tank.SentryState = Sentry.State.Idle;
                                     ReachedDestination = true;
                                 }
                                 else
