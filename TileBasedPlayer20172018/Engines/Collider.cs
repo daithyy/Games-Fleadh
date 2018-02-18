@@ -167,6 +167,7 @@ namespace Tiler
                         float hx = h * dx;
 
                         if (wy > hx)
+                        {
                             if (wy > -hx)
                             {
                                 /* collision at the top */
@@ -177,14 +178,17 @@ namespace Tiler
                             {
                                 /* on the left */
                                 obj.Direction.X = -obj.Direction.X;
+                                obj.Scale = -obj.Scale;
                                 return;
                             }
+                        }
                         else
                         {
                             if (wy > -hx)
                             {
                                 /* on the right */
                                 obj.Direction.X = -obj.Direction.X;
+                                obj.Scale = -obj.Scale;
                                 return;
                             }
                             else

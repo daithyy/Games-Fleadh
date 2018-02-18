@@ -106,7 +106,7 @@ namespace TileBasedPlayer20172018
             graphics.ApplyChanges();
 
             IsMouseVisible = false;
-            IsFixedTimeStep = true;
+            IsFixedTimeStep = false;
 
             Window.Title = "Steel Wrath";
             Window.AllowAltF4 = false;

@@ -129,7 +129,7 @@ namespace Tiler
                     case PROJECTILE_STATUS.Exploding:
                         this.Visible = false;
                         ShootSoundPlayed = false;
-                        
+
                         OrbLight.Scale = defaultScale * 2;
 
                         timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -140,6 +140,9 @@ namespace Tiler
                         if (timer > explosionLifeSpan)
                         {
                             timer = 0f;
+                            // If texture is flipped, flip back
+                            if (Scale != 1)
+                                Scale = 1;
                             // Reload Projectile
                             projectileState = PROJECTILE_STATUS.Idle;
                         }
