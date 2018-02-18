@@ -266,38 +266,45 @@ namespace Tiler
 
         public override void Update(GameTime gameTime)
         {
-            if (IsSpotted())
+            if (Helper.CurrentGameStatus == GameStatus.PLAYING)
             {
-                TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+                if (IsSpotted())
+                {
+                    TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
 
-                Target = player.CentrePos;
-                React();
+                    Target = player.CentrePos;
+                    React();
 
-                // Show self
-                Alpha += fadeAmount;
-                OrbLight.Enabled = true;
+                    // Show self
+                    Alpha += fadeAmount;
+                    OrbLight.Enabled = true;
+                }
+                else
+                {
+                    if (SentryState != State.Idle && SentryState != State.Patrol)
+                    {
+                        SentryState = State.Idle;
+                        CanMove = false;
+                    }
+
+                    // Hide
+                    if (Alpha > 0)
+                        Alpha -= fadeAmount;
+                    OrbLight.Enabled = false;
+                }
+
+                Alpha = MathHelper.Clamp(Alpha, 0, 2);
+
+                CheckState(gameTime);
+
+                //PlaySounds();
+
+                base.Update(gameTime);
             }
             else
             {
-                if (SentryState != State.Idle && SentryState != State.Patrol)
-                {
-                    SentryState = State.Idle;
-                    CanMove = false;
-                }
-
-                // Hide
-                if (Alpha > 0)
-                    Alpha -= fadeAmount;
-                OrbLight.Enabled = false;
+                StopSounds();
             }
-
-            Alpha = MathHelper.Clamp(Alpha, 0, 2);
-
-            CheckState(gameTime);
-
-            //PlaySounds();
-
-            base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)

@@ -72,7 +72,7 @@ namespace Tiler
 
         public override void Update(GameTime gameTime)
         {
-            if (Health > 0)
+            if (Health > 0 && Helper.CurrentGameStatus == GameStatus.PLAYING)
             {
                 if (Velocity != Vector2.Zero)
                     HeadLights.Enabled = true;
@@ -92,9 +92,12 @@ namespace Tiler
             }
             else
             {
-                this.healthBar.Enabled = false;
+                if (Helper.CurrentGameStatus == GameStatus.PLAYING)
+                {
+                    this.healthBar.Enabled = false;
+                    HeadLights.Enabled = false;
+                }
                 StopSounds();
-                HeadLights.Enabled = false;
             }
         }
 

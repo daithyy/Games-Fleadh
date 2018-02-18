@@ -186,7 +186,7 @@ namespace Tiler
 
                     // Share properties
                     parentBody.Health = this.Health;
-                    parentBody.DetectRadius = (this.DetectRadius + DetectRadius / 2);
+                    parentBody.DetectRadius = (this.DetectRadius + DetectRadius / 4);
                     Alpha = parentBody.Alpha;
                     healthBar.Alpha = this.Alpha;
                     //this.Visible = parentBody.Visible;

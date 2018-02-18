@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Penumbra;
 using System;
+
+using Helpers;
 using Tiler;
 
 namespace CameraNS
@@ -109,7 +111,7 @@ namespace CameraNS
             }
             #endregion
 
-            if (player != null)
+            if (player != null && Helper.CurrentGameStatus == GameStatus.PLAYING)
             {
                 if (Target != Vector2.Zero)
                 {

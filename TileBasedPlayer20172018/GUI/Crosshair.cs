@@ -5,10 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
+
 using InputManager;
 using Tiling;
 using AnimatedSprite;
 using CameraNS;
+using Helpers;
 
 namespace Tiler
 {
@@ -51,7 +53,7 @@ namespace Tiler
 
         public override void Update(GameTime gameTime)
         {
-            if (!Disabled)
+            if (!Disabled && Helper.CurrentGameStatus == GameStatus.PLAYING)
             {
                 TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
                 TilePlayerTurret playerTurret = (TilePlayerTurret)Game.Services.GetService(typeof(TilePlayerTurret));

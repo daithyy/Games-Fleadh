@@ -250,9 +250,10 @@ namespace Screens
             }
             else if (Active && CurrentScreen == ActiveScreen.PAUSE)
             {
-                spriteBatch.Draw(_txPause, new Rectangle(Position.ToPoint(), new Point(
-                    Helper.graphicsDevice.Viewport.Bounds.Width,
-                    Helper.graphicsDevice.Viewport.Bounds.Height)), Color.White);
+                spriteBatch.DrawString(Font,
+                    "Paused", new Vector2(Helper.graphicsDevice.Viewport.Width / 2 -
+                    Font.MeasureString("Paused").X / 2, Helper.graphicsDevice.Viewport.Height / 2),
+                    FontColor);
             }
             else if (Active && CurrentScreen == ActiveScreen.LOSE)
             {
@@ -279,7 +280,7 @@ namespace Screens
                 {
                     spriteBatch.DrawString(Font,
                     String.Format("{0}", Convert.ToInt32(TimeRemaining / 1000)) + " seconds",
-                    new Vector2(Game.Window.ClientBounds.Width / 2 -
+                    new Vector2(Helper.graphicsDevice.Viewport.Bounds.Width / 2 -
                     Font.MeasureString(String.Format("{0}",
                     Convert.ToInt32(TimeRemaining / 1000)) + " seconds").X / 2 + Font.MeasureString("Time Remaining: ").X / 2, 24),
                     FontWarningColor);
@@ -288,7 +289,7 @@ namespace Screens
                 {
                     spriteBatch.DrawString(Font,
                     String.Format("{0}", Convert.ToInt32(TimeRemaining / 1000)) + " seconds",
-                    new Vector2(Game.Window.ClientBounds.Width / 2 -
+                    new Vector2(Helper.graphicsDevice.Viewport.Bounds.Width / 2 -
                     Font.MeasureString(String.Format("{0}",
                     Convert.ToInt32(TimeRemaining / 1000)) + " seconds").X / 2 + Font.MeasureString("Time Remaining: ").X / 2, 24),
                     FontColor);
@@ -296,18 +297,18 @@ namespace Screens
 
                 spriteBatch.DrawString(Font,
                     "Tanks Remaining: " + String.Format("{0}", Convert.ToInt32(SentryTurret.Count)),
-                    new Vector2(Game.Window.ClientBounds.Width / 2 -
+                    new Vector2(Helper.graphicsDevice.Viewport.Bounds.Width / 2 -
                     Font.MeasureString("Tanks Remaining: " + String.Format("{0}", Convert.ToInt32(SentryTurret.Count))).X / 2 - 220, 
-                    (Game.Window.ClientBounds.Height - 48)),
+                    (Helper.graphicsDevice.Viewport.Bounds.Height - 48)),
                     FontColor);
 
                 if (SentryTurret.Count <= 0)
                 {
                     spriteBatch.DrawString(Font,
                     "ESCAPE !",
-                    new Vector2(Game.Window.ClientBounds.Width / 2 -
+                    new Vector2(Helper.graphicsDevice.Viewport.Bounds.Width / 2 -
                     Font.MeasureString("FINISH !").X / 2 + 24,
-                    (Game.Window.ClientBounds.Height - 48)),
+                    (Helper.graphicsDevice.Viewport.Bounds.Height - 48)),
                     FontSafeColor);
                 }
             }

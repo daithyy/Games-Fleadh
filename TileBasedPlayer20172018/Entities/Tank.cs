@@ -10,7 +10,6 @@ using Penumbra;
 
 using AnimatedSprite;
 using Tiling;
-using Helpers;
 using CameraNS;
 
 namespace Tiler
@@ -74,23 +73,16 @@ namespace Tiler
         #region Methods
         public override void Update(GameTime gameTime)
         {
-            if (Helper.CurrentGameStatus == GameStatus.PLAYING)
-            {
-                PreviousPosition = PixelPosition;
+            PreviousPosition = PixelPosition;
 
-                TankLightPos = new Vector2(CentrePos.X, CentrePos.Y) - Camera.CamPos;
-                OrbLight.Position = TankLightPos;
+            TankLightPos = new Vector2(CentrePos.X, CentrePos.Y) - Camera.CamPos;
+            OrbLight.Position = TankLightPos;
 
-                Direction = new Vector2((float)Math.Cos(this.angleOfRotation), (float)Math.Sin(this.angleOfRotation));
-                Velocity = Vector2.Clamp(Velocity, -MaxVelocity, MaxVelocity);
-                this.PixelPosition += (Direction * Velocity);
+            Direction = new Vector2((float)Math.Cos(this.angleOfRotation), (float)Math.Sin(this.angleOfRotation));
+            Velocity = Vector2.Clamp(Velocity, -MaxVelocity, MaxVelocity);
+            this.PixelPosition += (Direction * Velocity);
 
-                base.Update(gameTime);
-            }
-            else
-            {
-                StopSounds();
-            }
+            base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
