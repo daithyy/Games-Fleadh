@@ -26,6 +26,7 @@ namespace Tiler
                 : base(game, userPosition, sheetRefs, frameWidth, frameHeight, layerDepth)
         {
             DrawOrder = 100;
+            Scale = 2;
         }
 
         private void MoveWithRadius(TilePlayerTurret playerTurret)
