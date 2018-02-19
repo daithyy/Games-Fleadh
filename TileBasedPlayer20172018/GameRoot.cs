@@ -26,8 +26,8 @@ namespace TileBasedPlayer20172018
         SpriteBatch spriteBatch;
         PenumbraComponent penumbra;
 
-        private int _width = 800;
-        private int _height = 480;
+        private int _width = 1280;
+        private int _height = 720;
 
         private Color BackgroundColor = new Color(185, 132, 62);
         private const float WORLD_BRIGHTNESS = 0.1f;
@@ -160,7 +160,7 @@ namespace TileBasedPlayer20172018
             // Add Tank Projectile
             const int PLAYER_BULLET_SPD = 8;
 
-            Projectile bullet = new Projectile(this, "PLAYER", tankPlayerTurret.CentrePos, new List<TileRef>()
+            Ricochet bullet = new Ricochet(this, "PLAYER", tankPlayerTurret.CentrePos, new List<TileRef>()
             {
                 new TileRef(10, 2, 0),
             }, 64, 64, 0f, tankPlayerTurret.Direction, PLAYER_BULLET_SPD,
@@ -172,51 +172,6 @@ namespace TileBasedPlayer20172018
 
             Services.AddService(tankPlayer);
             Services.AddService(tankPlayerTurret);
-            #endregion
-
-            #region Load Animated Sprites
-            MuzzleFlash muzzleFlash = new MuzzleFlash(this, tankPlayerTurret.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(11,1,0),
-                new TileRef(11,0,0),
-            }, 64, 64, 0f);
-
-            MuzzleFlashSentry muzzleFlashSentry = new MuzzleFlashSentry(this, tankPlayerTurret.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(11,0,0),
-                new TileRef(11,1,0),
-            }, 64, 64, 0f);
-
-            BulletExplosion bulletExplosionSprite = new BulletExplosion(this, bullet.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(0,7,0),
-                new TileRef(1,7,0),
-                new TileRef(2,7,0),
-                new TileRef(3,7,0),
-                new TileRef(4,7,0),
-                new TileRef(5,7,0),
-                new TileRef(6,7,0),
-                new TileRef(7,7,0)
-            }, 64, 64, 0f);
-
-            TankExplosion tankExplosionSprite = new TankExplosion(this, tankPlayer.PixelPosition, new List<TileRef>()
-            {
-                new TileRef(0,6,0),
-                new TileRef(1,6,0),
-                new TileRef(2,6,0),
-                new TileRef(3,6,0),
-                new TileRef(4,6,0),
-                new TileRef(5,6,0),
-                new TileRef(6,6,0),
-                new TileRef(7,6,0)
-            }, 64, 64, 0f);
-            #endregion
-
-            #region Add Animated Sprites to Services
-            Services.AddService(muzzleFlash);
-            Services.AddService(muzzleFlashSentry);
-            Services.AddService(tankExplosionSprite);
-            Services.AddService(bulletExplosionSprite);
             #endregion
 
             #region Create Sentry Tanks
@@ -434,14 +389,14 @@ namespace TileBasedPlayer20172018
             #region Create Sentry Tank Projectiles
             int ENEMY_BULLET_SPD = PLAYER_BULLET_SPD - PLAYER_BULLET_SPD / 2;
 
-            Projectile enemyBulletOne = new Projectile(this, "SENTRY", new Vector2(0,0), new List<TileRef>()
+            Projectile enemyBulletOne = new Projectile(this, "SENTRY", enemyOne.PixelPosition, new List<TileRef>()
             {
                 new TileRef(10, 2, 0),
             }, 64, 64, 0f, enemyTurretOne.Direction, ENEMY_BULLET_SPD,
             Content.Load<SoundEffect>("audio/SentryTankShoot"),
             Content.Load<SoundEffect>("audio/TankArmorPierce"));
 
-            Projectile enemyBulletTwo = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
+            Projectile enemyBulletTwo = new Projectile(this, "SENTRY", enemyTwo.PixelPosition, new List<TileRef>()
             {
                 new TileRef(10, 2, 0),
             }, 64, 64, 0f, enemyTurretTwo.Direction, ENEMY_BULLET_SPD,

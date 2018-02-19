@@ -15,6 +15,14 @@ namespace Tiler
     public class Collider : DrawableGameComponent
     {
         #region Properties
+        public enum CollisionDirection
+        {
+            Top,
+            Bottom,
+            Left,
+            Right
+        }
+        public CollisionDirection Direction;
         public int tileX;
         public int tileY;
         public Texture2D texture;
@@ -59,23 +67,109 @@ namespace Tiler
         #endregion
 
         #region Methods
-        public override void Update(GameTime gameTime)
+        private void MinkowskiSum(Tank obj)
         {
-            UpdateShadow();
+            Rectangle overlap = Rectangle.Intersect(this.CollisionField, obj.BoundingRectangle);
 
-            UpdateCollisions();
+            #region Minkowski Sum of B and A
+            float w = 0.5f * (obj.BoundingRectangle.Width + CollisionField.Width);
+            float h = 0.5f * (obj.BoundingRectangle.Height + CollisionField.Height);
+            float dx = obj.BoundingRectangle.Center.X - CollisionField.Center.X;
+            float dy = obj.BoundingRectangle.Center.Y - CollisionField.Center.Y;
 
-            base.Update(gameTime);
+            if (Math.Abs(dx) <= w && Math.Abs(dy) <= h)
+            {
+                /* collision! */
+                float wy = w * dy;
+                float hx = h * dx;
+
+                if (wy > hx)
+                    if (wy > -hx)
+                    {
+                        /* collision at the top */
+                        obj.PixelPosition += new Vector2(0, overlap.Height);
+                        Direction = CollisionDirection.Top;
+                    }
+                    else
+                    {
+                        /* on the left */
+                        obj.PixelPosition -= new Vector2(overlap.Width, 0);
+                        Direction = CollisionDirection.Left;
+                    }
+                else
+                {
+                    if (wy > -hx)
+                    {
+                        /* on the right */
+                        obj.PixelPosition += new Vector2(overlap.Width, 0);
+                        Direction = CollisionDirection.Right;
+                    }
+                    else
+                    {
+                        /* at the bottom */
+                        obj.PixelPosition -= new Vector2(0, overlap.Height);
+                        Direction = CollisionDirection.Bottom;
+                    }
+                }
+            }
+            #endregion
+        }
+        private void MinkowskiSum(Ricochet obj)
+        {
+            float w = 0.5f * (obj.BoundingRectangle.Width + CollisionField.Width);
+            float h = 0.5f * (obj.BoundingRectangle.Height + CollisionField.Height);
+            float dx = obj.BoundingRectangle.Center.X - CollisionField.Center.X;
+            float dy = obj.BoundingRectangle.Center.Y - CollisionField.Center.Y;
+
+            if (Math.Abs(dx) <= w && Math.Abs(dy) <= h)
+            {
+                /* collision! */
+                float wy = w * dy;
+                float hx = h * dx;
+
+                if (wy > hx)
+                {
+                    if (wy > -hx)
+                    {
+                        /* collision at the top */
+                        obj.Direction.Y = -obj.Direction.Y;
+                        return;
+                    }
+                    else
+                    {
+                        /* on the left */
+                        obj.Direction.X = -obj.Direction.X;
+                        obj.Scale = -obj.Scale;
+                        return;
+                    }
+                }
+                else
+                {
+                    if (wy > -hx)
+                    {
+                        /* on the right */
+                        obj.Direction.X = -obj.Direction.X;
+                        obj.Scale = -obj.Scale;
+                        return;
+                    }
+                    else
+                    {
+                        /* at the bottom */
+                        obj.Direction.Y = -obj.Direction.Y;
+                        return;
+                    }
+                }
+            }
         }
 
         private void UpdateCollisions()
         {
             List<Sentry> sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
             TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
-            Projectile projectile = (Projectile)Game.Services.GetService(typeof(Projectile));
+            Ricochet projectile = (Ricochet)Game.Services.GetService(typeof(Ricochet));
             List<Projectile> sentryProjectiles = (List<Projectile>)Game.Services.GetService(typeof(List<Projectile>));
 
-            CollideWithProjectile(projectile, true);
+            CollideWithProjectile(projectile);
             CollideWithTank(player);
 
             for (int i = 0; i < sentries.Count; i++)
@@ -85,7 +179,7 @@ namespace Tiler
 
             for (int i = 0; i < sentryProjectiles.Count; i++)
             {
-                CollideWithProjectile(sentryProjectiles[i], false);
+                CollideWithProjectile(sentryProjectiles[i]);
             }
         }
 
@@ -106,46 +200,7 @@ namespace Tiler
             if (obj == null) return;
             else
             {
-                Rectangle overlap = Rectangle.Intersect(this.CollisionField, obj.BoundingRectangle);
-
-                #region Minkowski sum of B and A
-                float w = 0.5f * (obj.BoundingRectangle.Width + CollisionField.Width);
-                float h = 0.5f * (obj.BoundingRectangle.Height + CollisionField.Height);
-                float dx = obj.BoundingRectangle.Center.X - CollisionField.Center.X;
-                float dy = obj.BoundingRectangle.Center.Y - CollisionField.Center.Y;
-
-                if (Math.Abs(dx) <= w && Math.Abs(dy) <= h)
-                {
-                    /* collision! */
-                    float wy = w * dy;
-                    float hx = h * dx;
-
-                    if (wy > hx)
-                        if (wy > -hx)
-                        {
-                            /* collision at the top */
-                            obj.PixelPosition += new Vector2(0, overlap.Height);
-                        }
-                        else
-                        {
-                            /* on the left */
-                            obj.PixelPosition -= new Vector2(overlap.Width, 0);
-                        }
-                    else
-                    {
-                        if (wy > -hx)
-                        {
-                            /* on the right */
-                            obj.PixelPosition += new Vector2(overlap.Width, 0);
-                        }
-                        else
-                        {
-                            /* at the bottom */
-                            obj.PixelPosition -= new Vector2(0, overlap.Height);
-                        }
-                    }
-                }
-                #endregion
+                MinkowskiSum(obj);
 
                 /// OLD COLLISION METHOD
                 //if (obj.BoundingRectangle.Intersects(CollisionField))
@@ -156,7 +211,7 @@ namespace Tiler
             }
         }
 
-        private void CollideWithProjectile(Projectile obj, bool ricochet)
+        private void CollideWithProjectile(Projectile obj)
         {
             if (obj == null) return;
             else
@@ -169,67 +224,39 @@ namespace Tiler
 
                 if (projectileBounds.Intersects(CollisionField))
                 {
-                    // If specified, bounce!
-                    if (ricochet)
-                    {
-                        obj.PixelPosition = obj.PreviousPosition;
-                        obj.angleOfRotation = -obj.angleOfRotation;
-
-                        #region Minkowski sum of B and A
-                        float w = 0.5f * (obj.BoundingRectangle.Width + CollisionField.Width);
-                        float h = 0.5f * (obj.BoundingRectangle.Height + CollisionField.Height);
-                        float dx = obj.BoundingRectangle.Center.X - CollisionField.Center.X;
-                        float dy = obj.BoundingRectangle.Center.Y - CollisionField.Center.Y;
-
-                        if (Math.Abs(dx) <= w && Math.Abs(dy) <= h)
-                        {
-                            /* collision! */
-                            float wy = w * dy;
-                            float hx = h * dx;
-
-                            if (wy > hx)
-                            {
-                                if (wy > -hx)
-                                {
-                                    /* collision at the top */
-                                    obj.Direction.Y = -obj.Direction.Y;
-                                    return;
-                                }
-                                else
-                                {
-                                    /* on the left */
-                                    obj.Direction.X = -obj.Direction.X;
-                                    obj.Scale = -obj.Scale;
-                                    return;
-                                }
-                            }
-                            else
-                            {
-                                if (wy > -hx)
-                                {
-                                    /* on the right */
-                                    obj.Direction.X = -obj.Direction.X;
-                                    obj.Scale = -obj.Scale;
-                                    return;
-                                }
-                                else
-                                {
-                                    /* at the bottom */
-                                    obj.Direction.Y = -obj.Direction.Y;
-                                    return;
-                                }
-                            }
-                        }
-                        #endregion
-                    }
-                    else
-                    {
-                        obj.PixelPosition = obj.PreviousPosition;
-                        obj.ProjectileState = Projectile.PROJECTILE_STATUS.Exploding;
-                        obj.flyTimer = 0f;
-                    }
+                    obj.PixelPosition = obj.PreviousPosition;
+                    obj.ProjectileState = Projectile.PROJECTILE_STATUS.Exploding;
+                    obj.flyTimer = 0f;
                 }
             }
+        }
+        private void CollideWithProjectile(Ricochet obj)
+        {
+            if (obj == null) return;
+            else
+            {
+                Rectangle projectileBounds = new Rectangle(
+                    new Point(
+                    (int)obj.CentrePos.X - (obj.ProjectileWidth),
+                    (int)obj.CentrePos.Y),
+                    new Point(obj.ProjectileWidth, obj.ProjectileHeight));
+
+                if (projectileBounds.Intersects(CollisionField))
+                {
+                    obj.PixelPosition = obj.PreviousPosition;
+                    obj.angleOfRotation = -obj.angleOfRotation;
+                    MinkowskiSum(obj);
+                }
+            }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            UpdateShadow();
+
+            UpdateCollisions();
+
+            base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)

@@ -43,6 +43,8 @@ namespace Tiler
             }
         }
         private Sentry parentBody;
+        private MuzzleFlash muzzleFlash;
+        private TankExplosion explosionSprite;
         #endregion
 
         #region Constructor
@@ -70,6 +72,29 @@ namespace Tiler
             TurnSoundInstance.Pitch = -0.75f;
             TurnSoundInstance.IsLooped = true;
             TurnSoundInstance.Play();
+            #endregion
+
+            #region Muzzleflash Sprite
+            muzzleFlash = new MuzzleFlash(Game, PixelPosition, new List<TileRef>()
+            {
+                new TileRef(11,1,0),
+                new TileRef(11,0,0),
+            }, 64, 64, 0f);
+            #endregion
+
+            #region Explosion Sprite
+            explosionSprite = new TankExplosion(Game, PixelPosition, new List<TileRef>()
+            {
+                new TileRef(0,6,0),
+                new TileRef(1,6,0),
+                new TileRef(2,6,0),
+                new TileRef(3,6,0),
+                new TileRef(4,6,0),
+                new TileRef(5,6,0),
+                new TileRef(6,6,0),
+                new TileRef(7,6,0)
+            }, 64, 64, 0f)
+            { Visible = false };
             #endregion
         }
         #endregion
@@ -128,8 +153,6 @@ namespace Tiler
 
             if (Bullet != null)
             {
-                MuzzleFlashSentry muzzleFlash = (MuzzleFlashSentry)Game.Services.GetService(typeof(MuzzleFlashSentry));
-
                 if (Bullet.ProjectileState == Projectile.PROJECTILE_STATUS.Idle
                     && this.angleOfRotation != 0 && Math.Round(this.angleOfRotationPrev, 2) == Math.Round(this.angleOfRotation, 2))
                 {
@@ -231,16 +254,15 @@ namespace Tiler
 
                 if (explosionTimer < maxExplosionTime)
                 {
-                    TankExplosion Explosion = (TankExplosion)Game.Services.GetService(typeof(TankExplosion));
-
                     explosionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    Explosion.PixelPosition = this.PixelPosition - new Vector2(10, -2);
-                    Explosion.Visible = true;
-                    Vector2 LightPosition = new Vector2(CentrePos.X, CentrePos.Y) - Camera.CamPos;
-                    Explosion.OrbLight.Position = LightPosition;
+                    explosionSprite.PixelPosition = this.PixelPosition - new Vector2(10, -2);
+                    explosionSprite.Visible = true;
+                    explosionSprite.OrbLight.Position = CentrePos - Camera.CamPos;
                     if (explosionTimer < maxExplosionTime - maxExplosionTime + 0.3f)
-                        Explosion.OrbLight.Intensity = 0.25f;
+                        explosionSprite.OrbLight.Intensity = 0.25f;
                 }
+                else
+                    explosionSprite.Visible = false;
             }
         }
         #endregion

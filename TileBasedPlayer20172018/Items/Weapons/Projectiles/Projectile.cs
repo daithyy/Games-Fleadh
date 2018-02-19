@@ -67,6 +67,7 @@ namespace Tiler
             ShadowType = ShadowType.Illuminated
         };
         private Vector2 defaultScale = new Vector2(200f);
+        private BulletExplosion explosionSprite;
         #endregion
 
         #region Constructor
@@ -87,6 +88,18 @@ namespace Tiler
             PenumbraComponent penumbra = Game.Services.GetService<PenumbraComponent>();
             penumbra.Lights.Add(OrbLight);
             OrbLight.Enabled = false;
+
+            explosionSprite = new BulletExplosion(Game, this.PixelPosition, new List<TileRef>()
+            {
+                new TileRef(0,7,0),
+                new TileRef(1,7,0),
+                new TileRef(2,7,0),
+                new TileRef(3,7,0),
+                new TileRef(4,7,0),
+                new TileRef(5,7,0),
+                new TileRef(6,7,0),
+                new TileRef(7,7,0)
+            }, 64, 64, 0f);
         }
         #endregion
 
@@ -234,22 +247,20 @@ namespace Tiler
 
         public override void Draw(GameTime gameTime)
         {
-            BulletExplosion Explosion = (BulletExplosion)Game.Services.GetService(typeof(BulletExplosion));
-
-            if (ProjectileState == PROJECTILE_STATUS.Exploding && Explosion.State == BulletExplosion.Effect.Idle)
+            if (ProjectileState == PROJECTILE_STATUS.Exploding && explosionSprite.State == Explosion.Effect.Idle)
             {
-                Explosion.PixelPosition = this.PixelPosition;
-                Explosion.Visible = true;
+                explosionSprite.PixelPosition = this.PixelPosition;
+                explosionSprite.Visible = true;
 
-                if (Explosion.CurrentFrame >= Explosion.FrameCount - 1)
+                if (explosionSprite.CurrentFrame >= explosionSprite.FrameCount - 1)
                 {
-                    Explosion.Visible = false;
-                    Explosion.State = BulletExplosion.Effect.Exploding;
+                    explosionSprite.Visible = false;
+                    explosionSprite.State = Explosion.Effect.Exploding;
                 }
             }
             else if (ProjectileState == PROJECTILE_STATUS.Firing)
             {
-                Explosion.State = BulletExplosion.Effect.Idle;
+                explosionSprite.State = Explosion.Effect.Idle;
             }
 
             base.Draw(gameTime);

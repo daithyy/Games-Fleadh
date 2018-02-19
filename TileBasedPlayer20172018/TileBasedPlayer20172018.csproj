@@ -54,7 +54,6 @@
     <Compile Include="Sprites\Effects\BulletExplosion.cs" />
     <Compile Include="Sprites\Effects\Explosion.cs" />
     <Compile Include="Sprites\Effects\MuzzleFlash.cs" />
-    <Compile Include="Sprites\Effects\MuzzleFlashSentry.cs" />
     <Compile Include="Sprites\Effects\TankExplosion.cs" />
     <Compile Include="Items\Power-Ups\PowerUp.cs" />
     <Compile Include="GUI\Crosshair.cs" />
