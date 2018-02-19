@@ -41,7 +41,7 @@ namespace Tiler
         public int sentryDamageRate = 35;
         public int playerDamageRate = 10;
         public float explosionLifeSpan = 2f; // Default explosion life in seconds
-        private const float FLYING_LIFE_SPAN = 1f; // Default flight life in seconds
+        public float flyingLifeSpan = 1f; // Default flight life in seconds
         private float timer = 0;
         public float flyTimer = 0;
         private string Parent;
@@ -190,7 +190,7 @@ namespace Tiler
             if (this.PixelPosition.X < 0 || this.PixelPosition.Y < 0
                 || this.PixelPosition.X > Camera.WorldBound.X
                 || this.PixelPosition.Y > Camera.WorldBound.Y
-                || flyTimer > FLYING_LIFE_SPAN)
+                || flyTimer > flyingLifeSpan)
             {
                 flyTimer = 0f;
                 projectileState = PROJECTILE_STATUS.Exploding;

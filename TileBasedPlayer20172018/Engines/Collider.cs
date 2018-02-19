@@ -61,25 +61,44 @@ namespace Tiler
         #region Methods
         public override void Update(GameTime gameTime)
         {
+            UpdateShadow();
+
+            UpdateCollisions();
+
+            base.Update(gameTime);
+        }
+
+        private void UpdateCollisions()
+        {
             List<Sentry> sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
             TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
             Projectile projectile = (Projectile)Game.Services.GetService(typeof(Projectile));
+            List<Projectile> sentryProjectiles = (List<Projectile>)Game.Services.GetService(typeof(List<Projectile>));
 
+            CollideWithProjectile(projectile, true);
             CollideWithTank(player);
-            foreach (Sentry sentry in sentries)
-                CollideWithTank(sentry);
-            CollideWithProjectile(projectile);
 
-            Shadow.Position = (WorldPosition / 2) + 
-                new Vector2(
-                    WorldPosition.X / 2, 
-                    WorldPosition.Y / 2) + 
-                new Vector2(
-                    texture.Width / 2, 
-                    texture.Height / 2) - 
-                    Camera.CamPos;
+            for (int i = 0; i < sentries.Count; i++)
+            {
+                CollideWithTank(sentries[i]);
+            }
 
-            base.Update(gameTime);
+            for (int i = 0; i < sentryProjectiles.Count; i++)
+            {
+                CollideWithProjectile(sentryProjectiles[i], false);
+            }
+        }
+
+        private void UpdateShadow()
+        {
+            Shadow.Position = (WorldPosition / 2) +
+            new Vector2(
+                WorldPosition.X / 2,
+                WorldPosition.Y / 2) +
+            new Vector2(
+                texture.Width / 2,
+                texture.Height / 2) -
+                Camera.CamPos;
         }
 
         private void CollideWithTank(Tank obj)
@@ -137,7 +156,7 @@ namespace Tiler
             }
         }
 
-        private void CollideWithProjectile(Projectile obj)
+        private void CollideWithProjectile(Projectile obj, bool ricochet)
         {
             if (obj == null) return;
             else
@@ -150,59 +169,65 @@ namespace Tiler
 
                 if (projectileBounds.Intersects(CollisionField))
                 {
-                    obj.PixelPosition = obj.PreviousPosition;
-                    obj.angleOfRotation = -obj.angleOfRotation;
-
-                    // Bounce
-                    #region Minkowski sum of B and A
-                    float w = 0.5f * (obj.BoundingRectangle.Width + CollisionField.Width);
-                    float h = 0.5f * (obj.BoundingRectangle.Height + CollisionField.Height);
-                    float dx = obj.BoundingRectangle.Center.X - CollisionField.Center.X;
-                    float dy = obj.BoundingRectangle.Center.Y - CollisionField.Center.Y;
-
-                    if (Math.Abs(dx) <= w && Math.Abs(dy) <= h)
+                    // If specified, bounce!
+                    if (ricochet)
                     {
-                        /* collision! */
-                        float wy = w * dy;
-                        float hx = h * dx;
+                        obj.PixelPosition = obj.PreviousPosition;
+                        obj.angleOfRotation = -obj.angleOfRotation;
 
-                        if (wy > hx)
+                        #region Minkowski sum of B and A
+                        float w = 0.5f * (obj.BoundingRectangle.Width + CollisionField.Width);
+                        float h = 0.5f * (obj.BoundingRectangle.Height + CollisionField.Height);
+                        float dx = obj.BoundingRectangle.Center.X - CollisionField.Center.X;
+                        float dy = obj.BoundingRectangle.Center.Y - CollisionField.Center.Y;
+
+                        if (Math.Abs(dx) <= w && Math.Abs(dy) <= h)
                         {
-                            if (wy > -hx)
+                            /* collision! */
+                            float wy = w * dy;
+                            float hx = h * dx;
+
+                            if (wy > hx)
                             {
-                                /* collision at the top */
-                                obj.Direction.Y = -obj.Direction.Y;
-                                return;
+                                if (wy > -hx)
+                                {
+                                    /* collision at the top */
+                                    obj.Direction.Y = -obj.Direction.Y;
+                                    return;
+                                }
+                                else
+                                {
+                                    /* on the left */
+                                    obj.Direction.X = -obj.Direction.X;
+                                    obj.Scale = -obj.Scale;
+                                    return;
+                                }
                             }
                             else
                             {
-                                /* on the left */
-                                obj.Direction.X = -obj.Direction.X;
-                                obj.Scale = -obj.Scale;
-                                return;
+                                if (wy > -hx)
+                                {
+                                    /* on the right */
+                                    obj.Direction.X = -obj.Direction.X;
+                                    obj.Scale = -obj.Scale;
+                                    return;
+                                }
+                                else
+                                {
+                                    /* at the bottom */
+                                    obj.Direction.Y = -obj.Direction.Y;
+                                    return;
+                                }
                             }
                         }
-                        else
-                        {
-                            if (wy > -hx)
-                            {
-                                /* on the right */
-                                obj.Direction.X = -obj.Direction.X;
-                                obj.Scale = -obj.Scale;
-                                return;
-                            }
-                            else
-                            {
-                                /* at the bottom */
-                                obj.Direction.Y = -obj.Direction.Y;
-                                return;
-                            }
-                        }
+                        #endregion
                     }
-                    #endregion
-
-                    //obj.ProjectileState = Projectile.PROJECTILE_STATUS.Exploding;
-                    //obj.flyTimer = 0f;
+                    else
+                    {
+                        obj.PixelPosition = obj.PreviousPosition;
+                        obj.ProjectileState = Projectile.PROJECTILE_STATUS.Exploding;
+                        obj.flyTimer = 0f;
+                    }
                 }
             }
         }

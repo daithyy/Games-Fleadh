@@ -100,13 +100,13 @@ namespace TileBasedPlayer20172018
 
             graphics.PreferredBackBufferWidth = _width;
             graphics.PreferredBackBufferHeight = _height;
-            graphics.PreferMultiSampling = false;
+            //graphics.PreferMultiSampling = false;
             graphics.SynchronizeWithVerticalRetrace = true;
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
             IsMouseVisible = false;
-            IsFixedTimeStep = false;
+            IsFixedTimeStep = true;
 
             Window.Title = "Steel Wrath";
             Window.AllowAltF4 = false;
@@ -158,7 +158,7 @@ namespace TileBasedPlayer20172018
             Content.Load<SoundEffect>("audio/TankExplosion"));
 
             // Add Tank Projectile
-            const int PLAYER_BULLET_SPD = 10;
+            const int PLAYER_BULLET_SPD = 8;
 
             Projectile bullet = new Projectile(this, "PLAYER", tankPlayerTurret.CentrePos, new List<TileRef>()
             {
@@ -432,7 +432,7 @@ namespace TileBasedPlayer20172018
             #endregion
 
             #region Create Sentry Tank Projectiles
-            int ENEMY_BULLET_SPD = tankPlayerTurret.Bullet.Velocity / 6;
+            int ENEMY_BULLET_SPD = PLAYER_BULLET_SPD - PLAYER_BULLET_SPD / 2;
 
             Projectile enemyBulletOne = new Projectile(this, "SENTRY", new Vector2(0,0), new List<TileRef>()
             {
@@ -542,9 +542,13 @@ namespace TileBasedPlayer20172018
 
             for (int i = 0; i < SentryTurrets.Count; i++)
             {
-                sentryProjectiles[i].explosionLifeSpan = bullet.explosionLifeSpan * 2;
+                // Shooting Speed
+                sentryProjectiles[i].explosionLifeSpan = sentryProjectiles[i].explosionLifeSpan * 2;
+                // Bullet Life Span
+                sentryProjectiles[i].flyingLifeSpan = sentryProjectiles[i].flyingLifeSpan + 0.25f;
                 SentryTurrets[i].AddProjectile(sentryProjectiles[i]);
             }
+            Services.AddService(sentryProjectiles);
             #endregion
 
             #region Add PowerUps
