@@ -254,3 +254,27 @@
 /processorParam:Quality=Best
 /build:audio/Heartbeat.wav
 
+#begin audio/Rescue1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/Rescue1.wav
+
+#begin audio/Rescue2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/Rescue2.wav
+
+#begin audio/Rescue3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/Rescue3.wav
+
+#begin audio/Rescue4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/Rescue4.wav
+

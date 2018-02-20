@@ -543,7 +543,7 @@ namespace TileBasedPlayer20172018
             {
                 new TileRef(12,4,0),
             }, 64, 64, 0f, 5, PowerUp.PowerUpType.Camouflage, 0, 0,
-            Content.Load<SoundEffect>(@"audio/Resupply"));
+            Content.Load<SoundEffect>(@"audio/Rescue3"));
             #endregion
 
             #region Add Crosshair
