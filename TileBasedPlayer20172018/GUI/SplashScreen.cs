@@ -269,29 +269,24 @@ namespace Screens
             }
             else if (!Active && CurrentScreen == ActiveScreen.PLAY)
             {
-                spriteBatch.DrawString(Font,
-                    "Time Remaining: ",
-                    new Vector2(Game.Window.ClientBounds.Width / 2 -
-                    Font.MeasureString("Time Remaining: " + String.Format("{0}",
-                    Convert.ToInt32(TimeRemaining / 1000)) + " seconds").X / 2, 24),
-                    FontColor);
+                #region Get Minutes and Seconds Format
+                int minutes = (int)Math.Floor((TimeRemaining / 1000) / 60f);
+                int seconds = (int)Math.Floor((TimeRemaining / 1000) - minutes * 60);
+                string timeLeft = string.Format("{0:00}:{1:00}", minutes, seconds);
+                #endregion
 
-                if (TimeRemaining / 1000 <= 10)
+                if ((TimeRemaining / 1000) <= 10)
                 {
-                    spriteBatch.DrawString(Font,
-                    String.Format("{0}", Convert.ToInt32(TimeRemaining / 1000)) + " seconds",
-                    new Vector2(Helper.graphicsDevice.Viewport.Bounds.Width / 2 -
-                    Font.MeasureString(String.Format("{0}",
-                    Convert.ToInt32(TimeRemaining / 1000)) + " seconds").X / 2 + Font.MeasureString("Time Remaining: ").X / 2, 24),
+                    spriteBatch.DrawString(Font, timeLeft,
+                    new Vector2(Helper.graphicsDevice.Viewport.Width / 2 -
+                    Font.MeasureString(timeLeft).X / 2, 24),
                     FontWarningColor);
                 }
                 else
                 {
-                    spriteBatch.DrawString(Font,
-                    String.Format("{0}", Convert.ToInt32(TimeRemaining / 1000)) + " seconds",
-                    new Vector2(Helper.graphicsDevice.Viewport.Bounds.Width / 2 -
-                    Font.MeasureString(String.Format("{0}",
-                    Convert.ToInt32(TimeRemaining / 1000)) + " seconds").X / 2 + Font.MeasureString("Time Remaining: ").X / 2, 24),
+                    spriteBatch.DrawString(Font, timeLeft,
+                    new Vector2(Helper.graphicsDevice.Viewport.Width / 2 -
+                    Font.MeasureString(timeLeft).X / 2, 24),
                     FontColor);
                 }
 

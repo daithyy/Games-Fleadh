@@ -146,7 +146,9 @@ namespace TileBasedPlayer20172018
                 new TileRef(10, 0, 0),
             }, 64, 64, 0f,
             Content.Load<SoundEffect>("audio/PlayerTankHum"),
-            Content.Load<SoundEffect>("audio/PlayerTankTracks"));
+            Content.Load<SoundEffect>("audio/PlayerTankTracks"),
+            Content.Load<SoundEffect>("audio/PlayerWarning"),
+            Content.Load<SoundEffect>("audio/Heartbeat"));
 
             TilePlayerTurret tankPlayerTurret = new TilePlayerTurret(this, tankPlayer.PixelPosition, new List<TileRef>()
             {
@@ -509,31 +511,37 @@ namespace TileBasedPlayer20172018
             #region Add PowerUps
             //PowerUp Speed = new PowerUp(this, new Vector2(200, 192), new List<TileRef>()
             //{
-            //    new TileRef(4,3,0),
+            //    new TileRef(12,3,0),
             //}, 64, 64, 0f, 5, PowerUp.PowerUpType.SpeedBoost, 0, 2,
             //Content.Load<SoundEffect>(@"audio/Resupply"));
 
+            PowerUp Regen = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
+            {
+                new TileRef(12,2,0),
+            }, 64, 64, 0f, 1, PowerUp.PowerUpType.Regen, 1, 1,
+            Content.Load<SoundEffect>(@"audio/Resupply"));
+
             //PowerUp Heal = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
             //{
-            //    new TileRef(4,3,0),
+            //    new TileRef(12,2,0),
             //}, 64, 64, 0f, 1, PowerUp.PowerUpType.Heal, 50, 1,
             //Content.Load<SoundEffect>(@"audio/Resupply"));
 
             //PowerUp DefenseBoost = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
             //{
-            //    new TileRef(4,3,0),
+            //    new TileRef(12,1,0),
             //}, 64, 64, 0f, 60, PowerUp.PowerUpType.DefenseBoost, 0, 2,
             //Content.Load<SoundEffect>(@"audio/Resupply"));
 
             //PowerUp ExtraDamage = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
             //{
-            //    new TileRef(4,3,0),
+            //    new TileRef(12,0,0),
             //}, 64, 64, 0f, 60, PowerUp.PowerUpType.ExtraDamage, 0, 2,
             //Content.Load<SoundEffect>(@"audio/Resupply"));
 
             //PowerUp Camouflage = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
             //{
-            //    new TileRef(4,3,0),
+            //    new TileRef(12,4,0),
             //}, 64, 64, 0f, 5, PowerUp.PowerUpType.Camouflage, 0, 0,
             //Content.Load<SoundEffect>(@"audio/Resupply"));
             #endregion

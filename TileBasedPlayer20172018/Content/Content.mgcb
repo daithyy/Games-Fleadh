@@ -242,3 +242,15 @@
 /processorParam:TextureFormat=Color
 /build:tiles/tilesheet_tanksmall.png
 
+#begin audio/PlayerWarning.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/PlayerWarning.wav
+
+#begin audio/Heartbeat.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/Heartbeat.wav
+

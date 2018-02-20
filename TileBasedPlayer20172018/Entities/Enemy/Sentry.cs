@@ -65,7 +65,7 @@ namespace Tiler
 
             wayPoint = new WayPoint();
 
-            OrbLight.Scale = new Vector2(120);
+            OrbLight.Scale = new Vector2(150);
             OrbLight.Color = Color.HotPink;
 
             Alpha = 0f;

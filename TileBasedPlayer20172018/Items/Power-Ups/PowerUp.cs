@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Penumbra;
 
 using AnimatedSprite;
 using Tiling;
@@ -19,24 +20,23 @@ namespace PowerUps
         #region Properties
 
         /// <summary>
-        /// <para>AMOUNT defines a value you wish to give/take away.</para>
-        /// <para>FACTOR multiplies this AMOUNT.</para>
-        /// 
-        /// <para>See below.</para>
-        /// <para>1.  Heal</para>
-        ///     Gives your AMOUNT x your FACTOR.
-        /// <para>2.  Defense Boost</para>
-        ///     Takes CURRENT player damage rate / FACTOR.
-        /// <para>3.  Speed Boost</para>
-        ///     Takes CURRENT player speed x FACTOR.
-        /// <para>4.  Extra Damage</para>
-        ///     Inflicts your entered AMOUNT x FACTOR.
-        /// <para>5.  Camouflage</para>
-        ///     Takes AMOUNT x FACTOR as sentry detection radius.
+        /// <para>1.  Regen</para>
+        ///     Adds your AMOUNT x FACTOR over durations of one second.
+        /// <para>2.  Health</para>
+        ///     Adds your AMOUNT x FACTOR.
+        /// <para>3.  DefenseBoost</para>
+        ///     Subtracts CURRENT player damage rate / FACTOR.
+        /// <para>4.  SpeedBoost</para>
+        ///     Subtracts CURRENT player speed x FACTOR.
+        /// <para>5.  ExtraDamage</para>
+        ///     Adds your entered AMOUNT x FACTOR.
+        /// <para>6.  Camouflage</para>
+        ///     Reduces AMOUNT x FACTOR sentry detection radius.
         ///     Leave this at 0 for no detection!
         /// </summary>
         public enum PowerUpType
         {
+            Regen,
             Heal,
             DefenseBoost,
             SpeedBoost,
@@ -52,6 +52,15 @@ namespace PowerUps
             Depleted
         }
 
+        public Light OrbLight { get; } = new PointLight
+        {
+            Scale = new Vector2(100),
+            Intensity = 0.5f,
+            Color = Color.White,
+            ShadowType = ShadowType.Illuminated,
+            CastsShadows = false,
+        };
+
         private PowerUpType Type;
         public PowerUpStatus State;
 
@@ -59,6 +68,7 @@ namespace PowerUps
         public float Factor = 0; // This factor will act as the multiplier for player traits.
         public int Amount = 0;
         public float MaxLifeTime;
+        public float RegenTimer;
 
         private SoundEffect pickupSnd;
         private SoundEffectInstance pickupSndInst;
@@ -117,6 +127,34 @@ namespace PowerUps
             this.pickupSnd = pickupSnd;
             pickupSndInst = this.pickupSnd.CreateInstance();
             #endregion
+
+            #region Setup OrbLight
+            PenumbraComponent penumbra = Game.Services.GetService<PenumbraComponent>();
+            penumbra.Lights.Add(OrbLight);
+
+            switch (type)
+            {
+                case PowerUpType.Regen:
+                case PowerUpType.Heal:
+                    OrbLight.Color = Color.LimeGreen;
+                    break;
+                case PowerUpType.DefenseBoost:
+                    OrbLight.Color = Color.LightBlue;
+                    break;
+                case PowerUpType.SpeedBoost:
+                    OrbLight.Color = Color.Orange;
+                    break;
+                case PowerUpType.ExtraDamage:
+                    OrbLight.Color = Color.Red;
+                    break;
+                case PowerUpType.Camouflage:
+                    OrbLight.Color = Color.Purple;
+                    break;
+                default:
+                    OrbLight.Color = Color.White;
+                    break;
+            }
+            #endregion
         }
         #endregion
 
@@ -127,6 +165,7 @@ namespace PowerUps
             {
                 pickupSndInst.Play();
                 State = PowerUpStatus.Activated;
+                OrbLight.Enabled = false;
             }
         }
 
@@ -162,10 +201,20 @@ namespace PowerUps
             }
         }
 
-        private void Affect(TilePlayer other, TilePlayerTurret otherTurret, List<SentryTurret> sentryTurrets)
+        private void Affect(GameTime gameTime, TilePlayer other, TilePlayerTurret otherTurret, List<SentryTurret> sentryTurrets)
         {
             switch (Type)
             {
+                case PowerUpType.Regen:
+                    Duration = 0;
+                    RegenTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    if (other.Health < 100 && other.Health > 0 && RegenTimer > 1)
+                    {
+                        other.Health += Amount * (int)Factor;
+                        RegenTimer = 0;
+                    }
+                    break;
                 case PowerUpType.Heal:
                     other.Health += Amount * (int)Factor;
                     State = PowerUpStatus.Depleted;
@@ -179,9 +228,8 @@ namespace PowerUps
                     State = PowerUpStatus.ExecuteOnce;
                     break;
                 case PowerUpType.SpeedBoost:
-                    // Accelerate slowly, gain more speed and stop your tracks faster!
                     other.MaxVelocity *= Factor;
-                    //other.Acceleration = other.Acceleration * Factor;
+                    //other.Acceleration = other.Acceleration * Factor; // Immediately gain speed
                     other.Deceleration *= Factor;
                     State = PowerUpStatus.ExecuteOnce;
                     break;
@@ -204,6 +252,8 @@ namespace PowerUps
         {
             if (Helper.CurrentGameStatus == GameStatus.PLAYING)
             {
+                OrbLight.Position = CentrePos - CameraNS.Camera.CamPos;
+
                 TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
                 TilePlayerTurret playerTurret = (TilePlayerTurret)Game.Services.GetService(typeof(TilePlayerTurret));
                 List<SentryTurret> sentryTurrets = (List<SentryTurret>)Game.Services.GetService(typeof(List<SentryTurret>));
@@ -220,7 +270,7 @@ namespace PowerUps
                         Duration += (float)gametime.ElapsedGameTime.TotalSeconds;
 
                         if (State != PowerUpStatus.ExecuteOnce)
-                            Affect(player, playerTurret, sentryTurrets);
+                            Affect(gametime, player, playerTurret, sentryTurrets);
 
                         if (Duration >= MaxLifeTime)
                         {

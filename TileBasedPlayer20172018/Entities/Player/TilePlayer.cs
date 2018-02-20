@@ -26,6 +26,10 @@ namespace Tiler
             ShadowType = ShadowType.Illuminated
         };
         public HealthBar healthBar;
+        private SoundEffect tankWarningSound;
+        private SoundEffect heartBeatSound;
+        private SoundEffectInstance tankWarningSoundInstance;
+        private SoundEffectInstance heartBeatSoundInstance;
         private const int MAX_HEALTH = 100;
         private const float FADE_AMOUNT = 0.075f;
         #endregion
@@ -33,7 +37,8 @@ namespace Tiler
         #region Constructor
         public TilePlayer(Game game, Vector2 startPosition,
             List<TileRef> sheetRefs, int frameWidth, int frameHeight, float layerDepth,
-            SoundEffect tankHumSound, SoundEffect tankTrackSound)
+            SoundEffect tankHumSound, SoundEffect tankTrackSound, SoundEffect tankWarningSound,
+            SoundEffect heartBeatSound)
                 : base(game, startPosition, sheetRefs, frameWidth, frameHeight, layerDepth,
                       tankHumSound, tankTrackSound)
         {
@@ -47,10 +52,41 @@ namespace Tiler
 
             PenumbraComponent penumbra = Game.Services.GetService<PenumbraComponent>();
             penumbra.Lights.Add(HeadLights);
+
+            this.heartBeatSound = heartBeatSound;
+            this.tankWarningSound = tankWarningSound;
+            heartBeatSoundInstance = heartBeatSound.CreateInstance();
+            heartBeatSoundInstance.Volume = 1.0f;
+            heartBeatSoundInstance.IsLooped = true;
+            tankWarningSoundInstance = tankWarningSound.CreateInstance();
+            tankWarningSoundInstance.Volume = 0.1f;
+            tankWarningSoundInstance.IsLooped = true;
         }
         #endregion
 
         #region Methods
+        private void PlayWarningSound()
+        {
+            if (Health > HealthBar.WarningLevel)
+            {
+                HeadLights.Color = new Color(153, 255, 255);
+                tankWarningSoundInstance.Stop();
+                heartBeatSoundInstance.Stop();
+
+            }
+            else if (Health > HealthBar.CriticalLevel && Health <= HealthBar.WarningLevel)
+            {
+                HeadLights.Color = healthBar.WarningColor;
+                tankWarningSoundInstance.Stop();
+                heartBeatSoundInstance.Stop();
+            }
+            else if (Health > 0 && Health <= HealthBar.CriticalLevel)
+            {
+                HeadLights.Color = Color.HotPink;
+                tankWarningSoundInstance.Play();
+                heartBeatSoundInstance.Play();
+            }
+        }
 
         /// <summary>
         /// Fade in the health bar when health is lower than max health.
@@ -85,6 +121,7 @@ namespace Tiler
                 Movement();
 
                 PlaySounds();
+                PlayWarningSound();
 
                 ToggleHealthBar();
 
@@ -94,7 +131,7 @@ namespace Tiler
             {
                 if (Helper.CurrentGameStatus == GameStatus.PLAYING)
                 {
-                    this.healthBar.Enabled = false;
+                    healthBar.Visible = false;
                     HeadLights.Enabled = false;
                 }
                 StopSounds();
