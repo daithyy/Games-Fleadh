@@ -26,8 +26,8 @@ namespace TileBasedPlayer20172018
         SpriteBatch spriteBatch;
         PenumbraComponent penumbra;
 
-        private int _width = 1280;
-        private int _height = 720;
+        private int _width = 800;
+        private int _height = 480;
 
         private Color BackgroundColor = new Color(185, 132, 62);
         private const float WORLD_BRIGHTNESS = 0.1f;
@@ -564,7 +564,7 @@ namespace TileBasedPlayer20172018
 
             // Add SpriteBatch to services, it can be called anywhere.
             Services.AddService(spriteBatch);
-            Services.AddService(Content.Load<Texture2D>(@"tiles/tilesheet_tank"));
+            Services.AddService(Content.Load<Texture2D>(@"tiles/tilesheet_tanksmall"));
 
             // Tile References to be drawn on the Map corresponding to the entries in the defined 
             // Tile Map

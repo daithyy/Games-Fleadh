@@ -24,7 +24,7 @@ namespace Screens
         Texture2D _txPause;
         Texture2D _txGameOver;
         Texture2D _txWin;
-        public const float VOLUME = 0.6f;
+        public const float VOLUME = 0.25f;
         public bool Active { get; set; }
         private Texture2D txMain
         {

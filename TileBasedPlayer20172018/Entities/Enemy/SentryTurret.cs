@@ -164,11 +164,13 @@ namespace Tiler
                     muzzleFlash.angleOfRotation = this.angleOfRotation;
                     muzzleFlash.PixelPosition = this.PixelPosition - new Vector2(10, 0) + (this.Direction * (FrameWidth - 10));
                     muzzleFlash.Visible = true;
+                    muzzleFlash.OrbLight.Enabled = true;
                     muzzleFlash.Draw(gameTime);
                 }
                 else
                 {
                     muzzleFlash.Visible = false;
+                    muzzleFlash.OrbLight.Enabled = false;
                 }
             }
         }
@@ -223,7 +225,7 @@ namespace Tiler
                     // Face and shoot at the player when player is within radius
                     Detect(gameTime);
 
-                    PlaySounds();
+                    //PlaySounds();
 
                     base.Update(gameTime);
                 }

@@ -194,7 +194,7 @@
 /processorParam:Quality=Best
 /build:audio/SentryTankTracks.wav
 
-#begin Tiles/tilesheet_tank.png
+#begin tiles/collider.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -204,9 +204,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tiles/tilesheet_tank.png
+/build:tiles/collider.png
 
-#begin Tiles/collider.png
+#begin tiles/tilesheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -216,9 +216,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tiles/collider.png
+/build:tiles/tilesheet.png
 
-#begin Tiles/tilesheet.png
+#begin tiles/tilesheet_alternate.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -228,9 +228,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tiles/tilesheet.png
+/build:tiles/tilesheet_alternate.png
 
-#begin Tiles/tilesheet_alternate.png
+#begin tiles/tilesheet_tanksmall.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -240,5 +240,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tiles/tilesheet_alternate.png
+/build:tiles/tilesheet_tanksmall.png
 
