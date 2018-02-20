@@ -16,6 +16,7 @@ namespace Tiler
         public TileTrigger(string name, Game game, Texture2D tx, int tlx, int tly) : base(game, tx, tlx, tly)
         {
             Name = name;
+            Shadow.Enabled = false;
         }
         public override void Update(GameTime gameTime)
         {

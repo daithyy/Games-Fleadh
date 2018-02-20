@@ -41,7 +41,7 @@ namespace Tiler
                 return new Rectangle(WorldPosition.ToPoint(), new Point(texture.Width, texture.Height));
             }
         }
-        private Hull Shadow;
+        public Hull Shadow;
         #endregion
 
         #region Constructor
