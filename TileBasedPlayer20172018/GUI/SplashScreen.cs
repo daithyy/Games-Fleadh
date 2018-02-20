@@ -291,9 +291,9 @@ namespace Screens
                 }
 
                 spriteBatch.DrawString(Font,
-                    "Tanks Remaining: " + String.Format("{0}", Convert.ToInt32(SentryTurret.Count)),
+                    "Tanks Left: " + String.Format("{0}", Convert.ToInt32(SentryTurret.Count)),
                     new Vector2(Helper.graphicsDevice.Viewport.Bounds.Width / 2 -
-                    Font.MeasureString("Tanks Remaining: " + String.Format("{0}", Convert.ToInt32(SentryTurret.Count))).X / 2 - 220, 
+                    Font.MeasureString("Tanks Left: " + String.Format("{0}", Convert.ToInt32(SentryTurret.Count))).X / 2 - 220, 
                     (Helper.graphicsDevice.Viewport.Bounds.Height - 48)),
                     FontColor);
 

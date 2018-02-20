@@ -515,11 +515,11 @@ namespace TileBasedPlayer20172018
             //}, 64, 64, 0f, 5, PowerUp.PowerUpType.SpeedBoost, 0, 2,
             //Content.Load<SoundEffect>(@"audio/Resupply"));
 
-            PowerUp Regen = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
-            {
-                new TileRef(12,2,0),
-            }, 64, 64, 0f, 1, PowerUp.PowerUpType.Regen, 1, 1,
-            Content.Load<SoundEffect>(@"audio/Resupply"));
+            //PowerUp Regen = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
+            //{
+            //    new TileRef(12,2,0),
+            //}, 64, 64, 0f, 1, PowerUp.PowerUpType.Regen, 1, 1,
+            //Content.Load<SoundEffect>(@"audio/Resupply"));
 
             //PowerUp Heal = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
             //{
@@ -539,11 +539,11 @@ namespace TileBasedPlayer20172018
             //}, 64, 64, 0f, 60, PowerUp.PowerUpType.ExtraDamage, 0, 2,
             //Content.Load<SoundEffect>(@"audio/Resupply"));
 
-            //PowerUp Camouflage = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
-            //{
-            //    new TileRef(12,4,0),
-            //}, 64, 64, 0f, 5, PowerUp.PowerUpType.Camouflage, 0, 0,
-            //Content.Load<SoundEffect>(@"audio/Resupply"));
+            PowerUp Camouflage = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
+            {
+                new TileRef(12,4,0),
+            }, 64, 64, 0f, 5, PowerUp.PowerUpType.Camouflage, 0, 0,
+            Content.Load<SoundEffect>(@"audio/Resupply"));
             #endregion
 
             #region Add Crosshair
