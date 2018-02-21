@@ -35,6 +35,8 @@ namespace Tiler
         private SoundEffect ExplosionSound;
         private SoundEffect ShellSound;
         private SoundEffect ShellReload;
+        private SoundEffect HumReload;
+        private SoundEffectInstance HumReloadInstance;
         private SoundEffect TankTurnSound;
         private SoundEffectInstance TurnSoundInstance;
         public bool IsDead = false;
@@ -45,8 +47,8 @@ namespace Tiler
         #region Constructor
         public TilePlayerTurret(Game game, Vector2 playerPosition,
             List<TileRef> sheetRefs, int frameWidth, int frameHeight, float layerDepth, 
-            SoundEffect shellSound, SoundEffect shellReload, SoundEffect turnSound,
-            SoundEffect explosionSound)
+            SoundEffect shellSound, SoundEffect humReload, SoundEffect shellReload, 
+            SoundEffect turnSound, SoundEffect explosionSound)
                 : base(game, playerPosition, sheetRefs, frameWidth, frameHeight, layerDepth)
         {
             DrawOrder = 70;
@@ -56,7 +58,11 @@ namespace Tiler
             this.ExplosionSound = explosionSound;
             this.ShellSound = shellSound;
             this.ShellReload = shellReload;
+            this.HumReload = humReload;
             TankTurnSound = turnSound;
+            HumReloadInstance = HumReload.CreateInstance();
+            HumReloadInstance.Volume = 0.1f;
+            HumReloadInstance.Pitch = -0.5f;
             TurnSoundInstance = TankTurnSound.CreateInstance();
             TurnSoundInstance.Volume = 0f;
             TurnSoundInstance.Pitch = -0.75f;
@@ -162,6 +168,7 @@ namespace Tiler
                     // Play sounds
                     ShellSound.Play();
                     ShellReload.Play();
+                    HumReloadInstance.Play();
                     // Shake the camera
                     thisCamera.Shake(5f, 0.5f);
                 }

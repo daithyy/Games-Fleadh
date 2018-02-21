@@ -155,6 +155,7 @@ namespace TileBasedPlayer20172018
                 new TileRef(10, 1, 0),
             }, 64, 64, 0f,
             Content.Load<SoundEffect>("audio/PlayerTankShoot"),
+            Content.Load<SoundEffect>("audio/PlayerTankReload2"),
             Content.Load<SoundEffect>("audio/PlayerTankReload"),
             Content.Load<SoundEffect>("audio/PlayerTurretTurn"),
             Content.Load<SoundEffect>("audio/TankExplosion"));
@@ -539,11 +540,11 @@ namespace TileBasedPlayer20172018
             //}, 64, 64, 0f, 60, PowerUp.PowerUpType.ExtraDamage, 0, 2,
             //Content.Load<SoundEffect>(@"audio/Resupply"));
 
-            PowerUp Camouflage = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
-            {
-                new TileRef(12,4,0),
-            }, 64, 64, 0f, 5, PowerUp.PowerUpType.Camouflage, 0, 0,
-            Content.Load<SoundEffect>(@"audio/Rescue3"));
+            //PowerUp Camouflage = new PowerUp(this, new Vector2(500, 192), new List<TileRef>()
+            //{
+            //    new TileRef(12,4,0),
+            //}, 64, 64, 0f, 5, PowerUp.PowerUpType.Camouflage, 0, 0,
+            //Content.Load<SoundEffect>(@"audio/Rescue1"));
             #endregion
 
             #region Add Crosshair
