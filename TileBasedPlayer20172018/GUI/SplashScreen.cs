@@ -25,6 +25,7 @@ namespace Screens
         Texture2D _txGameOver;
         Texture2D _txWin;
         public const float VOLUME = 0.25f;
+
         public bool Active { get; set; }
         private Texture2D txMain
         {
@@ -40,15 +41,14 @@ namespace Screens
         }
         private Texture2D txPause
         {
-            get
-            {
-                return _txPause;
-            }
-
-            set
-            {
-                _txPause = value;
-            }
+            get { return _txPause; }
+            set { _txPause = value; }
+        }
+        private Rectangle txPauseRect
+        {
+            get { return new Rectangle(0, 0, 
+                GraphicsDevice.Viewport.Width, 
+                GraphicsDevice.Viewport.Height); }
         }
         private Texture2D txGameOver
         {
@@ -85,26 +85,19 @@ namespace Screens
 
         #region Constructor
         public SplashScreen(Game game, Vector2 pos, float timeLeft,
-            Texture2D txMain, Texture2D txPause, Texture2D txGameOver, Texture2D txWin,
+            Texture2D txMain, Texture2D txGameOver, Texture2D txWin,
             Song menuMusic, Song playMusic, Song pauseMusic, Song gameOverMusic, Song winMusic,
             Keys pauseKey, Keys activateKey, Buttons activateButton, Buttons pauseButton, 
             SpriteFont fontIn, SoundEffect blinkPlay, SoundEffect blinkPause) : base(game)
         {
             game.Components.Add(this);
             DrawOrder = 1000;
-            #region Load Audio
+
             _txMain = txMain;
-            _txPause = txPause;
+            txPause = new Texture2D(game.GraphicsDevice, 1, 1);
+            txPause.SetData(new[] { new Color(0,0,0,127) });
             _txGameOver = txGameOver;
             _txWin = txWin;
-            MenuTrack = menuMusic;
-            BackingTrack = playMusic;
-            PauseTrack = pauseMusic;
-            GameOverTrack = gameOverMusic;
-            WinTrack = winMusic;
-            BlinkPlay = blinkPlay;
-            BlinkPause = blinkPause;
-            #endregion
             Position = pos;
             ActivationKey = activateKey;
             ActivationButton = activateButton;
@@ -115,6 +108,17 @@ namespace Screens
             CurrentScreen = ActiveScreen.MAIN;
             CurrentGameCondition = GameCondition.LOSE;
             Active = true;
+
+            #region Load Audio
+            MenuTrack = menuMusic;
+            BackingTrack = playMusic;
+            PauseTrack = pauseMusic;
+            GameOverTrack = gameOverMusic;
+            WinTrack = winMusic;
+            BlinkPlay = blinkPlay;
+            BlinkPause = blinkPause;
+            #endregion
+
             MediaPlayer.Volume = VOLUME;
             MediaPlayer.IsRepeating = true;
         }
@@ -250,6 +254,7 @@ namespace Screens
             }
             else if (Active && CurrentScreen == ActiveScreen.PAUSE)
             {
+                spriteBatch.Draw(txPause, txPauseRect, Color.White);
                 spriteBatch.DrawString(Font,
                     "Paused", new Vector2(Helper.graphicsDevice.Viewport.Width / 2 -
                     Font.MeasureString("Paused").X / 2, Helper.graphicsDevice.Viewport.Height / 2),

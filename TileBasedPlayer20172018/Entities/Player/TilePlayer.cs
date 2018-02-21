@@ -65,7 +65,13 @@ namespace Tiler
         #endregion
 
         #region Methods
-        private void PlayWarningSound()
+        private void StopWarningSound()
+        {
+            tankWarningSoundInstance.Stop();
+            heartBeatSoundInstance.Stop();
+        }
+
+        private void ShowWarning()
         {
             if (Health > HealthBar.WarningLevel)
             {
@@ -121,7 +127,7 @@ namespace Tiler
                 Movement();
 
                 PlaySounds();
-                PlayWarningSound();
+                ShowWarning();
 
                 ToggleHealthBar();
 
@@ -135,6 +141,7 @@ namespace Tiler
                     HeadLights.Enabled = false;
                 }
                 StopSounds();
+                StopWarningSound();
             }
         }
 

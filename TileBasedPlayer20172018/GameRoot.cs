@@ -598,7 +598,6 @@ namespace TileBasedPlayer20172018
             #region Splash Screen
             MainScreen = new SplashScreen(this, Vector2.Zero, 300000.00f, // 5 mins
                             Content.Load<Texture2D>("background/MainMenu"),
-                            Content.Load<Texture2D>("background/Pause"),
                             Content.Load<Texture2D>("background/Lose"),
                             Content.Load<Texture2D>("background/Win"),
                             Content.Load<Song>("audio/MainMenu"),
