@@ -21,7 +21,8 @@ namespace Screens
     {
         #region Properties
         Texture2D _txMain;
-        Texture2D _txPause;
+        Texture2D _txBlack;
+        Texture2D _txWhite;
         Texture2D _txGameOver;
         Texture2D _txWin;
         public const float VOLUME = 0.25f;
@@ -39,12 +40,17 @@ namespace Screens
                 _txMain = value;
             }
         }
-        private Texture2D txPause
+        private Texture2D txBlack
         {
-            get { return _txPause; }
-            set { _txPause = value; }
+            get { return _txBlack; }
+            set { _txBlack = value; }
         }
-        private Rectangle txPauseRect
+        private Texture2D txWhite
+        {
+            get { return _txWhite; }
+            set { _txWhite = value; }
+        }
+        private Rectangle ScreenRect
         {
             get { return new Rectangle(0, 0, 
                 GraphicsDevice.Viewport.Width, 
@@ -75,6 +81,8 @@ namespace Screens
         public ActiveScreen CurrentScreen;
         public GameCondition CurrentGameCondition;
         private SpriteFont Font;
+        private float OverlayAlpha = 0f;
+        private const float FADE_AMOUNT = 0.01f;
         public float TimeRemaining;
         private float TrackPlayCount = 0; // To stop Game Over track loop
         public Color FontColor = new Color(243, 208, 168);
@@ -94,8 +102,10 @@ namespace Screens
             DrawOrder = 1000;
 
             _txMain = txMain;
-            txPause = new Texture2D(game.GraphicsDevice, 1, 1);
-            txPause.SetData(new[] { new Color(0,0,0,127) });
+            _txBlack = new Texture2D(game.GraphicsDevice, 1, 1);
+            _txBlack.SetData(new[] { new Color(0,0,0,255) });
+            _txWhite = new Texture2D(game.GraphicsDevice, 1, 1);
+            _txWhite.SetData(new[] { Color.White });
             _txGameOver = txGameOver;
             _txWin = txWin;
             Position = pos;
@@ -107,6 +117,7 @@ namespace Screens
             TimeRemaining = timeLeft;
             CurrentScreen = ActiveScreen.MAIN;
             CurrentGameCondition = GameCondition.LOSE;
+            OverlayAlpha = 1;
             Active = true;
 
             #region Load Audio
@@ -127,7 +138,7 @@ namespace Screens
         #region Methods
         public override void Update(GameTime gameTime)
         {
-            float deltaTime = (float)gameTime.ElapsedGameTime.Milliseconds;
+            float deltaTime = gameTime.ElapsedGameTime.Milliseconds;
 
             switch (CurrentScreen)
             {
@@ -144,17 +155,22 @@ namespace Screens
                         CurrentScreen = ActiveScreen.PLAY;
                     }
 
+                    OverlayAlpha -= FADE_AMOUNT;
+
                     // Check Input
                     if (InputEngine.IsKeyPressed(ActivationKey) ||
                         InputEngine.IsButtonPressed(ActivationButton))
                     {
-                        Active = !Active;
+                        OverlayAlpha = 1;
                         BlinkPlay.Play();
+                        Active = !Active;
                         Helper.CurrentGameStatus = GameStatus.PLAYING;
                     }
                     break;
                 case ActiveScreen.PLAY:
                     TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+
+                    OverlayAlpha -= FADE_AMOUNT;
 
                     if (Active)
                     {
@@ -170,7 +186,6 @@ namespace Screens
                         Active = !Active;
                         BlinkPause.Play();
                         Helper.CurrentGameStatus = GameStatus.PAUSED;
-                        
                     }
                     
                     if (player.Health > 0 && TimeRemaining > 0)
@@ -180,9 +195,15 @@ namespace Screens
                     else
                     {
                         MediaPlayer.Stop();
-                        //Active = !Active;
-                        //CurrentGameCondition = GameCondition.LOSE;
-                        //CurrentScreen = ActiveScreen.LOSE;
+
+                        // Wait for Input
+                        if (InputEngine.IsPadInputChanged(true) ||
+                            InputEngine.IsKeyInputChanged())
+                        {
+                            Active = !Active;
+                            CurrentGameCondition = GameCondition.LOSE;
+                            CurrentScreen = ActiveScreen.LOSE;
+                        }
                     }
 
                     if (CurrentGameCondition == GameCondition.WIN)
@@ -195,6 +216,7 @@ namespace Screens
                 case ActiveScreen.PAUSE:
                     if (MediaPlayer.State == MediaState.Stopped)
                     {
+                        OverlayAlpha = 0.5f;
                         MediaPlayer.Play(PauseTrack);
                     }
 
@@ -210,6 +232,7 @@ namespace Screens
                     if (InputEngine.IsKeyPressed(PauseKey) ||
                         InputEngine.IsButtonPressed(PauseButton))
                     {
+                        OverlayAlpha = 0;
                         Active = !Active;
                         BlinkPause.Play();
                         Helper.CurrentGameStatus = GameStatus.PLAYING;
@@ -237,6 +260,8 @@ namespace Screens
                     break;
             }
 
+            MathHelper.Clamp(OverlayAlpha, 0, 1);
+
             base.Update(gameTime);
         }
 
@@ -251,10 +276,11 @@ namespace Screens
                 spriteBatch.Draw(_txMain, new Rectangle(Position.ToPoint(), new Point(
                     Helper.graphicsDevice.Viewport.Bounds.Width,
                     Helper.graphicsDevice.Viewport.Bounds.Height)), Color.White);
+                spriteBatch.Draw(txWhite, ScreenRect, Color.White * OverlayAlpha);
             }
             else if (Active && CurrentScreen == ActiveScreen.PAUSE)
             {
-                spriteBatch.Draw(txPause, txPauseRect, Color.White);
+                spriteBatch.Draw(txBlack, ScreenRect, Color.White * OverlayAlpha);
                 spriteBatch.DrawString(Font,
                     "Paused", new Vector2(Helper.graphicsDevice.Viewport.Width / 2 -
                     Font.MeasureString("Paused").X / 2, Helper.graphicsDevice.Viewport.Height / 2),
@@ -311,6 +337,7 @@ namespace Screens
                     (Helper.graphicsDevice.Viewport.Bounds.Height - 48)),
                     FontSafeColor);
                 }
+                spriteBatch.Draw(txBlack, ScreenRect, Color.White * OverlayAlpha);
             }
             spriteBatch.End();
         }
