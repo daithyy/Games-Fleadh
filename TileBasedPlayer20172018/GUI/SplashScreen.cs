@@ -14,6 +14,7 @@ using Helpers;
 using Tiler;
 using InputManager;
 using CameraNS;
+using TileBasedPlayer20172018;
 
 namespace Screens
 {
@@ -28,6 +29,8 @@ namespace Screens
         public const float VOLUME = 0.25f;
 
         public bool Active { get; set; }
+        private VideoPlayer vidPlayer;
+        private Video vidWin { get; set; }
         private Texture2D txMain
         {
             get
@@ -83,6 +86,8 @@ namespace Screens
         private SpriteFont Font;
         private float OverlayAlpha = 0f;
         private const float FADE_AMOUNT = 0.01f;
+        private bool fadeIn = true;
+        private bool fadeOut = false;
         public float TimeRemaining;
         private float TrackPlayCount = 0; // To stop Game Over track loop
         public Color FontColor = new Color(243, 208, 168);
@@ -155,7 +160,8 @@ namespace Screens
                         CurrentScreen = ActiveScreen.PLAY;
                     }
 
-                    OverlayAlpha -= FADE_AMOUNT;
+                    if (fadeIn && OverlayAlpha <= 1)
+                        OverlayAlpha -= FADE_AMOUNT;
 
                     // Check Input
                     if (InputEngine.IsKeyPressed(ActivationKey) ||
@@ -166,11 +172,10 @@ namespace Screens
                         Active = !Active;
                         Helper.CurrentGameStatus = GameStatus.PLAYING;
                     }
+
                     break;
                 case ActiveScreen.PLAY:
                     TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
-
-                    OverlayAlpha -= FADE_AMOUNT;
 
                     if (Active)
                     {
@@ -178,19 +183,24 @@ namespace Screens
                         PauseTime = gameTime.TotalGameTime;
                         CurrentScreen = ActiveScreen.PAUSE;
                     }
-
-                    // Check Input
-                    if (InputEngine.IsKeyPressed(PauseKey) ||
-                        InputEngine.IsButtonPressed(PauseButton))
-                    {
-                        Active = !Active;
-                        BlinkPause.Play();
-                        Helper.CurrentGameStatus = GameStatus.PAUSED;
-                    }
                     
                     if (player.Health > 0 && TimeRemaining > 0)
                     {
                         TimeRemaining -= deltaTime;
+
+                        // Check Input
+                        if (InputEngine.IsKeyPressed(PauseKey) ||
+                            InputEngine.IsButtonPressed(PauseButton))
+                        {
+                            Active = !Active;
+                            BlinkPause.Play();
+                            Helper.CurrentGameStatus = GameStatus.PAUSED;
+                        }
+
+                        if (OverlayAlpha <= 0)
+                            fadeIn = false;
+                        if (fadeIn && OverlayAlpha > 0)
+                            OverlayAlpha -= FADE_AMOUNT;
                     }
                     else
                     {
@@ -200,17 +210,31 @@ namespace Screens
                         if (InputEngine.IsPadInputChanged(true) ||
                             InputEngine.IsKeyInputChanged())
                         {
-                            Active = !Active;
-                            CurrentGameCondition = GameCondition.LOSE;
-                            CurrentScreen = ActiveScreen.LOSE;
+                            fadeOut = true;
+                        }
+
+                        if (fadeOut)
+                        {
+                            OverlayAlpha += FADE_AMOUNT;
+                            if (OverlayAlpha >= 1)
+                            {
+                                Active = !Active;
+                                CurrentGameCondition = GameCondition.LOSE;
+                                CurrentScreen = ActiveScreen.LOSE;
+                                fadeIn = true;
+                            }
                         }
                     }
 
                     if (CurrentGameCondition == GameCondition.WIN)
                     {
-                        MediaPlayer.Stop();
-                        Active = !Active;
-                        CurrentScreen = ActiveScreen.WIN;
+                        OverlayAlpha += FADE_AMOUNT;
+                        if (OverlayAlpha >= 1)
+                        {
+                            MediaPlayer.Stop();
+                            Active = !Active;
+                            CurrentScreen = ActiveScreen.WIN;
+                        }
                     }
                     break;
                 case ActiveScreen.PAUSE:
@@ -239,7 +263,9 @@ namespace Screens
                     }
                     break;
                 case ActiveScreen.LOSE:
-                    
+                    if (OverlayAlpha <= 1)
+                        OverlayAlpha -= FADE_AMOUNT;
+
                     if (MediaPlayer.State == MediaState.Stopped && TrackPlayCount < 1)
                     {
                         MediaPlayer.Play(GameOverTrack);
@@ -249,6 +275,9 @@ namespace Screens
                     Helper.CurrentGameStatus = GameStatus.PAUSED;
                     break;
                 case ActiveScreen.WIN:
+                    if (OverlayAlpha <= 1)
+                        OverlayAlpha -= FADE_AMOUNT;
+
                     if (MediaPlayer.State == MediaState.Stopped && TrackPlayCount < 1)
                     {
                         MediaPlayer.Play(WinTrack);
@@ -259,8 +288,6 @@ namespace Screens
                 default:
                     break;
             }
-
-            MathHelper.Clamp(OverlayAlpha, 0, 1);
 
             base.Update(gameTime);
         }
@@ -291,12 +318,14 @@ namespace Screens
                 spriteBatch.Draw(_txGameOver, new Rectangle(Position.ToPoint(), new Point(
                     Helper.graphicsDevice.Viewport.Bounds.Width,
                     Helper.graphicsDevice.Viewport.Bounds.Height)), Color.White);
+                spriteBatch.Draw(txBlack, ScreenRect, Color.White * OverlayAlpha);
             }
             else if (Active && CurrentScreen == ActiveScreen.WIN)
             {
                 spriteBatch.Draw(_txWin, new Rectangle(Position.ToPoint(), new Point(
                     Helper.graphicsDevice.Viewport.Bounds.Width,
                     Helper.graphicsDevice.Viewport.Bounds.Height)), Color.White);
+                spriteBatch.Draw(txWhite, ScreenRect, Color.White * OverlayAlpha);
             }
             else if (!Active && CurrentScreen == ActiveScreen.PLAY)
             {
@@ -337,7 +366,10 @@ namespace Screens
                     (Helper.graphicsDevice.Viewport.Bounds.Height - 48)),
                     FontSafeColor);
                 }
-                spriteBatch.Draw(txBlack, ScreenRect, Color.White * OverlayAlpha);
+                if (CurrentGameCondition == GameCondition.LOSE)
+                    spriteBatch.Draw(txBlack, ScreenRect, Color.White * OverlayAlpha);
+                if (CurrentGameCondition == GameCondition.WIN)
+                    spriteBatch.Draw(txWhite, ScreenRect, Color.White * OverlayAlpha);
             }
             spriteBatch.End();
         }

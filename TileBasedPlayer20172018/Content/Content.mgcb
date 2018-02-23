@@ -44,18 +44,6 @@
 /processorParam:TextureFormat=Color
 /build:background/MainMenu.png
 
-#begin background/Pause.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:background/Pause.png
-
 #begin audio/GameOver.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
@@ -85,18 +73,6 @@
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:audio/Win.mp3
-
-#begin background/Win.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:background/Win.png
 
 #begin audio/BlinkPause.wav
 /importer:WavImporter
