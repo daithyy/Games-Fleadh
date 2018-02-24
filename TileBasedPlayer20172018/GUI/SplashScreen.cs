@@ -379,14 +379,14 @@ namespace Screens
                     (Helper.graphicsDevice.Viewport.Bounds.Height - 48)),
                     FontColor);
 
-                if (SentryTurret.Count <= 0)
+                if (SentryTurret.Count <= 0 && PowerUp.Count >= 5)
                 {
                     spriteBatch.DrawString(Font,
                     "ESCAPE !",
                     new Vector2(Helper.graphicsDevice.Viewport.Bounds.Width / 2 -
-                    Font.MeasureString("FINISH !").X / 2 + 24,
+                    Font.MeasureString("FINISH !").X / 2,
                     (Helper.graphicsDevice.Viewport.Bounds.Height - 48)),
-                    FontSafeColor);
+                    FontWinColor);
                 }
 
                 if (CurrentGameCondition == GameCondition.LOSE)

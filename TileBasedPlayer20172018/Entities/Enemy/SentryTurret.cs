@@ -220,7 +220,6 @@ namespace Tiler
                     angleOfRotationPrev = this.angleOfRotation;
 
                     Direction = new Vector2((float)Math.Cos(this.angleOfRotation), (float)Math.Sin(this.angleOfRotation));
-                    Bullet.GetDirection(this.Direction);
 
                     // Face and shoot at the player when player is within radius
                     Detect(gameTime);

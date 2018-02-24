@@ -124,6 +124,8 @@ namespace Tiler
                 HeadLights.Position = TankLightPos;
                 HeadLights.Rotation = this.angleOfRotation;
 
+                PixelPosition = this.PixelPosition;
+
                 Movement();
 
                 PlaySounds();

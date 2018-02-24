@@ -295,7 +295,7 @@ namespace Tiler
 
                 Alpha = MathHelper.Clamp(Alpha, 0, 2);
 
-                CheckState(gameTime);
+                //CheckState(gameTime);
 
                 //PlaySounds();
 

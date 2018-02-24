@@ -310,9 +310,11 @@ namespace PowerUps
 
         public override void Draw(GameTime gameTime)
         {
-            if (attachToHUD && Helper.CurrentGameStatus == GameStatus.PAUSED)
+            TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+
+            if (attachToHUD && Helper.CurrentGameStatus == GameStatus.PAUSED || player.Health <= 0)
             {
-                // Don't draw.
+                // Don't draw over pause screen.
             }
             else
                 base.Draw(gameTime);

@@ -254,7 +254,7 @@ namespace Tiler
         {
             UpdateShadow();
 
-            UpdateCollisions();
+            //UpdateCollisions();
 
             base.Update(gameTime);
         }
