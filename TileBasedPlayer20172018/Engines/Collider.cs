@@ -9,6 +9,7 @@ using Penumbra;
 
 using AnimatedSprite;
 using CameraNS;
+using Helpers;
 
 namespace Tiler
 {
@@ -42,6 +43,21 @@ namespace Tiler
             }
         }
         public Hull Shadow;
+        private List<Sentry> sentries;
+        private TilePlayer player;
+        private Ricochet projectile;
+        private List<Projectile> sentryProjectiles;
+
+        #region Minkowski Sum Variables
+        private Rectangle overlap;
+        private Rectangle projectileBounds;
+        float w;
+        float h;
+        float dx;
+        float dy;
+        float wy;
+        float hx;
+        #endregion
         #endregion
 
         #region Constructor
@@ -69,19 +85,19 @@ namespace Tiler
         #region Methods
         private void MinkowskiSum(Tank obj)
         {
-            Rectangle overlap = Rectangle.Intersect(this.CollisionField, obj.BoundingRectangle);
+            overlap = Rectangle.Intersect(this.CollisionField, obj.BoundingRectangle);
 
             #region Minkowski Sum of B and A
-            float w = 0.5f * (obj.BoundingRectangle.Width + CollisionField.Width);
-            float h = 0.5f * (obj.BoundingRectangle.Height + CollisionField.Height);
-            float dx = obj.BoundingRectangle.Center.X - CollisionField.Center.X;
-            float dy = obj.BoundingRectangle.Center.Y - CollisionField.Center.Y;
+            w = 0.5f * (obj.BoundingRectangle.Width + CollisionField.Width);
+            h = 0.5f * (obj.BoundingRectangle.Height + CollisionField.Height);
+            dx = obj.BoundingRectangle.Center.X - CollisionField.Center.X;
+            dy = obj.BoundingRectangle.Center.Y - CollisionField.Center.Y;
 
             if (Math.Abs(dx) <= w && Math.Abs(dy) <= h)
             {
                 /* collision! */
-                float wy = w * dy;
-                float hx = h * dx;
+                wy = w * dy;
+                hx = h * dx;
 
                 if (wy > hx)
                     if (wy > -hx)
@@ -116,16 +132,16 @@ namespace Tiler
         }
         private void MinkowskiSum(Ricochet obj)
         {
-            float w = 0.5f * (obj.BoundingRectangle.Width + CollisionField.Width);
-            float h = 0.5f * (obj.BoundingRectangle.Height + CollisionField.Height);
-            float dx = obj.BoundingRectangle.Center.X - CollisionField.Center.X;
-            float dy = obj.BoundingRectangle.Center.Y - CollisionField.Center.Y;
+            w = 0.5f * (obj.BoundingRectangle.Width + CollisionField.Width);
+            h = 0.5f * (obj.BoundingRectangle.Height + CollisionField.Height);
+            dx = obj.BoundingRectangle.Center.X - CollisionField.Center.X;
+            dy = obj.BoundingRectangle.Center.Y - CollisionField.Center.Y;
 
             if (Math.Abs(dx) <= w && Math.Abs(dy) <= h)
             {
                 /* collision! */
-                float wy = w * dy;
-                float hx = h * dx;
+                wy = w * dy;
+                hx = h * dx;
 
                 if (wy > hx)
                 {
@@ -164,17 +180,18 @@ namespace Tiler
 
         private void UpdateCollisions()
         {
-            List<Sentry> sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
-            TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
-            Ricochet projectile = (Ricochet)Game.Services.GetService(typeof(Ricochet));
-            List<Projectile> sentryProjectiles = (List<Projectile>)Game.Services.GetService(typeof(List<Projectile>));
+            sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
+            player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+            projectile = (Ricochet)Game.Services.GetService(typeof(Ricochet));
+            sentryProjectiles = (List<Projectile>)Game.Services.GetService(typeof(List<Projectile>));
 
             CollideWithProjectile(projectile);
             CollideWithTank(player);
 
             for (int i = 0; i < sentries.Count; i++)
             {
-                CollideWithTank(sentries[i]);
+                if (!sentries[i].IsDead)
+                    CollideWithTank(sentries[i]);
             }
 
             for (int i = 0; i < sentryProjectiles.Count; i++)
@@ -197,26 +214,24 @@ namespace Tiler
 
         private void CollideWithTank(Tank obj)
         {
-            if (obj == null) return;
-            else
+            if (obj != null && obj.PixelPosition != obj.PreviousPosition)
             {
-                MinkowskiSum(obj);
-
-                /// OLD COLLISION METHOD
-                //if (obj.BoundingRectangle.Intersects(CollisionField))
-                //{
-                //    //obj.PixelPosition = obj.PreviousPosition;
-                //}
-                ///
+                float distance = Math.Abs(Vector2.Distance(WorldPosition, obj.CentrePos));
+                if (distance <= 100)
+                {
+                    MinkowskiSum(obj);
+                    //Visible = true;
+                }
+                //else
+                //    Visible = false;
             }
         }
 
         private void CollideWithProjectile(Projectile obj)
         {
-            if (obj == null) return;
-            else
+            if (obj != null && obj.ProjectileState != Projectile.PROJECTILE_STATUS.Idle)
             {
-                Rectangle projectileBounds = new Rectangle(
+                projectileBounds = new Rectangle(
                     new Point(
                     (int)obj.CentrePos.X - (obj.ProjectileWidth),
                     (int)obj.CentrePos.Y),
@@ -232,10 +247,9 @@ namespace Tiler
         }
         private void CollideWithProjectile(Ricochet obj)
         {
-            if (obj == null) return;
-            else
+            if (obj != null && obj.ProjectileState != Projectile.PROJECTILE_STATUS.Idle)
             {
-                Rectangle projectileBounds = new Rectangle(
+                projectileBounds = new Rectangle(
                     new Point(
                     (int)obj.CentrePos.X - (obj.ProjectileWidth),
                     (int)obj.CentrePos.Y),
@@ -254,7 +268,10 @@ namespace Tiler
         {
             UpdateShadow();
 
-            //UpdateCollisions();
+            if (Helper.CurrentGameStatus != GameStatus.PAUSED)
+            {
+                UpdateCollisions();
+            }
 
             base.Update(gameTime);
         }

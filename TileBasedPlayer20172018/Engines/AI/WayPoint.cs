@@ -12,7 +12,7 @@ namespace Pathfinding_Demo.Engine.AI
     class WayPoint
     {
         public int WayPointIndex;
-        public bool ReachedDestination;
+        //public bool ReachedDestination;
         public static int freezeRadius = 200; // Stay outside this radius from target
 
         public void MoveTo(GameTime gameTime, Sentry tank, List<Vector2> DestinationWaypoint)
@@ -124,7 +124,7 @@ namespace Pathfinding_Demo.Engine.AI
                                 if (WayPointIndex >= DestinationWaypoint.Count - 1)
                                 {
                                     tank.PixelPosition += Direction;
-                                    ReachedDestination = true;
+                                    //ReachedDestination = true;
                                 }
                                 else
                                     WayPointIndex++;

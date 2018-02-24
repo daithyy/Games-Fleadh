@@ -26,7 +26,7 @@ namespace Tiler
         private const float fadeAmount = 0.05f;
         private float knockBack = 0.1f;
         private float updateTime = 0f;
-        private const float UPDATE_TIME_MAX = 0.1f;
+        private float UPDATE_TIME_MAX = 1.0f;
         private float waitTime = 0f;
         private const int WAIT_TIME_MAX = 5; // 5 seconds
         public bool IsDead = false;
@@ -270,6 +270,7 @@ namespace Tiler
             {
                 if (IsSpotted())
                 {
+                    UPDATE_TIME_MAX = 0.1f;
                     TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
 
                     Target = player.CentrePos;
@@ -281,6 +282,7 @@ namespace Tiler
                 }
                 else
                 {
+                    UPDATE_TIME_MAX = 1.0f;
                     if (SentryState != State.Idle && SentryState != State.Patrol)
                     {
                         SentryState = State.Idle;
@@ -295,7 +297,7 @@ namespace Tiler
 
                 Alpha = MathHelper.Clamp(Alpha, 0, 2);
 
-                //CheckState(gameTime);
+                CheckState(gameTime);
 
                 //PlaySounds();
 
