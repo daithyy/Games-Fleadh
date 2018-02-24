@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Helpers;
+using PowerUps;
 
 namespace Tiler
 {
     class TileTrigger : Collider
     {
+        private const int MAX_CREWMEN = 5;
         string Name;
         public TileTrigger(string name, Game game, Texture2D tx, int tlx, int tly) : base(game, tx, tlx, tly)
         {
@@ -28,7 +30,8 @@ namespace Tiler
                 switch (Name.ToUpper())
                 {
                     case "EXIT":
-                        if (p.BoundingRectangle.Intersects(CollisionField) && SentryTurret.Count <= 0)
+                        if (p.BoundingRectangle.Intersects(CollisionField) && SentryTurret.Count <= 0 &&
+                            PowerUp.Count >= MAX_CREWMEN)
                         {
                             TileBasedPlayer20172018.GameRoot.MainScreen.CurrentGameCondition = GameCondition.WIN;
                         }

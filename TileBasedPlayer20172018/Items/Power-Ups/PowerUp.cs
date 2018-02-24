@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Penumbra;
 
+using CameraNS;
 using AnimatedSprite;
 using Tiling;
 using Helpers;
@@ -36,8 +38,8 @@ namespace PowerUps
         /// </summary>
         public enum PowerUpType
         {
-            Regen,
             Heal,
+            Regen,
             DefenseBoost,
             SpeedBoost,
             ExtraDamage,
@@ -63,12 +65,14 @@ namespace PowerUps
 
         private PowerUpType Type;
         public PowerUpStatus State;
+        public static int Count = 0;
 
         private float Duration = 0;
         public float Factor = 0; // This factor will act as the multiplier for player traits.
         public int Amount = 0;
         public float MaxLifeTime;
         public float RegenTimer;
+        private bool attachToHUD = false;
 
         private SoundEffect pickupSnd;
         private SoundEffectInstance pickupSndInst;
@@ -163,9 +167,11 @@ namespace PowerUps
         {
             if (State == PowerUpStatus.Deactivated)
             {
+                Interlocked.Increment(ref Count);
                 pickupSndInst.Play();
-                State = PowerUpStatus.Activated;
                 OrbLight.Enabled = false;
+                Frames.Clear();
+                State = PowerUpStatus.Activated;
             }
         }
 
@@ -205,8 +211,14 @@ namespace PowerUps
         {
             switch (Type)
             {
+                case PowerUpType.Heal:
+                    Frames.Add(new TileRef(13, 2, 0));
+                    other.Health += Amount * (int)Factor;
+                    State = PowerUpStatus.Depleted;
+                    break;
                 case PowerUpType.Regen:
-                    Duration = 0;
+                    Frames.Add(new TileRef(13, 2, 0));
+                    //Duration = 0;
                     RegenTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     if (other.Health < 100 && other.Health > 0 && RegenTimer > 1)
@@ -215,11 +227,8 @@ namespace PowerUps
                         RegenTimer = 0;
                     }
                     break;
-                case PowerUpType.Heal:
-                    other.Health += Amount * (int)Factor;
-                    State = PowerUpStatus.Depleted;
-                    break;
                 case PowerUpType.DefenseBoost:
+                    Frames.Add(new TileRef(13, 1, 0));
                     foreach (SentryTurret turret in sentryTurrets)
                     {
                         if (turret != null)
@@ -228,16 +237,19 @@ namespace PowerUps
                     State = PowerUpStatus.ExecuteOnce;
                     break;
                 case PowerUpType.SpeedBoost:
+                    Frames.Add(new TileRef(13, 3, 0));
                     other.MaxVelocity *= Factor;
                     //other.Acceleration = other.Acceleration * Factor; // Immediately gain speed
                     other.Deceleration *= Factor;
                     State = PowerUpStatus.ExecuteOnce;
                     break;
                 case PowerUpType.ExtraDamage:
+                    Frames.Add(new TileRef(13, 0, 0));
                     otherTurret.Bullet.sentryDamageRate *= (int)Factor;
                     State = PowerUpStatus.ExecuteOnce;
                     break;
                 case PowerUpType.Camouflage:
+                    Frames.Add(new TileRef(13, 4, 0));
                     foreach (SentryTurret turret in sentryTurrets)
                     {
                         if (turret != null)
@@ -252,7 +264,7 @@ namespace PowerUps
         {
             if (Helper.CurrentGameStatus == GameStatus.PLAYING)
             {
-                OrbLight.Position = CentrePos - CameraNS.Camera.CamPos;
+                OrbLight.Position = (CentrePos - Camera.CamPos);
 
                 TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
                 TilePlayerTurret playerTurret = (TilePlayerTurret)Game.Services.GetService(typeof(TilePlayerTurret));
@@ -267,10 +279,15 @@ namespace PowerUps
 
                     if (State == PowerUpStatus.Activated || State == PowerUpStatus.ExecuteOnce)
                     {
-                        Duration += (float)gametime.ElapsedGameTime.TotalSeconds;
+                        attachToHUD = true;
+
+                        // Comment out to make effects last forever.
+                        //Duration += (float)gametime.ElapsedGameTime.TotalSeconds;
 
                         if (State != PowerUpStatus.ExecuteOnce)
+                        {
                             Affect(gametime, player, playerTurret, sentryTurrets);
+                        }
 
                         if (Duration >= MaxLifeTime)
                         {
@@ -280,16 +297,25 @@ namespace PowerUps
                     }
                 }
 
+                if (attachToHUD)
+                    PixelPosition = new Vector2(
+                        (Helper.graphicsDevice.Viewport.Bounds.Width / 2 - 450) + 
+                        (FrameWidth * (int)Type),
+                        (Helper.graphicsDevice.Viewport.Bounds.Height - 64)) + 
+                        Camera.CamPos;
+
                 base.Update(gametime);
             }
         }
 
         public override void Draw(GameTime gameTime)
         {
-            if (State == PowerUpStatus.Deactivated)
+            if (attachToHUD && Helper.CurrentGameStatus == GameStatus.PAUSED)
             {
+                // Don't draw.
+            }
+            else
                 base.Draw(gameTime);
-            }  
         }
         #endregion
     }

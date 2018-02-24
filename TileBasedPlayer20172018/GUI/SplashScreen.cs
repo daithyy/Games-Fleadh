@@ -13,8 +13,7 @@ using System.Text;
 using Helpers;
 using Tiler;
 using InputManager;
-using CameraNS;
-using TileBasedPlayer20172018;
+using PowerUps;
 
 namespace Screens
 {
@@ -376,7 +375,7 @@ namespace Screens
                 spriteBatch.DrawString(Font,
                     "Tanks Left: " + String.Format("{0}", Convert.ToInt32(SentryTurret.Count)),
                     new Vector2(Helper.graphicsDevice.Viewport.Bounds.Width / 2 -
-                    Font.MeasureString("Tanks Left: " + String.Format("{0}", Convert.ToInt32(SentryTurret.Count))).X / 2 - 220, 
+                    Font.MeasureString("Tanks Left: " + String.Format("{0}", Convert.ToInt32(SentryTurret.Count))).X / 2 + 220, 
                     (Helper.graphicsDevice.Viewport.Bounds.Height - 48)),
                     FontColor);
 
@@ -389,6 +388,7 @@ namespace Screens
                     (Helper.graphicsDevice.Viewport.Bounds.Height - 48)),
                     FontSafeColor);
                 }
+
                 if (CurrentGameCondition == GameCondition.LOSE)
                     spriteBatch.Draw(txBlack, ScreenRect, Color.White * OverlayAlpha);
                 if (CurrentGameCondition == GameCondition.WIN)

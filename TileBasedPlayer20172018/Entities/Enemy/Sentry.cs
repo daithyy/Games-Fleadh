@@ -68,7 +68,7 @@ namespace Tiler
             OrbLight.Scale = new Vector2(150);
             OrbLight.Color = Color.HotPink;
 
-            Alpha = 0f;
+            Alpha = 1f;
         }
         #endregion
 

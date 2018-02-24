@@ -38,7 +38,7 @@ namespace Tiler
         public int Velocity = 25; // Default bullet speed
         public Vector2 Direction;
         private Random damageRate = new Random();
-        public int sentryDamageRate = 100;
+        public int sentryDamageRate = 35;
         public int playerDamageRate = 30;
         public float explosionLifeSpan = 2f; // Default explosion life in seconds
         public float flyingLifeSpan = 1f; // Default flight life in seconds
