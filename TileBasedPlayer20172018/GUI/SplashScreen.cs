@@ -64,11 +64,6 @@ namespace Screens
             get { return _txGameOver; }
             set { _txGameOver = value; }
         }
-        private Texture2D txWin
-        {
-            get { return _txGameOver; }
-            set { _txGameOver = value; }
-        }
         private Song MenuTrack { get; set; }
         private Song BackingTrack { get; set; }
         private Song PauseTrack { get; set; }
@@ -91,6 +86,7 @@ namespace Screens
         public float TimeRemaining;
         private float TrackPlayCount = 0; // To stop Game Over track loop
         public Color FontColor = new Color(243, 208, 168);
+        public Color FontWinColor = new Color(169, 242, 181);
         public Color FontSafeColor = new Color(0, 137, 81);
         public Color FontWarningColor = new Color(255, 86, 86);
         TimeSpan PauseTime;
@@ -98,7 +94,7 @@ namespace Screens
 
         #region Constructor
         public SplashScreen(Game game, Vector2 pos, float timeLeft,
-            Texture2D txMain, Texture2D txGameOver, Texture2D txWin,
+            Texture2D txMain, Texture2D txGameOver, Video vidWin,
             Song menuMusic, Song playMusic, Song pauseMusic, Song gameOverMusic, Song winMusic,
             Keys pauseKey, Keys activateKey, Buttons activateButton, Buttons pauseButton, 
             SpriteFont fontIn, SoundEffect blinkPlay, SoundEffect blinkPause) : base(game)
@@ -112,7 +108,9 @@ namespace Screens
             _txWhite = new Texture2D(game.GraphicsDevice, 1, 1);
             _txWhite.SetData(new[] { Color.White });
             _txGameOver = txGameOver;
-            _txWin = txWin;
+            vidPlayer = new VideoPlayer();
+            vidPlayer.IsMuted = true;
+            this.vidWin = vidWin;
             Position = pos;
             ActivationKey = activateKey;
             ActivationButton = activateButton;
@@ -263,7 +261,7 @@ namespace Screens
                     }
                     break;
                 case ActiveScreen.LOSE:
-                    if (OverlayAlpha <= 1)
+                    if (OverlayAlpha <= 1 || OverlayAlpha > 0)
                         OverlayAlpha -= FADE_AMOUNT;
 
                     if (MediaPlayer.State == MediaState.Stopped && TrackPlayCount < 1)
@@ -275,14 +273,22 @@ namespace Screens
                     Helper.CurrentGameStatus = GameStatus.PAUSED;
                     break;
                 case ActiveScreen.WIN:
-                    if (OverlayAlpha <= 1)
+                    if (OverlayAlpha <= 1 || OverlayAlpha > 0)
                         OverlayAlpha -= FADE_AMOUNT;
 
                     if (MediaPlayer.State == MediaState.Stopped && TrackPlayCount < 1)
                     {
                         MediaPlayer.Play(WinTrack);
                         TrackPlayCount++;
+                        if (vidPlayer.State == MediaState.Stopped)
+                        {
+                            vidPlayer.Play(vidWin);
+                        }
                     }
+
+                    if (vidPlayer.State != MediaState.Stopped)
+                        _txWin = vidPlayer.GetTexture();
+
                     Helper.CurrentGameStatus = GameStatus.PAUSED;
                     break;
                 default:
@@ -303,6 +309,14 @@ namespace Screens
                 spriteBatch.Draw(_txMain, new Rectangle(Position.ToPoint(), new Point(
                     Helper.graphicsDevice.Viewport.Bounds.Width,
                     Helper.graphicsDevice.Viewport.Bounds.Height)), Color.White);
+                spriteBatch.DrawString(Font,
+                    "STEEL WRATH", new Vector2(Helper.graphicsDevice.Viewport.Width / 2 -
+                    Font.MeasureString("STEEL WRATH").X / 2, Helper.graphicsDevice.Viewport.Height / 2 - 50),
+                    FontColor);
+                spriteBatch.DrawString(Font,
+                    "Press enter / A to start", new Vector2(Helper.graphicsDevice.Viewport.Width / 2 -
+                    Font.MeasureString("Press enter / A to start").X / 2, Helper.graphicsDevice.Viewport.Height / 2 + 180),
+                    FontWinColor);
                 spriteBatch.Draw(txWhite, ScreenRect, Color.White * OverlayAlpha);
             }
             else if (Active && CurrentScreen == ActiveScreen.PAUSE)
@@ -318,13 +332,22 @@ namespace Screens
                 spriteBatch.Draw(_txGameOver, new Rectangle(Position.ToPoint(), new Point(
                     Helper.graphicsDevice.Viewport.Bounds.Width,
                     Helper.graphicsDevice.Viewport.Bounds.Height)), Color.White);
+                spriteBatch.DrawString(Font,
+                    "GAME OVER", new Vector2(Helper.graphicsDevice.Viewport.Width / 2 -
+                    Font.MeasureString("GAME OVER").X / 2, Helper.graphicsDevice.Viewport.Height / 2 + 170),
+                    FontColor);
                 spriteBatch.Draw(txBlack, ScreenRect, Color.White * OverlayAlpha);
             }
             else if (Active && CurrentScreen == ActiveScreen.WIN)
             {
-                spriteBatch.Draw(_txWin, new Rectangle(Position.ToPoint(), new Point(
-                    Helper.graphicsDevice.Viewport.Bounds.Width,
-                    Helper.graphicsDevice.Viewport.Bounds.Height)), Color.White);
+                if (_txWin != null)
+                    spriteBatch.Draw(_txWin, new Rectangle(Position.ToPoint(), new Point(
+                        Helper.graphicsDevice.Viewport.Bounds.Width,
+                        Helper.graphicsDevice.Viewport.Bounds.Height)), Color.White);
+                spriteBatch.DrawString(Font,
+                    "You WIN", new Vector2(Helper.graphicsDevice.Viewport.Width / 2 -
+                    Font.MeasureString("You WIN").X / 2, Helper.graphicsDevice.Viewport.Height / 2 - 180),
+                    FontWinColor);
                 spriteBatch.Draw(txWhite, ScreenRect, Color.White * OverlayAlpha);
             }
             else if (!Active && CurrentScreen == ActiveScreen.PLAY)

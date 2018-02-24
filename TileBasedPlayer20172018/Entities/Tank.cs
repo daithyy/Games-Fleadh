@@ -21,7 +21,7 @@ namespace Tiler
         float volumeVelocity = 0;
         float pitchVelocity = -1;
         public Vector2 Velocity = new Vector2(0, 0);
-        public Vector2 MaxVelocity = new Vector2(2.5f, 2.5f);
+        public Vector2 MaxVelocity = new Vector2(6f, 6f);
         public Vector2 Acceleration = new Vector2(0.1f);
         public Vector2 Deceleration = new Vector2(0.08f);
         public Vector2 Direction;
