@@ -73,6 +73,9 @@ namespace PowerUps
         public float MaxLifeTime;
         public float RegenTimer;
         private bool attachToHUD = false;
+        private float distance;
+        private const int RUN_RADIUS = 100;
+        private const float RUN_SPEED = 0.01f;
 
         private SoundEffect pickupSnd;
         private SoundEffectInstance pickupSndInst;
@@ -100,6 +103,9 @@ namespace PowerUps
             this.Factor = multiplier;
             this.Amount = amount;
             this.State = PowerUpStatus.Deactivated;
+            BoundingRectangle = new Rectangle(
+                PixelPosition.ToPoint(), 
+                new Point(FrameWidth / 8, FrameHeight / 8));
 
             #region Get Default Values
             TilePlayer player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
@@ -295,6 +301,14 @@ namespace PowerUps
                             Deactivate(player, playerTurret, sentryTurrets);
                         }
                     }
+
+                    distance = Math.Abs(Vector2.Distance(this.CentrePos, player.CentrePos));
+
+                    if (distance <= RUN_RADIUS)
+                        PixelPosition = Vector2.Lerp(
+                            this.PixelPosition, 
+                            player.PixelPosition, 
+                            RUN_SPEED);
                 }
 
                 if (attachToHUD)

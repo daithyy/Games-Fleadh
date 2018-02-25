@@ -21,7 +21,7 @@ namespace Tiler
         #region Properties
         float volumeVelocity = 0;
         private float turnSpeed = 0.04f;
-        private const float WIDTH_IN = 11f; // Width in from the left for the sprites origin
+        private const float WIDTH_IN = 15f; // Width in from the left for the sprites origin
         private float angleOfRotationPrev;
         public Projectile Bullet;
         public Vector2 Direction;

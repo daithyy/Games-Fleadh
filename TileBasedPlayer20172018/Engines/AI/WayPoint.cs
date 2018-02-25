@@ -12,7 +12,7 @@ namespace Pathfinding_Demo.Engine.AI
     class WayPoint
     {
         public int WayPointIndex;
-        //public bool ReachedDestination;
+        public bool ReachedDestination; // This is NOT updated !
         public static int freezeRadius = 200; // Stay outside this radius from target
 
         public void MoveTo(GameTime gameTime, Sentry tank, List<Vector2> DestinationWaypoint)

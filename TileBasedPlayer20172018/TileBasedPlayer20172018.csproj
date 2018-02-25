@@ -72,6 +72,7 @@
     <Compile Include="Sprites\AnimatedSprite.cs" />
     <Compile Include="GUI\SplashScreen.cs" />
     <Compile Include="Entities\Player\TilePlayerTurret.cs" />
+    <Compile Include="Sprites\TankWreckSprite.cs" />
     <Compile Include="Sprites\Tile.cs" />
     <Compile Include="Entities\Player\TilePlayer.cs" />
     <Compile Include="Sprites\TileRef.cs" />
