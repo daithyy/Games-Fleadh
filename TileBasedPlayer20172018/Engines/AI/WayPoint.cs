@@ -124,7 +124,7 @@ namespace Pathfinding_Demo.Engine.AI
                                 if (WayPointIndex >= DestinationWaypoint.Count - 1)
                                 {
                                     tank.PixelPosition += Direction;
-                                    //ReachedDestination = true;
+                                    ReachedDestination = true;
                                 }
                                 else
                                     WayPointIndex++;

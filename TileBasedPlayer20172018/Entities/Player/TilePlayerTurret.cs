@@ -33,7 +33,7 @@ namespace Tiler
             }
         }
         private SoundEffect ExplosionSound;
-        private SoundEffect ShellSound;
+        public SoundEffect ShellSound;
         private SoundEffect ShellReload;
         private SoundEffect HumReload;
         private SoundEffectInstance HumReloadInstance;

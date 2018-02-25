@@ -164,16 +164,23 @@ namespace TileBasedPlayer20172018
             // Add Tank Projectile
             const int PLAYER_BULLET_SPD = 8;
 
-            Ricochet bullet = new Ricochet(this, "PLAYER", tankPlayerTurret.CentrePos, new List<TileRef>()
+            Projectile bullet = new Projectile(this, "PLAYER", tankPlayerTurret.CentrePos, new List<TileRef>()
             {
                 new TileRef(10, 2, 0),
             }, 64, 64, 0f, tankPlayerTurret.Direction, PLAYER_BULLET_SPD,
             Content.Load<SoundEffect>("audio/TankShoot"),
             Content.Load<SoundEffect>("audio/TankArmorPierce"));
-
             tankPlayerTurret.AddProjectile(bullet);
-            Services.AddService(bullet);
 
+            Ricochet ricochetRound = new Ricochet(this, "PLAYER", tankPlayerTurret.CentrePos, new List<TileRef>()
+            {
+                new TileRef(11, 2, 0),
+            }, 64, 64, 0f, tankPlayerTurret.Direction, PLAYER_BULLET_SPD,
+            Content.Load<SoundEffect>("audio/TankShoot"),
+            Content.Load<SoundEffect>("audio/TankArmorPierce"),
+            Content.Load<SoundEffect>("audio/PlayerTankShootAlt"));
+
+            Services.AddService(ricochetRound);
             Services.AddService(tankPlayer);
             Services.AddService(tankPlayerTurret);
             #endregion
@@ -209,7 +216,7 @@ namespace TileBasedPlayer20172018
 
             Sentry enemyTwo = new Sentry(this, SentryPositions[1], new List<TileRef>()
             {
-                new TileRef(10, 4, 0),
+                new TileRef(10, 6, 0),
             }, 64, 64, 0f, "Enemy Tank 2",
             Content.Load<SoundEffect>("audio/SentryTankHum"),
             Content.Load<SoundEffect>("audio/SentryTankTracks"),
@@ -330,7 +337,7 @@ namespace TileBasedPlayer20172018
 
             SentryTurret enemyTurretTwo = new SentryTurret(this, enemyTwo.PixelPosition, new List<TileRef>()
             {
-                new TileRef(10, 5, 0),
+                new TileRef(11, 6, 0),
             }, 64, 64, 0f, "Enemy Tank 2", ANGLE_RIGHT, Content.Load<SoundEffect>("audio/SentryTurretTurn"),
             Content.Load<SoundEffect>("audio/TankExplosion"));
 
@@ -532,7 +539,7 @@ namespace TileBasedPlayer20172018
             { enemyBulletOne, enemyBulletTwo, enemyBulletThree,
               enemyBulletFour, enemyBulletFive, enemyBulletSix,
               enemyBulletFive, enemyBulletSeven, enemyBulletEight,
-              enemyBulletNine, enemyBulletTen//, enemyBulletEleven,
+              enemyBulletNine, enemyBulletTen, bullet//, enemyBulletEleven,
               //enemyBulletTwelve, enemyBulletThirteen, enemyBulletFourteen
             };
 
@@ -585,31 +592,31 @@ namespace TileBasedPlayer20172018
             {
                 new TileRef(12,3,0)               
             }, 64, 64, 0f, 5, PowerUp.PowerUpType.SpeedBoost, 0, 1.1f,
-            Content.Load<SoundEffect>(@"audio/Rescue1"));
+            Content.Load<SoundEffect>(@"audio/Rescue1"), null);
 
             PowerUp Regen = new PowerUp(this, CrewmanPositions[1], new List<TileRef>()
             {
                 new TileRef(12,2,0),
             }, 64, 64, 0f, 1, PowerUp.PowerUpType.Regen, 1, 1,
-            Content.Load<SoundEffect>(@"audio/Rescue2"));
+            Content.Load<SoundEffect>(@"audio/Rescue2"), null);
 
             PowerUp DefenseBoost = new PowerUp(this, CrewmanPositions[2], new List<TileRef>()
             {
                 new TileRef(12,1,0),
             }, 64, 64, 0f, 60, PowerUp.PowerUpType.DefenseBoost, 0, 2,
-            Content.Load<SoundEffect>(@"audio/Rescue3"));
+            Content.Load<SoundEffect>(@"audio/Rescue3"), null);
 
             PowerUp ExtraDamage = new PowerUp(this, CrewmanPositions[3], new List<TileRef>()
             {
                 new TileRef(12,0,0),
             }, 64, 64, 0f, 60, PowerUp.PowerUpType.ExtraDamage, 0, 2,
-            Content.Load<SoundEffect>(@"audio/Rescue4"));
+            Content.Load<SoundEffect>(@"audio/Rescue4"), ricochetRound);
 
             PowerUp Camouflage = new PowerUp(this, CrewmanPositions[4], new List<TileRef>()
             {
                 new TileRef(12,4,0),
             }, 64, 64, 0f, 5, PowerUp.PowerUpType.Camouflage, 0, 0,
-            Content.Load<SoundEffect>(@"audio/Rescue4"));
+            Content.Load<SoundEffect>(@"audio/Rescue4"), null);
 
             List<PowerUp> TankCrewmen = new List<PowerUp>()
             { Speed, Regen, DefenseBoost, ExtraDamage, Camouflage };

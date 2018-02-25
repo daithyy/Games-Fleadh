@@ -77,10 +77,15 @@ namespace PowerUps
         private const int RUN_RADIUS = 100;
         private const float RUN_SPEED = 0.01f;
 
+        private Ricochet newRound;
+
         private SoundEffect pickupSnd;
         private SoundEffectInstance pickupSndInst;
 
-        // Store important variables.
+        #region Store Default values
+        private Projectile defaultBullet;
+        private SoundEffect defaultShellSnd; // Store original shoot sound.
+        private float defaultTurnSpeed; // Store original turret turning speed.
         private Vector2 defaultMaxVelocity; // Default player speed.
         private Vector2 defaultPlayerAcceleration;
         private Vector2 defaultPlayerDeceleration;
@@ -88,12 +93,13 @@ namespace PowerUps
         private int defaultSentryDamageRate; // Default sentry damage rate.
         private int defaultRadius; // Player spotted radius.
         #endregion
+        #endregion
 
         #region Constructors
         public PowerUp(Game game, Vector2 position, List<TileRef>sheetRefs, 
             int frameWidth, int frameHeight, float layerDepth,
             float maxLifeTime, PowerUpType type, int amount, float multiplier,
-            SoundEffect pickupSnd)
+            SoundEffect pickupSnd, Ricochet newRound)
             : base(game, position, sheetRefs, frameWidth, frameHeight, layerDepth)
         {
             Visible = true;
@@ -103,6 +109,7 @@ namespace PowerUps
             this.Factor = multiplier;
             this.Amount = amount;
             this.State = PowerUpStatus.Deactivated;
+            this.newRound = newRound;
             BoundingRectangle = new Rectangle(
                 PixelPosition.ToPoint(), 
                 new Point(FrameWidth / 8, FrameHeight / 8));
@@ -117,6 +124,7 @@ namespace PowerUps
                 defaultMaxVelocity = player.MaxVelocity;
                 defaultPlayerAcceleration = player.Acceleration;
                 defaultPlayerDeceleration = player.Deceleration;
+                defaultTurnSpeed = player.turnSpeed;
             }
 
             foreach (SentryTurret turret in sentryTurrets)
@@ -130,7 +138,12 @@ namespace PowerUps
                 }
             }
 
-            if (playerTurret != null) defaultSentryDamageRate = playerTurret.Bullet.sentryDamageRate;
+            if (playerTurret != null)
+            {
+                defaultSentryDamageRate = playerTurret.Bullet.sentryDamageRate;
+                defaultBullet = playerTurret.Bullet;
+                defaultShellSnd = playerTurret.ShellSound;
+            }
             #endregion
 
             #region Handle Audio
@@ -199,9 +212,12 @@ namespace PowerUps
                     other.MaxVelocity = defaultMaxVelocity;
                     other.Acceleration = defaultPlayerAcceleration;
                     other.Deceleration = defaultPlayerDeceleration;
+                    other.turnSpeed = defaultTurnSpeed;
                     break;
                 case PowerUpType.ExtraDamage:
+                    otherTurret.Bullet = defaultBullet;
                     otherTurret.Bullet.sentryDamageRate = defaultSentryDamageRate;
+                    otherTurret.ShellSound = defaultShellSnd;
                     break;
                 case PowerUpType.Camouflage:
                     foreach (SentryTurret turret in sentryTurrets)
@@ -247,11 +263,15 @@ namespace PowerUps
                     other.MaxVelocity *= Factor;
                     //other.Acceleration = other.Acceleration * Factor; // Immediately gain speed
                     other.Deceleration *= Factor;
+                    other.turnSpeed *= (Factor + (Factor / 2));
                     State = PowerUpStatus.ExecuteOnce;
                     break;
                 case PowerUpType.ExtraDamage:
                     Frames.Add(new TileRef(13, 0, 0));
                     otherTurret.Bullet.sentryDamageRate *= (int)Factor;
+                    otherTurret.ShellSound = newRound.shellSoundAlt;
+                    if (newRound != null)
+                        otherTurret.Bullet = newRound;
                     State = PowerUpStatus.ExecuteOnce;
                     break;
                 case PowerUpType.Camouflage:

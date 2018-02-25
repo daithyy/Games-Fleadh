@@ -241,3 +241,9 @@
 /processorParam:TextureFormat=Color
 /build:tiles/tilesheet.png
 
+#begin audio/PlayerTankShootAlt.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/PlayerTankShootAlt.wav
+

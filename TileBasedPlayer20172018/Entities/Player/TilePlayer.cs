@@ -196,7 +196,7 @@ namespace Tiler
                         Velocity -= Deceleration / 2;
                     }
 
-                    this.angleOfRotation += InputEngine.CurrentPadState.ThumbSticks.Left.X * (turnSpeed * 2);
+                    this.angleOfRotation += InputEngine.CurrentPadState.ThumbSticks.Left.X * (turnSpeed);
                     #endregion
                     break;
             }

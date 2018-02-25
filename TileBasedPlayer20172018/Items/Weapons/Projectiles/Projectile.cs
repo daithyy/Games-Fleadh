@@ -134,7 +134,10 @@ namespace Tiler
                         // Play sounds
                         if (!ShootSoundPlayed)
                         {
-                            ShootSound.Play();
+                            if (Parent.ToUpper() == "PLAYER")
+                                ShootSound.Play(0.5f, 1.0f, 0.0f);
+                            else
+                                ShootSound.Play();
                             ShootSoundPlayed = true;
                         }
                         break;
