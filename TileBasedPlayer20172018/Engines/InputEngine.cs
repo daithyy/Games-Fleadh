@@ -54,6 +54,12 @@ namespace InputManager
 
         private static Vector2 thumbStick;
 
+        private static float m_Time;
+        private float m_Ratio;
+        private static float m_CurrTime;
+        private static float m_LeftMotor;
+        private static float m_RightMotor;
+
         public static bool UsingKeyboard = true;
 #endif
         public InputEngine(Game _game)
@@ -70,6 +76,11 @@ namespace InputManager
             currentKeyState = Keyboard.GetState();
 #endif
             _game.Components.Add(this);
+        }
+
+        public new void Dispose()
+        {
+            GamePad.SetVibration(0, 0, 0);
         }
 
         private Vector2 ApplyDeadZone(GamePadThumbSticks ThumbStick)
@@ -158,12 +169,13 @@ namespace InputManager
             currentMousePos = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
             currentMouseState = Mouse.GetState();
 
-
             KeysPressedInLastFrame.Clear();
             CheckForTextInput();
 
             UpdateControls();
             thumbStick = ApplyDeadZone(currentPadState.ThumbSticks);
+
+            UpdateRumble((float)gametime.ElapsedGameTime.TotalSeconds);
 #endif
             base.Update(gametime);
         }
@@ -358,6 +370,30 @@ namespace InputManager
             {
                 UsingKeyboard = true;
             }
+        }
+
+        private void UpdateRumble(float TimeElapsed)
+        {
+            //if (GlobalObjects.m_Settings.m_RumbleEnabled)
+            //{
+            m_CurrTime -= TimeElapsed;
+            m_Ratio = m_CurrTime / m_Time;
+            if (m_CurrTime <= 0)
+            {
+                GamePad.SetVibration(0, 0, 0);
+            }
+            else
+            {
+                GamePad.SetVibration(0, m_LeftMotor * m_Ratio, m_RightMotor * m_Ratio);
+            }
+            //}
+        }
+
+        public static void ShakePad(float Time, float LeftMotor, float RightMotor)
+        {
+            m_LeftMotor = LeftMotor;
+            m_RightMotor = RightMotor;
+            m_CurrTime = m_Time = Time;
         }
 #endif
     }

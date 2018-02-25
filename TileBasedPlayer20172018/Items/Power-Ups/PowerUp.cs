@@ -268,10 +268,10 @@ namespace PowerUps
                     break;
                 case PowerUpType.ExtraDamage:
                     Frames.Add(new TileRef(13, 0, 0));
-                    otherTurret.Bullet.sentryDamageRate *= (int)Factor;
-                    otherTurret.ShellSound = newRound.shellSoundAlt;
                     if (newRound != null)
                         otherTurret.Bullet = newRound;
+                    otherTurret.Bullet.sentryDamageRate *= (int)Factor;
+                    otherTurret.ShellSound = newRound.shellSoundAlt;
                     State = PowerUpStatus.ExecuteOnce;
                     break;
                 case PowerUpType.Camouflage:

@@ -171,6 +171,7 @@ namespace Tiler
                     HumReloadInstance.Play();
                     // Shake the camera
                     thisCamera.Shake(5f, 0.5f);
+                    InputEngine.ShakePad(0.4f, 0.5f, 0.5f);
                 }
                 else
                 {

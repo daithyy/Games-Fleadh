@@ -49,6 +49,8 @@
     <Compile Include="Engines\AI\WayPoint.cs" />
     <Compile Include="Engines\Camera.cs" />
     <Compile Include="Engines\Collider.cs" />
+    <Compile Include="Engines\GamePadRumble.cs" />
+    <Compile Include="Engines\InputEngine.cs" />
     <Compile Include="Entities\Tank.cs" />
     <Compile Include="Items\Weapons\Projectiles\Ricochet.cs" />
     <Compile Include="Sprites\Effects\BulletExplosion.cs" />
@@ -60,7 +62,6 @@
     <Compile Include="GameRoot.cs" />
     <Compile Include="GUI\HealthBar.cs" />
     <Compile Include="Engines\Helpers.cs" />
-    <Compile Include="Engines\InputEngine.cs" />
     <Compile Include="Events\TileTrigger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Items\Weapons\Projectiles\Projectile.cs" />

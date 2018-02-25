@@ -14,6 +14,7 @@ using AnimatedSprite;
 using Tiling;
 using Helpers;
 using CameraNS;
+using InputManager;
 
 namespace Tiler
 {
@@ -225,6 +226,7 @@ namespace Tiler
                     projectileState = PROJECTILE_STATUS.Exploding;
                     player.Health -= playerDamageRate;
                     thisCamera.Shake(7.5f, 0.25f);
+                    InputEngine.ShakePad(0.75f, 1.0f, 1.0f);
                     _sndPierce.Play();
                 }
             }
