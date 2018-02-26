@@ -33,6 +33,8 @@ namespace Tiler
         public bool DestinationReached = false;
         public bool CanMove = false;
         public bool StayVisible = false;
+        private AudioListener listener;
+        private AudioEmitter emitter;
 
         public enum State
         {
@@ -70,6 +72,11 @@ namespace Tiler
             OrbLight.Color = Color.HotPink;
 
             Alpha = 1f;
+
+            listener = new AudioListener();
+            emitter = new AudioEmitter();
+            HumSoundInstance.Apply3D(listener, emitter);
+            TrackSoundInstance.Apply3D(listener, emitter);
         }
         #endregion
 
@@ -265,6 +272,13 @@ namespace Tiler
                 return false;
         }
 
+        private void ApplyAudioPosition()
+        {
+            listener.Position = new Vector3(CentrePos.X, CentrePos.Y, 0);
+            HumSoundInstance.Apply3D(listener, emitter);
+            TrackSoundInstance.Apply3D(listener, emitter);
+        }
+
         public override void Update(GameTime gameTime)
         {
             if (Helper.CurrentGameStatus == GameStatus.PLAYING)
@@ -300,7 +314,7 @@ namespace Tiler
 
                 CheckState(gameTime);
 
-                //PlaySounds();
+                PlaySounds();
 
                 base.Update(gameTime);
             }

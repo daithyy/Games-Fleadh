@@ -27,10 +27,10 @@ namespace Tiler
         public Vector2 Direction;
         public Vector2 PreviousPosition;
         public Vector2 TankLightPos;
-        SoundEffect TankHumSound;
-        SoundEffect TankTrackSound;
-        SoundEffectInstance HumSoundInstance;
-        SoundEffectInstance TrackSoundInstance;
+        public SoundEffect TankHumSound;
+        public SoundEffect TankTrackSound;
+        public SoundEffectInstance HumSoundInstance;
+        public SoundEffectInstance TrackSoundInstance;
 
         public Light OrbLight { get; } = new PointLight
         {
