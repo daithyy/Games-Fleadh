@@ -112,7 +112,11 @@ namespace AnimatedSprite
             if (Hbar != null)
             {
                 Hbar.health = Health;
-                Hbar.position = PixelPosition - new Vector2((FrameWidth / 2 - 10), (-FrameHeight - 20));
+                if (Hbar.Name == null || Hbar.Name.ToUpper() != "CAMOUFLAGE")
+                    Hbar.position = PixelPosition - new Vector2(
+                        (FrameWidth / 2 - 10), (-FrameHeight - 20));
+                else
+                    Hbar.position = CentrePos + new Vector2((-FrameWidth / 2.5f), (FrameHeight / 4));
             }
 
             base.Update(gametime);

@@ -287,6 +287,8 @@ namespace Screens
 
                     if (vidPlayer.State != MediaState.Stopped)
                         _txWin = vidPlayer.GetTexture();
+                    else
+                        vidPlayer.Dispose();
 
                     Helper.CurrentGameStatus = GameStatus.PAUSED;
                     break;

@@ -247,3 +247,9 @@
 /processorParam:Quality=Best
 /build:audio/PlayerTankShootAlt.wav
 
+#begin audio/PlayerActiveCamo.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/PlayerActiveCamo.wav
+

@@ -340,6 +340,7 @@ namespace InputManager
             Keys.S,
             Keys.A,
             Keys.D,
+            Keys.C,
             Keys.Enter,
             Keys.Escape,
             Keys.Space

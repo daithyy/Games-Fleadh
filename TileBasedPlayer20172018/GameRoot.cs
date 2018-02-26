@@ -592,31 +592,33 @@ namespace TileBasedPlayer20172018
             {
                 new TileRef(12,3,0)               
             }, 64, 64, 0f, 5, PowerUp.PowerUpType.SpeedBoost, 0, 1.1f,
-            Content.Load<SoundEffect>(@"audio/Rescue1"), null);
+            Content.Load<SoundEffect>(@"audio/Rescue1"), null, null);
 
             PowerUp Regen = new PowerUp(this, CrewmanPositions[1], new List<TileRef>()
             {
                 new TileRef(12,2,0),
             }, 64, 64, 0f, 1, PowerUp.PowerUpType.Regen, 1, 1,
-            Content.Load<SoundEffect>(@"audio/Rescue2"), null);
+            Content.Load<SoundEffect>(@"audio/Rescue2"), null, null);
 
             PowerUp DefenseBoost = new PowerUp(this, CrewmanPositions[2], new List<TileRef>()
             {
                 new TileRef(12,1,0),
             }, 64, 64, 0f, 60, PowerUp.PowerUpType.DefenseBoost, 0, 2,
-            Content.Load<SoundEffect>(@"audio/Rescue3"), null);
+            Content.Load<SoundEffect>(@"audio/Rescue3"), null, null);
 
             PowerUp ExtraDamage = new PowerUp(this, CrewmanPositions[3], new List<TileRef>()
             {
                 new TileRef(12,0,0),
             }, 64, 64, 0f, 60, PowerUp.PowerUpType.ExtraDamage, 0, 2,
-            Content.Load<SoundEffect>(@"audio/Rescue4"), ricochetRound);
+            Content.Load<SoundEffect>(@"audio/Rescue4"), null, ricochetRound);
+
+            SoundEffect CamoSound = Content.Load<SoundEffect>(@"audio/PlayerActiveCamo");
 
             PowerUp Camouflage = new PowerUp(this, CrewmanPositions[4], new List<TileRef>()
             {
                 new TileRef(12,4,0),
-            }, 64, 64, 0f, 5, PowerUp.PowerUpType.Camouflage, 0, 0,
-            Content.Load<SoundEffect>(@"audio/Rescue4"), null);
+            }, 64, 64, 0f, (float)CamoSound.Duration.TotalSeconds, PowerUp.PowerUpType.Camouflage, 0, 0,
+            Content.Load<SoundEffect>(@"audio/Rescue4"), CamoSound, null);
 
             List<PowerUp> TankCrewmen = new List<PowerUp>()
             { Speed, Regen, DefenseBoost, ExtraDamage, Camouflage };

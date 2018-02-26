@@ -13,8 +13,9 @@ namespace Helpers
     public class HealthBar : DrawableGameComponent
     {
         #region Properties
+        public string Name;
         public int health;
-        private Texture2D txHealthBar; // hold the texture
+        public Texture2D txHealthBar; // hold the texture
         public Vector2 position; // Position on the screen
         public Color HealthyColor = new Color(243, 208, 168);
         public Color WarningColor = new Color(255, 142, 86);

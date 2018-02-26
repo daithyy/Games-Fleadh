@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Input;
 using Penumbra;
 
 using CameraNS;
@@ -14,6 +15,7 @@ using AnimatedSprite;
 using Tiling;
 using Helpers;
 using Tiler;
+using InputManager;
 
 namespace PowerUps
 {
@@ -67,8 +69,10 @@ namespace PowerUps
         public PowerUpStatus State;
         public static int Count = 0;
 
-        private float Duration = 0;
-        public float Factor = 0; // This factor will act as the multiplier for player traits.
+        private float Duration = 0; // Effect life time
+        private const int MAX_COOLDOWN = 5; // Cool down time
+        private float coolDownTime = 0;
+        public float Factor = 0; // Double, Triple amount.etc
         public int Amount = 0;
         public float MaxLifeTime;
         public float RegenTimer;
@@ -77,8 +81,13 @@ namespace PowerUps
         private const int RUN_RADIUS = 100;
         private const float RUN_SPEED = 0.01f;
 
+        private Color durationBarColor = new Color(169, 169, 242);
+        private HealthBar durationBar;
+        private const float ALPHA_SPD = 0.05f;
         private Ricochet newRound;
 
+        private SoundEffect camoSnd;
+        private SoundEffectInstance camoSndInst;
         private SoundEffect pickupSnd;
         private SoundEffectInstance pickupSndInst;
 
@@ -99,7 +108,7 @@ namespace PowerUps
         public PowerUp(Game game, Vector2 position, List<TileRef>sheetRefs, 
             int frameWidth, int frameHeight, float layerDepth,
             float maxLifeTime, PowerUpType type, int amount, float multiplier,
-            SoundEffect pickupSnd, Ricochet newRound)
+            SoundEffect pickupSnd, SoundEffect camoSnd, Ricochet newRound)
             : base(game, position, sheetRefs, frameWidth, frameHeight, layerDepth)
         {
             Visible = true;
@@ -178,6 +187,21 @@ namespace PowerUps
                     break;
             }
             #endregion
+
+            #region Setup Duration Bar
+            if (Type == PowerUpType.Camouflage)
+            {
+                durationBar = new HealthBar(game, CentrePos);
+                durationBar.Name = Type.ToString();
+                durationBar.txHealthBar.SetData(new[] { durationBarColor });
+                AddHealthBar(durationBar);
+                Health = (int)Duration;
+
+                this.camoSnd = camoSnd;
+                camoSndInst = this.camoSnd.CreateInstance();
+                camoSndInst.Volume = 0.8f;
+            }
+            #endregion
         }
         #endregion
 
@@ -220,6 +244,9 @@ namespace PowerUps
                     otherTurret.ShellSound = defaultShellSnd;
                     break;
                 case PowerUpType.Camouflage:
+                    other.Alpha = 1;
+                    otherTurret.Alpha = 1;
+
                     foreach (SentryTurret turret in sentryTurrets)
                     {
                         if (turret != null)
@@ -276,6 +303,10 @@ namespace PowerUps
                     break;
                 case PowerUpType.Camouflage:
                     Frames.Add(new TileRef(13, 4, 0));
+
+                    other.Alpha = 0.5f;
+                    otherTurret.Alpha = 0.5f;
+                    
                     foreach (SentryTurret turret in sentryTurrets)
                     {
                         if (turret != null)
@@ -283,6 +314,64 @@ namespace PowerUps
                     }
                     State = PowerUpStatus.ExecuteOnce;
                     break;
+            }
+        }
+
+        private void UpdateHUD(GameTime gametime)
+        {
+            if (attachToHUD)
+            {
+                PixelPosition = new Vector2(
+                    (Helper.graphicsDevice.Viewport.Bounds.Width / 2 - 450) +
+                    (FrameWidth * (int)Type),
+                    (Helper.graphicsDevice.Viewport.Bounds.Height - 64)) +
+                    Camera.CamPos;
+
+                if (Type == PowerUpType.Camouflage)
+                {
+                    Duration += (float)gametime.ElapsedGameTime.TotalSeconds;
+                    CheckCamoState(gametime);
+                }
+            }
+        }
+
+        private void RunToPlayer(TilePlayer player)
+        {
+            distance = Math.Abs(Vector2.Distance(this.CentrePos, player.CentrePos));
+
+            if (distance <= RUN_RADIUS)
+                PixelPosition = Vector2.Lerp(
+                    this.PixelPosition,
+                    player.PixelPosition,
+                    RUN_SPEED);
+        }
+
+        private void DisplayDurationBar(GameTime gameTime)
+        {
+            Health = (int)coolDownTime * ((int)coolDownTime * 4);
+
+            if (Health < 100)
+            {
+                durationBar.Alpha += ALPHA_SPD;
+            }
+            else
+                durationBar.Alpha -= ALPHA_SPD;
+        }
+
+        private void CheckCamoState(GameTime gameTime)
+        {
+            DisplayDurationBar(gameTime);
+
+            if (InputEngine.IsKeyPressed(Keys.C) || InputEngine.IsButtonPressed(Buttons.X)
+                && State == PowerUpStatus.Depleted)
+            {
+                if (coolDownTime >= MAX_COOLDOWN)
+                {
+                    State = PowerUpStatus.Activated;
+                    Duration = 0;
+                    coolDownTime = 0;
+                    camoSndInst.Play();
+                }
             }
         }
 
@@ -305,10 +394,10 @@ namespace PowerUps
 
                     if (State == PowerUpStatus.Activated || State == PowerUpStatus.ExecuteOnce)
                     {
-                        attachToHUD = true;
-
-                        // Comment out to make effects last forever.
+                        // Comment out to make effects last infinitely.
                         //Duration += (float)gametime.ElapsedGameTime.TotalSeconds;
+
+                        attachToHUD = true;
 
                         if (State != PowerUpStatus.ExecuteOnce)
                         {
@@ -322,21 +411,16 @@ namespace PowerUps
                         }
                     }
 
-                    distance = Math.Abs(Vector2.Distance(this.CentrePos, player.CentrePos));
+                    RunToPlayer(player);
 
-                    if (distance <= RUN_RADIUS)
-                        PixelPosition = Vector2.Lerp(
-                            this.PixelPosition, 
-                            player.PixelPosition, 
-                            RUN_SPEED);
+                    // Cool Down Timer
+                    if (State == PowerUpStatus.Depleted && coolDownTime <= MAX_COOLDOWN)
+                    {
+                        coolDownTime += (float)gametime.ElapsedGameTime.TotalSeconds;
+                    }
+
+                    UpdateHUD(gametime);
                 }
-
-                if (attachToHUD)
-                    PixelPosition = new Vector2(
-                        (Helper.graphicsDevice.Viewport.Bounds.Width / 2 - 450) + 
-                        (FrameWidth * (int)Type),
-                        (Helper.graphicsDevice.Viewport.Bounds.Height - 64)) + 
-                        Camera.CamPos;
 
                 base.Update(gametime);
             }

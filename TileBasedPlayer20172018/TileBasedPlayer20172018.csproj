@@ -49,7 +49,6 @@
     <Compile Include="Engines\AI\WayPoint.cs" />
     <Compile Include="Engines\Camera.cs" />
     <Compile Include="Engines\Collider.cs" />
-    <Compile Include="Engines\GamePadRumble.cs" />
     <Compile Include="Engines\InputEngine.cs" />
     <Compile Include="Entities\Tank.cs" />
     <Compile Include="Items\Weapons\Projectiles\Ricochet.cs" />
