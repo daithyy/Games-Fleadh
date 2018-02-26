@@ -22,7 +22,7 @@ namespace Tiler
         #region Properties
         float volumeVelocity = 0;
         public int DetectRadius = 400;
-        float turnSpeed = 0.015f;
+        public float turnSpeed = 0.015f;
         const float WIDTH_IN = 11f; // Width in from the left for the sprites origin
         float angleOfRotationPrev;
         public string Name;
@@ -31,6 +31,8 @@ namespace Tiler
         private SoundEffect ExplosionSound;
         private SoundEffect TankTurnSound;
         private SoundEffectInstance TurnSoundInstance;
+        private AudioListener listener;
+        private AudioEmitter emitter;
         HealthBar healthBar;
         public static int Count = 0; // Keeps track of amount of Sentries created
         public bool IsDead = false;
@@ -72,6 +74,9 @@ namespace Tiler
             TurnSoundInstance.Pitch = -0.75f;
             TurnSoundInstance.IsLooped = true;
             TurnSoundInstance.Play();
+            listener = new AudioListener();
+            emitter = new AudioEmitter();
+            //TurnSoundInstance.Apply3D(listener, emitter);
             #endregion
 
             #region Muzzleflash Sprite
@@ -180,6 +185,12 @@ namespace Tiler
             this.PixelPosition = followPos;
         }
 
+        private void ApplyAudioPosition()
+        {
+            listener.Position = new Vector3(CentrePos.X, CentrePos.Y, 0);
+            TurnSoundInstance.Apply3D(listener, emitter);
+        }
+
         public void PlaySounds()
         {
             TurnSoundInstance.Play();
@@ -195,6 +206,8 @@ namespace Tiler
             {
                 TurnSoundInstance.Volume = 0f;
             }
+
+            ApplyAudioPosition();
         }
 
         public override void Update(GameTime gameTime)

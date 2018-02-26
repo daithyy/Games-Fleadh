@@ -50,6 +50,10 @@
     <Compile Include="Engines\Camera.cs" />
     <Compile Include="Engines\Collider.cs" />
     <Compile Include="Engines\InputEngine.cs" />
+    <Compile Include="Entities\Enemy\Types\HeavySentry.cs" />
+    <Compile Include="Entities\Enemy\Types\HeavySentryTurret.cs" />
+    <Compile Include="Entities\Enemy\Types\LightSentry.cs" />
+    <Compile Include="Entities\Enemy\Types\LightSentryTurret.cs" />
     <Compile Include="Entities\Tank.cs" />
     <Compile Include="GUI\MouseCrosshair.cs" />
     <Compile Include="Items\Weapons\Projectiles\Ricochet.cs" />

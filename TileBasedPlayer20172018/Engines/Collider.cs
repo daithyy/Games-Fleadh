@@ -46,6 +46,7 @@ namespace Tiler
         private List<Sentry> sentries;
         private TilePlayer player;
         private Ricochet projectile;
+        private Projectile playerProjectile;
         private List<Projectile> sentryProjectiles;
 
         #region Minkowski Sum Variables
@@ -182,9 +183,11 @@ namespace Tiler
         {
             sentries = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
             player = (TilePlayer)Game.Services.GetService(typeof(TilePlayer));
+            playerProjectile = (Projectile)Game.Services.GetService(typeof(Projectile));
             projectile = (Ricochet)Game.Services.GetService(typeof(Ricochet));
             sentryProjectiles = (List<Projectile>)Game.Services.GetService(typeof(List<Projectile>));
 
+            CollideWithProjectile(playerProjectile);
             CollideWithProjectile(projectile);
             CollideWithTank(player);
 

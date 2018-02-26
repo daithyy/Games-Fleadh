@@ -75,8 +75,8 @@ namespace Tiler
 
             listener = new AudioListener();
             emitter = new AudioEmitter();
-            HumSoundInstance.Apply3D(listener, emitter);
-            TrackSoundInstance.Apply3D(listener, emitter);
+            //HumSoundInstance.Apply3D(listener, emitter);
+            //TrackSoundInstance.Apply3D(listener, emitter);
         }
         #endregion
 
@@ -314,7 +314,8 @@ namespace Tiler
 
                 CheckState(gameTime);
 
-                PlaySounds();
+                //PlaySounds();
+                //ApplyAudioPosition();
 
                 base.Update(gameTime);
             }
