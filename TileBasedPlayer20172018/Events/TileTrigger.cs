@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using TileBasedPlayer20172018;
 using Helpers;
 using PowerUps;
 
@@ -33,7 +34,7 @@ namespace Tiler
                         if (p.BoundingRectangle.Intersects(CollisionField) && SentryTurret.Count <= 0 &&
                             PowerUp.Count >= MAX_CREWMEN)
                         {
-                            TileBasedPlayer20172018.GameRoot.MainScreen.CurrentGameCondition = GameCondition.WIN;
+                            GameRoot.MainScreen.CurrentGameCondition = GameCondition.WIN;
                         }
                         break;
                     default:

@@ -366,7 +366,7 @@ namespace PowerUps
 
         private void DisplayDurationBar(GameTime gameTime)
         {
-            Health = (int)coolDownTime * ((int)coolDownTime * 4);
+            Health = (int)coolDownTime * ((int)coolDownTime);
 
             if (Health < 100)
             {

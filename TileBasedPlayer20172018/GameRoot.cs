@@ -706,13 +706,8 @@ namespace TileBasedPlayer20172018
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (InputEngine.IsButtonPressed(Buttons.Back) || InputEngine.IsKeyPressed(Keys.Escape))
                 Exit();
-
-            TilePlayer player = (TilePlayer)Services.GetService(typeof(TilePlayer));
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
-                player.Health = 0;
 
             if (this.IsActive)
                 base.Update(gameTime);
