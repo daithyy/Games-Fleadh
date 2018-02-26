@@ -51,6 +51,7 @@
     <Compile Include="Engines\Collider.cs" />
     <Compile Include="Engines\InputEngine.cs" />
     <Compile Include="Entities\Tank.cs" />
+    <Compile Include="GUI\MouseCrosshair.cs" />
     <Compile Include="Items\Weapons\Projectiles\Ricochet.cs" />
     <Compile Include="Sprites\Effects\BulletExplosion.cs" />
     <Compile Include="Sprites\Effects\Explosion.cs" />

@@ -626,10 +626,14 @@ namespace TileBasedPlayer20172018
             Services.AddService(TankCrewmen);
             #endregion
 
-            #region Add Crosshair
+            #region Add Crosshairs
             new Crosshair(this, new Vector2(0, 0), new List<TileRef>()
             {
                 new TileRef(10, 3, 0),
+            }, 64, 64, 0f);
+            new MouseCrosshair(this, new Vector2(0, 0), new List<TileRef>()
+            {
+                new TileRef(11, 3, 0),
             }, 64, 64, 0f);
             #endregion
 
