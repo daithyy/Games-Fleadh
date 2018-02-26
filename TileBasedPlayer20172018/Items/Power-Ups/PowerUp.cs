@@ -70,7 +70,7 @@ namespace PowerUps
         public static int Count = 0;
 
         private float Duration = 0; // Effect life time
-        private const int MAX_COOLDOWN = 5; // Cool down time
+        private const int MAX_COOLDOWN = 10; // Cool down time
         private float coolDownTime = 0;
         public float Factor = 0; // Double, Triple amount.etc
         public int Amount = 0;
@@ -247,6 +247,14 @@ namespace PowerUps
                     other.Alpha = 1;
                     otherTurret.Alpha = 1;
 
+                    List<Sentry> otherTanks = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
+
+                    foreach (Sentry tank in otherTanks)
+                    {
+                        if (tank != null)
+                            tank.StayVisible = false;
+                    }
+
                     foreach (SentryTurret turret in sentryTurrets)
                     {
                         if (turret != null)
@@ -310,8 +318,18 @@ namespace PowerUps
                     foreach (SentryTurret turret in sentryTurrets)
                     {
                         if (turret != null)
+                        {
                             turret.DetectRadius = Amount * (int)Factor;
+                        }
                     }
+
+                    List<Sentry> otherTanks = (List<Sentry>)Game.Services.GetService(typeof(List<Sentry>));
+                    foreach (Sentry tank in otherTanks)
+                    {
+                        if (tank != null)
+                            tank.StayVisible = true;
+                    }
+
                     State = PowerUpStatus.ExecuteOnce;
                     break;
             }

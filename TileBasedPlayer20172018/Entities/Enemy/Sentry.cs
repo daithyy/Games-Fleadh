@@ -32,6 +32,7 @@ namespace Tiler
         public bool IsDead = false;
         public bool DestinationReached = false;
         public bool CanMove = false;
+        public bool StayVisible = false;
 
         public enum State
         {
@@ -290,7 +291,7 @@ namespace Tiler
                     }
 
                     // Hide
-                    if (Alpha > 0)
+                    if (Alpha > 0 && !StayVisible)
                         Alpha -= fadeAmount;
                     OrbLight.Enabled = false;
                 }
