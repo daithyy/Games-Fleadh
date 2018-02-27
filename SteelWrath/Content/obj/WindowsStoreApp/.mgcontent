@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>WindowsStoreApp</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/BlinkPause.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/BlinkPlay.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/GameOver.mp3</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/Heartbeat.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/MainMenu.mp3</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/Pause.mp3</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/Play.mp3</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/Play3.mp3</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/PlayerActiveCamo.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/PlayerTankHum.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/PlayerTankReload.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/PlayerTankReload2.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/PlayerTankShoot.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/PlayerTankShoot2.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/PlayerTankShootAlt.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/PlayerTankTracks.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/PlayerTurretTurn.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/PlayerWarning.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/Rescue1.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/Rescue2.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/Rescue3.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/Rescue4.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/Resupply.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/SentryTankHum.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/SentryTankShoot.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/SentryTankShootAlt.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/SentryTankShootHeavy.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/SentryTankShootLight.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/SentryTankTracks.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/SentryTurretTurn.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/TankArmorPierce.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/TankExplosion.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/TankShoot.wav</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/Win.mp3</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/background/Lose.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/background/MainMenu.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/fonts/font.spritefont</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/Tiles/collider.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/Tiles/tilesheet.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/Tiles/tilesheet_alternate_old.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/Tiles/tilesheet_old.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/PenumbraHull.fx</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/PenumbraLight.fx</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/PenumbraShadow.fx</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/PenumbraTexture.fx</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/background/WinFrames/frame_00_delay-0.58s.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/background/WinFrames/frame_01_delay-0.08s.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/background/WinFrames/frame_02_delay-0.08s.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/background/WinFrames/frame_03_delay-0.08s.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/background/WinFrames/frame_04_delay-0.17s.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/background/WinFrames/frame_05_delay-0.33s.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/background/WinFrames/frame_06_delay-0.08s.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/background/WinFrames/frame_07_delay-0.08s.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/background/WinFrames/frame_08_delay-0.25s.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/background/WinFrames/frame_09_delay-0.17s.png</File>
+    <File>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/background/WinFrames/frame_10_delay-0.08s.png</File>
+  </SourceFiles>
+</SourceFileCollection>

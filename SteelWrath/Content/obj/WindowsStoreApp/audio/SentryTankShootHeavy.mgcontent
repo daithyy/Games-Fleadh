@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/SentryTankShootHeavy.wav</SourceFile>
+  <SourceTime>2018-02-27T02:39:55.9853588+00:00</SourceTime>
+  <DestFile>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/bin/WindowsStoreApp/audio/SentryTankShootHeavy.xnb</DestFile>
+  <DestTime>2018-02-27T15:52:42.1024764+00:00</DestTime>
+  <Importer>WavImporter</Importer>
+  <ImporterTime>2017-03-01T15:05:36+00:00</ImporterTime>
+  <Processor>SoundEffectProcessor</Processor>
+  <ProcessorTime>2017-03-01T15:05:36+00:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>
