@@ -11,6 +11,8 @@ namespace Tiler
 {
     class LightSentryTurret : SentryTurret
     {
+        private const int FACTOR = 2;
+        
         public LightSentryTurret(Game game, Vector2 sentryPosition, List<TileRef> sheetRefs, 
             int frameWidth, int frameHeight, float layerDepth, string nameIn, float angle, 
             SoundEffect turnSound, SoundEffect explosionSound) 
@@ -18,16 +20,16 @@ namespace Tiler
                   frameWidth, frameHeight, layerDepth, 
                   nameIn, angle, turnSound, explosionSound)
         {
-            Health += Health / 2;
-            DetectRadius += DetectRadius / 2;
-            turnSpeed *= 2;
+            Health += Health / FACTOR;
+            DetectRadius += DetectRadius / FACTOR;
+            turnSpeed *= FACTOR;
             
             if (Bullet != null)
             {
                 Bullet.OrbLight.Color = Color.Violet;
-                Bullet.flyingLifeSpan += Bullet.flyingLifeSpan;
-                Bullet.explosionLifeSpan -= Bullet.explosionLifeSpan / 2;
-                Bullet.playerDamageRate *= 2;
+                Bullet.flyingLifeSpan *= FACTOR;
+                Bullet.explosionLifeSpan -= Bullet.explosionLifeSpan / FACTOR;
+                Bullet.playerDamageRate *= FACTOR;
             }
         }
     }

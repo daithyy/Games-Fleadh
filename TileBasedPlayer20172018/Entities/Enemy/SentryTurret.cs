@@ -31,8 +31,6 @@ namespace Tiler
         private SoundEffect ExplosionSound;
         private SoundEffect TankTurnSound;
         private SoundEffectInstance TurnSoundInstance;
-        private AudioListener listener;
-        private AudioEmitter emitter;
         HealthBar healthBar;
         public static int Count = 0; // Keeps track of amount of Sentries created
         public bool IsDead = false;
@@ -74,9 +72,6 @@ namespace Tiler
             TurnSoundInstance.Pitch = -0.75f;
             TurnSoundInstance.IsLooped = true;
             TurnSoundInstance.Play();
-            listener = new AudioListener();
-            emitter = new AudioEmitter();
-            //TurnSoundInstance.Apply3D(listener, emitter);
             #endregion
 
             #region Muzzleflash Sprite
@@ -185,14 +180,19 @@ namespace Tiler
             this.PixelPosition = followPos;
         }
 
-        private void ApplyAudioPosition()
+        public bool SetSoundForCamera(SoundEffectInstance sound, Vector2 position, float baseVolume)
         {
-            listener.Position = new Vector3(CentrePos.X, CentrePos.Y, 0);
-            TurnSoundInstance.Apply3D(listener, emitter);
+            Vector2 screenDistance = (position - Camera.CamPos) / (Game.Window.ClientBounds.Width / 2);
+            float fade = MathHelper.Clamp(2f - screenDistance.Length(), 0, 1);
+            sound.Volume = fade * fade * baseVolume;
+            sound.Pan = MathHelper.Clamp(screenDistance.X, -1, 1);
+            return fade > 0;
         }
 
         public void PlaySounds()
         {
+            SetSoundForCamera(TurnSoundInstance, PixelPosition, 0.01f);
+
             TurnSoundInstance.Play();
 
             volumeVelocity = (turnSpeed * 4); // 0.06
@@ -206,8 +206,6 @@ namespace Tiler
             {
                 TurnSoundInstance.Volume = 0f;
             }
-
-            ApplyAudioPosition();
         }
 
         public override void Update(GameTime gameTime)

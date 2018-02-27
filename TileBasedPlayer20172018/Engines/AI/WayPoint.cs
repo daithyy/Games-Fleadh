@@ -92,7 +92,11 @@ namespace Pathfinding_Demo.Engine.AI
                                     {
                                         tank.Velocity -= tank.Deceleration;
                                     }
-                                    //tank.Velocity -= tank.Deceleration * 4; // Tank moves back when you advance!
+
+                                    if (tank.Name.ToUpper() == "ENEMY TANK 8" ||
+                                        tank.Name.ToUpper() == "ENEMY TANK 9" ||
+                                        tank.Name.ToUpper() == "ENEMY TANK 10")
+                                    tank.Velocity -= tank.Deceleration * 4; // Tank moves back when you advance!
                                 }
                             }
                             else

@@ -15,6 +15,7 @@ namespace Helpers
         #region Properties
         public string Name;
         public int health;
+        public int Factor = 2;
         public Texture2D txHealthBar; // hold the texture
         public Vector2 position; // Position on the screen
         public Color HealthyColor = new Color(243, 208, 168);
@@ -27,7 +28,7 @@ namespace Helpers
             get
             {
                 return new Rectangle((int)position.X,
-                                (int)position.Y, (health / 2), 5);
+                                (int)position.Y, (health / Factor), 5);
             }
         }
         public float Alpha = 0f;

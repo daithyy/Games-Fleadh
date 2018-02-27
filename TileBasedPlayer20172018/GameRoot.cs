@@ -26,8 +26,8 @@ namespace TileBasedPlayer20172018
         SpriteBatch spriteBatch;
         PenumbraComponent penumbra;
 
-        private int _width = 1920;
-        private int _height = 1080;
+        private int _width = 800;
+        private int _height = 480;
 
         private Color BackgroundColor = new Color(185, 132, 62);
         private const float WORLD_BRIGHTNESS = 1.0f;
@@ -102,7 +102,7 @@ namespace TileBasedPlayer20172018
             graphics.PreferredBackBufferHeight = _height;
             //graphics.PreferMultiSampling = false;
             graphics.SynchronizeWithVerticalRetrace = true;
-            graphics.IsFullScreen = true;
+            //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
             IsMouseVisible = false;
@@ -207,9 +207,9 @@ namespace TileBasedPlayer20172018
                 new Vector2(1374, 251),
             };
 
-            Shuffle(SentryPositions); // Randomize
+            //Shuffle(SentryPositions); // Randomize
 
-            Sentry enemyOne = new Sentry(this, SentryPositions[0], new List<TileRef>()
+            Sentry enemyOne = new Sentry(this, SentryPositions[9], new List<TileRef>()
             {
                 new TileRef(10, 4, 0),
             }, 64, 64, 0f, "Enemy Tank 1",
@@ -281,7 +281,7 @@ namespace TileBasedPlayer20172018
             Content.Load<SoundEffect>("audio/SentryTankTracks"),
             -ANGLE_RIGHT);
 
-            HeavySentry enemyTen = new HeavySentry(this, SentryPositions[9], new List<TileRef>()
+            HeavySentry enemyTen = new HeavySentry(this, SentryPositions[0], new List<TileRef>()
             {
                 new TileRef(11, 4, 0),
             }, 64, 64, 0f, "Enemy Tank 10",
@@ -503,12 +503,12 @@ namespace TileBasedPlayer20172018
             Content.Load<SoundEffect>("audio/SentryTankShootAlt"),
             Content.Load<SoundEffect>("audio/TankArmorPierce"), null);
 
-            Projectile enemyBulletTen = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
+            Ricochet enemyBulletTen = new Ricochet(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
             {
                 new TileRef(10, 7, 0),
             }, 64, 64, 0f, enemyTurretTen.Direction, PLAYER_BULLET_SPD,
             Content.Load<SoundEffect>("audio/SentryTankShoot"),
-            Content.Load<SoundEffect>("audio/TankArmorPierce"));
+            Content.Load<SoundEffect>("audio/TankArmorPierce"), null);
 
             //Projectile enemyBulletEleven = new Projectile(this, "SENTRY", new Vector2(0, 0), new List<TileRef>()
             //{
@@ -556,6 +556,9 @@ namespace TileBasedPlayer20172018
                 SentryTurrets[i].AddProjectile(sentryProjectiles[i]);
             }
             Services.AddService(sentryProjectiles);
+
+            // Heavy Tank Turret Bullet NULL FIX
+            enemyTurretTen.UpdateProjectile();
             #endregion
 
             #region Add Tank Crew

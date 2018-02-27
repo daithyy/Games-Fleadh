@@ -33,8 +33,6 @@ namespace Tiler
         public bool DestinationReached = false;
         public bool CanMove = false;
         public bool StayVisible = false;
-        private AudioListener listener;
-        private AudioEmitter emitter;
 
         public enum State
         {
@@ -72,11 +70,6 @@ namespace Tiler
             OrbLight.Color = Color.HotPink;
 
             Alpha = 1f;
-
-            listener = new AudioListener();
-            emitter = new AudioEmitter();
-            //HumSoundInstance.Apply3D(listener, emitter);
-            //TrackSoundInstance.Apply3D(listener, emitter);
         }
         #endregion
 
@@ -272,11 +265,13 @@ namespace Tiler
                 return false;
         }
 
-        private void ApplyAudioPosition()
+        public bool SetSoundForCamera(SoundEffectInstance sound, Vector2 position, float baseVolume)
         {
-            listener.Position = new Vector3(CentrePos.X, CentrePos.Y, 0);
-            HumSoundInstance.Apply3D(listener, emitter);
-            TrackSoundInstance.Apply3D(listener, emitter);
+            Vector2 screenDistance = Vector2.Subtract(position, Camera.CamPos) / (Game.Window.ClientBounds.Width / 2);
+            float fade = MathHelper.Clamp(2f - screenDistance.Length(), 0, 1);
+            sound.Volume = fade * fade * baseVolume;
+            sound.Pan = MathHelper.Clamp(screenDistance.X, -1, 1);
+            return fade > 0;
         }
 
         public override void Update(GameTime gameTime)
@@ -315,7 +310,8 @@ namespace Tiler
                 CheckState(gameTime);
 
                 //PlaySounds();
-                //ApplyAudioPosition();
+                //SetSoundForCamera(TrackSoundInstance, CentrePos, 0.1f);
+                //SetSoundForCamera(HumSoundInstance, CentrePos, 0.1f);
 
                 base.Update(gameTime);
             }
