@@ -253,3 +253,15 @@
 /processorParam:Quality=Best
 /build:audio/PlayerActiveCamo.wav
 
+#begin audio/SentryTankShootHeavy.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/SentryTankShootHeavy.wav
+
+#begin audio/SentryTankShootLight.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/SentryTankShootLight.wav
+

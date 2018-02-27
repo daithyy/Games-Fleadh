@@ -23,7 +23,7 @@ namespace Tiler
             Health *= FACTOR;
             Hbar.Factor = FACTOR;
             DetectRadius += DetectRadius / 2;
-            turnSpeed /= 1.5f;
+            turnSpeed /= 2f;
         }
 
         public void UpdateProjectile()
