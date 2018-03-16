@@ -1,0 +1,3 @@
+MainPackage=C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\bin\WindowsUniversal\x64\Release\SteelWrath_1.0.0.0_x64.appx
+SymbolPackage=C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\AppPackages\SteelWrath_1.0.0.0_Test\SteelWrath_1.0.0.0_x64.appxsym
+ResourcePack=C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\bin\WindowsUniversal\x64\Release\SteelWrath_1.0.0.0_scale-100.appx
