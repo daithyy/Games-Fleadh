@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/David/Documents/Notes/Games Fleadh/SteelWrath/Content/Tiles/tilesheet_alternate_old.png</SourceFile>
-  <SourceTime>2018-03-06T17:16:32.5841791+00:00</SourceTime>
+  <SourceTime>2018-03-16T13:00:24.6422648+00:00</SourceTime>
   <DestFile>C:/Users/David/Documents/Notes/Games Fleadh/SteelWrath/Content/bin/WindowsStoreApp/Tiles/tilesheet_alternate_old.xnb</DestFile>
-  <DestTime>2018-03-06T17:19:56.6101506+00:00</DestTime>
+  <DestTime>2018-03-16T13:01:19.1656157+00:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T15:05:36+00:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

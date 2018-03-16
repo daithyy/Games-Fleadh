@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/David/Documents/Notes/Games Fleadh/SteelWrath/Content/background/WinFrames/frame_07_delay-0.08s.png</SourceFile>
-  <SourceTime>2018-03-06T17:16:28.2458211+00:00</SourceTime>
+  <SourceTime>2018-03-16T13:00:23.4688972+00:00</SourceTime>
   <DestFile>C:/Users/David/Documents/Notes/Games Fleadh/SteelWrath/Content/bin/WindowsStoreApp/background/WinFrames/frame_07_delay-0.08s.xnb</DestFile>
-  <DestTime>2018-03-06T17:19:59.6544635+00:00</DestTime>
+  <DestTime>2018-03-16T13:01:21.9356801+00:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T15:05:36+00:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
