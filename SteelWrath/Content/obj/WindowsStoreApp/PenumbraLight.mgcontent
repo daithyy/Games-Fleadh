@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/David/Documents/Notes/Games Fleadh/SteelWrath/Content/PenumbraLight.fx</SourceFile>
-  <SourceTime>2018-03-16T13:00:24.6313909+00:00</SourceTime>
+  <SourceTime>2018-03-16T13:14:19.4811198+00:00</SourceTime>
   <DestFile>C:/Users/David/Documents/Notes/Games Fleadh/SteelWrath/Content/bin/WindowsStoreApp/PenumbraLight.xnb</DestFile>
-  <DestTime>2018-03-16T13:01:20.5079074+00:00</DestTime>
+  <DestTime>2018-03-16T13:16:59.7509464+00:00</DestTime>
   <Importer>EffectImporter</Importer>
   <ImporterTime>2017-03-01T15:05:36+00:00</ImporterTime>
   <Processor>EffectProcessor</Processor>
