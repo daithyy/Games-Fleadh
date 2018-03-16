@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/audio/SentryTankShootAlt.wav</SourceFile>
-  <SourceTime>2018-02-24T20:37:59.5690905+00:00</SourceTime>
-  <DestFile>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/bin/WindowsStoreApp/audio/SentryTankShootAlt.xnb</DestFile>
-  <DestTime>2018-02-27T15:52:41.8856314+00:00</DestTime>
+  <SourceFile>C:/Users/David/Documents/Notes/Games Fleadh/SteelWrath/Content/audio/SentryTankShootAlt.wav</SourceFile>
+  <SourceTime>2018-03-06T17:16:25.8003874+00:00</SourceTime>
+  <DestFile>C:/Users/David/Documents/Notes/Games Fleadh/SteelWrath/Content/bin/WindowsStoreApp/audio/SentryTankShootAlt.xnb</DestFile>
+  <DestTime>2018-03-06T17:19:51.1997523+00:00</DestTime>
   <Importer>WavImporter</Importer>
   <ImporterTime>2017-03-01T15:05:36+00:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>

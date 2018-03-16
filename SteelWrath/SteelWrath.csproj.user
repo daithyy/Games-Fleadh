@@ -3,4 +3,15 @@
   <PropertyGroup>
     <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <RemoteDebugMachine>192.168.137.9</RemoteDebugMachine>
+    <AuthenticationMode>Universal</AuthenticationMode>
+    <RemoteDebugEnabled>true</RemoteDebugEnabled>
+    <UseSimulator>false</UseSimulator>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <RemoteDebugMachine>192.168.137.9</RemoteDebugMachine>
+    <AuthenticationMode>Universal</AuthenticationMode>
+    <RemoteDebugEnabled>true</RemoteDebugEnabled>
+  </PropertyGroup>
 </Project>

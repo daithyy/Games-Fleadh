@@ -10,22 +10,22 @@
     <PackageArchitecture>x86</PackageArchitecture>
     <PackageIdentityName>fef81ec7-ad02-428c-bd96-67afff4da4b4</PackageIdentityName>
     <PackageIdentityPublisher>CN=David</PackageIdentityPublisher>
-    <IntermediateOutputPath>C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\obj\x86\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\obj\x86\Debug\</IntermediateOutputPath>
     <RemoteDeploymentType></RemoteDeploymentType>
     <PackageRegistrationPath></PackageRegistrationPath>
     <RemoveNonLayoutFiles>true</RemoveNonLayoutFiles>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\bin\WindowsUniversal\x86\Debug\Core\AppxManifest.xml">
+    <AppXManifest Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\bin\WindowsUniversal\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\bin\WindowsUniversal\x86\Debug\SteelWrath.exe">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\bin\WindowsUniversal\x86\Debug\SteelWrath.exe">
       <PackagePath>entrypoint\SteelWrath.exe</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\bin\WindowsUniversal\x86\Debug\SteelWrath.exe.config">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\bin\WindowsUniversal\x86\Debug\SteelWrath.exe.config">
       <PackagePath>SteelWrath.exe.config</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\David\.nuget\packages\Microsoft.CSharp\4.0.1\lib\netcore50\Microsoft.CSharp.dll">
@@ -373,7 +373,7 @@
     <AppxPackagedFile Include="C:\Program Files %28x86%29\MonoGame\v3.0\Assemblies\WindowsUniversal\MonoGame.Framework.dll">
       <PackagePath>MonoGame.Framework.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Visual Studio 2015\Projects\PenumbraUWP-master\Source\bin\Debug\MonoGame.Penumbra.UWP.dll">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\bin\WindowsUniversal\x86\Debug\MonoGame.Penumbra.UWP.dll">
       <PackagePath>MonoGame.Penumbra.UWP.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\MonoGame\v3.0\Assemblies\WindowsUniversal\SharpDX.DXGI.dll">
@@ -394,232 +394,232 @@
     <AppxPackagedFile Include="C:\Program Files %28x86%29\MonoGame\v3.0\Assemblies\WindowsUniversal\SharpDX.Direct2D1.dll">
       <PackagePath>SharpDX.Direct2D1.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Icon.ico">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Icon.ico">
       <PackagePath>Icon.ico</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Properties\Default.rd.xml">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Assets\LockScreenLogo.scale-200.png">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Assets\SplashScreen.scale-200.png">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Assets\Square150x150Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Assets\Square150x150Logo.scale-200.png">
       <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Assets\Square44x44Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Assets\Square44x44Logo.scale-200.png">
       <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Assets\StoreLogo.png">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Assets\Wide310x150Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\PenumbraHull.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\PenumbraHull.xnb">
       <PackagePath>Content\PenumbraHull.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\PenumbraLight.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\PenumbraLight.xnb">
       <PackagePath>Content\PenumbraLight.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\PenumbraShadow.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\PenumbraShadow.xnb">
       <PackagePath>Content\PenumbraShadow.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\PenumbraTexture.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\PenumbraTexture.xnb">
       <PackagePath>Content\PenumbraTexture.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\BlinkPause.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\BlinkPause.xnb">
       <PackagePath>Content\audio\BlinkPause.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\BlinkPlay.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\BlinkPlay.xnb">
       <PackagePath>Content\audio\BlinkPlay.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\GameOver.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\GameOver.xnb">
       <PackagePath>Content\audio\GameOver.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\Heartbeat.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\Heartbeat.xnb">
       <PackagePath>Content\audio\Heartbeat.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\MainMenu.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\MainMenu.xnb">
       <PackagePath>Content\audio\MainMenu.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\Pause.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\Pause.xnb">
       <PackagePath>Content\audio\Pause.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\Play.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\Play.xnb">
       <PackagePath>Content\audio\Play.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\Play3.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\Play3.xnb">
       <PackagePath>Content\audio\Play3.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerActiveCamo.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerActiveCamo.xnb">
       <PackagePath>Content\audio\PlayerActiveCamo.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTankHum.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTankHum.xnb">
       <PackagePath>Content\audio\PlayerTankHum.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTankReload.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTankReload.xnb">
       <PackagePath>Content\audio\PlayerTankReload.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTankReload2.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTankReload2.xnb">
       <PackagePath>Content\audio\PlayerTankReload2.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTankShoot.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTankShoot.xnb">
       <PackagePath>Content\audio\PlayerTankShoot.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTankShoot2.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTankShoot2.xnb">
       <PackagePath>Content\audio\PlayerTankShoot2.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTankShootAlt.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTankShootAlt.xnb">
       <PackagePath>Content\audio\PlayerTankShootAlt.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTankTracks.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTankTracks.xnb">
       <PackagePath>Content\audio\PlayerTankTracks.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTurretTurn.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerTurretTurn.xnb">
       <PackagePath>Content\audio\PlayerTurretTurn.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerWarning.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\PlayerWarning.xnb">
       <PackagePath>Content\audio\PlayerWarning.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\Rescue1.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\Rescue1.xnb">
       <PackagePath>Content\audio\Rescue1.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\Rescue2.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\Rescue2.xnb">
       <PackagePath>Content\audio\Rescue2.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\Rescue3.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\Rescue3.xnb">
       <PackagePath>Content\audio\Rescue3.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\Rescue4.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\Rescue4.xnb">
       <PackagePath>Content\audio\Rescue4.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\Resupply.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\Resupply.xnb">
       <PackagePath>Content\audio\Resupply.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\SentryTankHum.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\SentryTankHum.xnb">
       <PackagePath>Content\audio\SentryTankHum.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\SentryTankShoot.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\SentryTankShoot.xnb">
       <PackagePath>Content\audio\SentryTankShoot.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\SentryTankShootAlt.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\SentryTankShootAlt.xnb">
       <PackagePath>Content\audio\SentryTankShootAlt.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\SentryTankShootHeavy.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\SentryTankShootHeavy.xnb">
       <PackagePath>Content\audio\SentryTankShootHeavy.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\SentryTankShootLight.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\SentryTankShootLight.xnb">
       <PackagePath>Content\audio\SentryTankShootLight.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\SentryTankTracks.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\SentryTankTracks.xnb">
       <PackagePath>Content\audio\SentryTankTracks.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\SentryTurretTurn.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\SentryTurretTurn.xnb">
       <PackagePath>Content\audio\SentryTurretTurn.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\TankArmorPierce.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\TankArmorPierce.xnb">
       <PackagePath>Content\audio\TankArmorPierce.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\TankExplosion.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\TankExplosion.xnb">
       <PackagePath>Content\audio\TankExplosion.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\TankShoot.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\TankShoot.xnb">
       <PackagePath>Content\audio\TankShoot.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\Win.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\Win.xnb">
       <PackagePath>Content\audio\Win.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\background\Lose.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\background\Lose.xnb">
       <PackagePath>Content\background\Lose.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\background\MainMenu.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\background\MainMenu.xnb">
       <PackagePath>Content\background\MainMenu.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_00_delay-0.58s.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_00_delay-0.58s.xnb">
       <PackagePath>Content\background\WinFrames\frame_00_delay-0.58s.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_01_delay-0.08s.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_01_delay-0.08s.xnb">
       <PackagePath>Content\background\WinFrames\frame_01_delay-0.08s.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_02_delay-0.08s.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_02_delay-0.08s.xnb">
       <PackagePath>Content\background\WinFrames\frame_02_delay-0.08s.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_03_delay-0.08s.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_03_delay-0.08s.xnb">
       <PackagePath>Content\background\WinFrames\frame_03_delay-0.08s.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_04_delay-0.17s.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_04_delay-0.17s.xnb">
       <PackagePath>Content\background\WinFrames\frame_04_delay-0.17s.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_05_delay-0.33s.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_05_delay-0.33s.xnb">
       <PackagePath>Content\background\WinFrames\frame_05_delay-0.33s.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_06_delay-0.08s.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_06_delay-0.08s.xnb">
       <PackagePath>Content\background\WinFrames\frame_06_delay-0.08s.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_07_delay-0.08s.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_07_delay-0.08s.xnb">
       <PackagePath>Content\background\WinFrames\frame_07_delay-0.08s.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_08_delay-0.25s.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_08_delay-0.25s.xnb">
       <PackagePath>Content\background\WinFrames\frame_08_delay-0.25s.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_09_delay-0.17s.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_09_delay-0.17s.xnb">
       <PackagePath>Content\background\WinFrames\frame_09_delay-0.17s.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_10_delay-0.08s.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\background\WinFrames\frame_10_delay-0.08s.xnb">
       <PackagePath>Content\background\WinFrames\frame_10_delay-0.08s.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\fonts\font.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\fonts\font.xnb">
       <PackagePath>Content\fonts\font.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\Tiles\collider.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\Tiles\collider.xnb">
       <PackagePath>Content\Tiles\collider.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\Tiles\tilesheet.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\Tiles\tilesheet.xnb">
       <PackagePath>Content\Tiles\tilesheet.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\Tiles\tilesheet_alternate_old.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\Tiles\tilesheet_alternate_old.xnb">
       <PackagePath>Content\Tiles\tilesheet_alternate_old.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\Tiles\tilesheet_old.xnb">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\Tiles\tilesheet_old.xnb">
       <PackagePath>Content\Tiles\tilesheet_old.xnb</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\GameOver.wma">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\GameOver.wma">
       <PackagePath>Content\audio\GameOver.wma</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\MainMenu.wma">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\MainMenu.wma">
       <PackagePath>Content\audio\MainMenu.wma</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\Pause.wma">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\Pause.wma">
       <PackagePath>Content\audio\Pause.wma</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\Play.wma">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\Play.wma">
       <PackagePath>Content\audio\Play.wma</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\Play3.wma">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\Play3.wma">
       <PackagePath>Content\audio\Play3.wma</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\bin\WindowsStoreApp\audio\Win.wma">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\bin\WindowsStoreApp\audio\Win.wma">
       <PackagePath>Content\audio\Win.wma</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\bin\WindowsUniversal\x86\Debug\SteelWrath.xr.xml">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\bin\WindowsUniversal\x86\Debug\SteelWrath.xr.xml">
       <PackagePath>SteelWrath.xr.xml</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\bin\WindowsUniversal\x86\Debug\resources.pri">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\bin\WindowsUniversal\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\bin\WindowsUniversal\x86\Debug\Core\SteelWrath.exe">
+    <AppxPackagedFile Include="C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\bin\WindowsUniversal\x86\Debug\Core\SteelWrath.exe">
       <PackagePath>SteelWrath.exe</PackagePath>
     </AppxPackagedFile>
   </ItemGroup>

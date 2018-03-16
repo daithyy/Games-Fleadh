@@ -11,7 +11,7 @@
   <mp:PhoneIdentity PhoneProductId="fef81ec7-ad02-428c-bd96-67afff4da4b4" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>SteelWrath</DisplayName>
-    <PublisherDisplayName>David</PublisherDisplayName>
+    <PublisherDisplayName>Daithyi</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -24,8 +24,11 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="SteelWrath.exe" EntryPoint="SteelWrath.App">
-      <uap:VisualElements DisplayName="SteelWrath" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="SteelWrath" BackgroundColor="#464646">
+      <uap:VisualElements DisplayName="Steel Wrath" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="Steel Wrath is a sci-fi post-apocalyptic shoot ‘em up in which you control a tank to fight against the hordes of rogue, artificial intelligent tanks on a no man’s planet." BackgroundColor="#464646">
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape" />
+        </uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>

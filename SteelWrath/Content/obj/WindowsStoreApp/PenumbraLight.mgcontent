@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/PenumbraLight.fx</SourceFile>
-  <SourceTime>2017-09-12T20:08:06+01:00</SourceTime>
-  <DestFile>C:/Users/David/Documents/Notes/Games Fleadh UWP/SteelWrath/SteelWrath/Content/bin/WindowsStoreApp/PenumbraLight.xnb</DestFile>
-  <DestTime>2018-02-27T20:22:56.0532118+00:00</DestTime>
+  <SourceFile>C:/Users/David/Documents/Notes/Games Fleadh/SteelWrath/Content/PenumbraLight.fx</SourceFile>
+  <SourceTime>2018-03-06T17:16:31.93816+00:00</SourceTime>
+  <DestFile>C:/Users/David/Documents/Notes/Games Fleadh/SteelWrath/Content/bin/WindowsStoreApp/PenumbraLight.xnb</DestFile>
+  <DestTime>2018-03-06T17:19:58.1858097+00:00</DestTime>
   <Importer>EffectImporter</Importer>
   <ImporterTime>2017-03-01T15:05:36+00:00</ImporterTime>
   <Processor>EffectProcessor</Processor>
@@ -13,7 +13,7 @@
     <Value>Auto</Value>
   </Parameters>
   <Dependencies>
-    <string>C:\Users\David\Documents\Notes\Games Fleadh UWP\SteelWrath\SteelWrath\Content\Macros.fxh</string>
+    <string>C:\Users\David\Documents\Notes\Games Fleadh\SteelWrath\Content\Macros.fxh</string>
   </Dependencies>
   <BuildAsset />
   <BuildOutput />

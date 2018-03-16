@@ -96,7 +96,7 @@
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\WindowsUniversal\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Penumbra.UWP">
-      <HintPath>..\..\..\..\Visual Studio 2015\Projects\PenumbraUWP-master\Source\bin\Debug\MonoGame.Penumbra.UWP.dll</HintPath>
+      <HintPath>..\..\..\Visual Studio 2015\Projects\PenumbraUWP-master\Source\bin\x64\Debug\MonoGame.Penumbra.UWP.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
