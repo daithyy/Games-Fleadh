@@ -67,7 +67,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Engines\AI\Astar.cs" />
@@ -78,12 +78,14 @@
     <Compile Include="Engines\Camera.cs" />
     <Compile Include="Engines\Collider.cs" />
     <Compile Include="Engines\InputEngine.cs" />
+    <Compile Include="Engines\Loader.cs" />
     <Compile Include="Entities\Enemy\Types\HeavySentry.cs" />
     <Compile Include="Entities\Enemy\Types\HeavySentryTurret.cs" />
     <Compile Include="Entities\Enemy\Types\LightSentry.cs" />
     <Compile Include="Entities\Enemy\Types\LightSentryTurret.cs" />
     <Compile Include="Entities\Tank.cs" />
     <Compile Include="GUI\MouseCrosshair.cs" />
+    <Compile Include="GUI\SplashScreen.cs" />
     <Compile Include="Items\Weapons\Projectiles\Ricochet.cs" />
     <Compile Include="Sprites\Effects\BulletExplosion.cs" />
     <Compile Include="Sprites\Effects\Explosion.cs" />
@@ -103,7 +105,6 @@
     <Compile Include="Entities\Enemy\SentryTurret.cs" />
     <Compile Include="Sprites\SimpleTileLayer.cs" />
     <Compile Include="Sprites\AnimatedSprite.cs" />
-    <Compile Include="GUI\SplashScreen.cs" />
     <Compile Include="Entities\Player\TilePlayerTurret.cs" />
     <Compile Include="Sprites\TankWreckSprite.cs" />
     <Compile Include="Sprites\Tile.cs" />

@@ -81,6 +81,10 @@ namespace PowerUps
         private const int RUN_RADIUS = 100;
         private const float RUN_SPEED = 0.01f;
 
+        #region Tank Crewman Colors
+
+        #endregion
+
         private Color durationBarColor = new Color(169, 169, 242);
         private HealthBar durationBar;
         private const float ALPHA_SPD = 0.05f;

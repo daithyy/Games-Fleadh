@@ -17,6 +17,7 @@ using Screens;
 using Helpers;
 using AnimatedSprite;
 using PowerUps;
+using ContentLoader;
 
 namespace TileBasedPlayer20172018
 {
@@ -26,8 +27,8 @@ namespace TileBasedPlayer20172018
         SpriteBatch spriteBatch;
         PenumbraComponent penumbra;
 
-        private int _width = 800;
-        private int _height = 480;
+        private int _width = 1280;
+        private int _height = 720;
 
         private Color BackgroundColor = new Color(185, 132, 62);
         private const float WORLD_BRIGHTNESS = 1.0f;
@@ -102,7 +103,7 @@ namespace TileBasedPlayer20172018
             graphics.PreferredBackBufferHeight = _height;
             //graphics.PreferMultiSampling = false;
             graphics.SynchronizeWithVerticalRetrace = true;
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
             IsMouseVisible = false;
@@ -689,10 +690,19 @@ namespace TileBasedPlayer20172018
             //List<Tile> tileFound = SimpleTileLayer.GetNamedTiles(backTileNames[(int)TileType.GREENBOX]);
 
             #region Splash Screen
+            Queue<Texture2D> txWinQueue = new Queue<Texture2D>();
+            Dictionary<string, Texture2D> winFrames = new Dictionary<string, Texture2D>();
+
+            winFrames = Loader.ContentLoad<Texture2D>(Content, "background\\WinFrames");
+            foreach (var frame in winFrames)
+            {
+                txWinQueue.Enqueue(frame.Value);
+            }
+
             MainScreen = new SplashScreen(this, Vector2.Zero, 360000.00f, // 6 mins
                             Content.Load<Texture2D>("background/MainMenu"),
                             Content.Load<Texture2D>("background/Lose"),
-                            Content.Load<Video>("background/Win"),
+                            txWinQueue,
                             Content.Load<Song>("audio/MainMenu"),
                             Content.Load<Song>("audio/Play"),
                             Content.Load<Song>("audio/Pause"),
@@ -717,6 +727,9 @@ namespace TileBasedPlayer20172018
         {
             if (InputEngine.IsButtonPressed(Buttons.Back) || InputEngine.IsKeyPressed(Keys.Escape))
                 Exit();
+
+            if (InputEngine.IsKeyPressed(Keys.Space))
+                MainScreen.CurrentGameCondition = GameCondition.WIN;
 
             if (this.IsActive)
                 base.Update(gameTime);

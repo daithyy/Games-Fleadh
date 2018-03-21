@@ -25,11 +25,22 @@ namespace Screens
         Texture2D _txWhite;
         Texture2D _txGameOver;
         Texture2D _txWin;
-        public const float VOLUME = 0.25f;
+        Queue<Texture2D> txWinQueue = new Queue<Texture2D>();
 
         public bool Active { get; set; }
-        private VideoPlayer vidPlayer;
-        private Video vidWin { get; set; }
+        public const float VOLUME = 0.25f;
+        public Texture2D txWin
+        {
+            get
+            {
+                return _txWin;
+            }
+
+            set
+            {
+                _txWin = value;
+            }
+        }
         private Texture2D txMain
         {
             get
@@ -71,6 +82,7 @@ namespace Screens
         private SoundEffect BlinkPlay { get; set; }
         private SoundEffect BlinkPause { get; set; }
         public Vector2 Position { get; set; }
+
         private Keys PauseKey;
         private Buttons PauseButton;
         private Keys ActivationKey;
@@ -83,17 +95,20 @@ namespace Screens
         private bool fadeIn = true;
         private bool fadeOut = false;
         public float TimeRemaining;
+        private string timeLeft;
         private float TrackPlayCount = 0; // To stop Game Over track loop
         public Color FontColor = new Color(243, 208, 168);
         public Color FontWinColor = new Color(169, 242, 181);
         public Color FontSafeColor = new Color(0, 137, 81);
         public Color FontWarningColor = new Color(255, 86, 86);
-        TimeSpan PauseTime;
+        private TimeSpan PauseTime;
+        private TimeSpan frameTime = new TimeSpan();
+        private const int FRAME_SPEED = 150;
         #endregion
 
         #region Constructor
         public SplashScreen(Game game, Vector2 pos, float timeLeft,
-            Texture2D txMain, Texture2D txGameOver, Video vidWin,
+            Texture2D txMain, Texture2D txGameOver, Queue<Texture2D> txQueue,
             Song menuMusic, Song playMusic, Song pauseMusic, Song gameOverMusic, Song winMusic,
             Keys pauseKey, Keys activateKey, Buttons activateButton, Buttons pauseButton, 
             SpriteFont fontIn, SoundEffect blinkPlay, SoundEffect blinkPause) : base(game)
@@ -107,9 +122,9 @@ namespace Screens
             _txWhite = new Texture2D(game.GraphicsDevice, 1, 1);
             _txWhite.SetData(new[] { Color.White });
             _txGameOver = txGameOver;
-            vidPlayer = new VideoPlayer();
-            vidPlayer.IsMuted = true;
-            this.vidWin = vidWin;
+            this.txWinQueue = txQueue;
+            txWin = txWinQueue.Dequeue();
+            txWinQueue.Enqueue(txWin);
             Position = pos;
             ActivationKey = activateKey;
             ActivationButton = activateButton;
@@ -279,16 +294,16 @@ namespace Screens
                     {
                         MediaPlayer.Play(WinTrack);
                         TrackPlayCount++;
-                        if (vidPlayer.State == MediaState.Stopped)
-                        {
-                            vidPlayer.Play(vidWin);
-                        }
                     }
 
-                    if (vidPlayer.State != MediaState.Stopped)
-                        _txWin = vidPlayer.GetTexture();
-                    else
-                        vidPlayer.Dispose();
+                    frameTime += gameTime.ElapsedGameTime;
+                    
+                    if (frameTime.Milliseconds > FRAME_SPEED)
+                    {
+                        txWin = txWinQueue.Dequeue();
+                        txWinQueue.Enqueue(txWin);
+                        frameTime = TimeSpan.Zero;
+                    }
 
                     Helper.CurrentGameStatus = GameStatus.PAUSED;
                     break;
@@ -341,14 +356,25 @@ namespace Screens
             }
             else if (Active && CurrentScreen == ActiveScreen.WIN)
             {
-                if (_txWin != null)
+                if (txWin != null)
+                {
                     spriteBatch.Draw(_txWin, new Rectangle(Position.ToPoint(), new Point(
                         Helper.graphicsDevice.Viewport.Bounds.Width,
                         Helper.graphicsDevice.Viewport.Bounds.Height)), Color.White);
+                }
+                    
                 spriteBatch.DrawString(Font,
                     "You WIN", new Vector2(Helper.graphicsDevice.Viewport.Width / 2 -
-                    Font.MeasureString("You WIN").X / 2, Helper.graphicsDevice.Viewport.Height / 2 - 180),
+                    Font.MeasureString("You WIN").X / 2, 100),
                     FontWinColor);
+
+                spriteBatch.DrawString(Font, "Time Remaining: " + timeLeft, 
+                    new Vector2(
+                        Helper.graphicsDevice.Viewport.Width / 2 -
+                        Font.MeasureString("Time Remaining: " + timeLeft).X / 2,
+                        Helper.graphicsDevice.Viewport.Height - 100),
+                    FontWinColor);
+
                 spriteBatch.Draw(txWhite, ScreenRect, Color.White * OverlayAlpha);
             }
             else if (!Active && CurrentScreen == ActiveScreen.PLAY)
@@ -356,7 +382,7 @@ namespace Screens
                 #region Get Minutes and Seconds Format
                 int minutes = (int)Math.Floor((TimeRemaining / 1000) / 60f);
                 int seconds = (int)Math.Floor((TimeRemaining / 1000) - minutes * 60);
-                string timeLeft = string.Format("{0:00}:{1:00}", minutes, seconds);
+                timeLeft = string.Format("{0:00}:{1:00}", minutes, seconds);
                 #endregion
 
                 if ((TimeRemaining / 1000) <= 10)
@@ -384,9 +410,9 @@ namespace Screens
                 if (SentryTurret.Count <= 0 && PowerUp.Count >= 5)
                 {
                     spriteBatch.DrawString(Font,
-                    "ESCAPE !",
+                    "ESCAPE!",
                     new Vector2(Helper.graphicsDevice.Viewport.Bounds.Width / 2 -
-                    Font.MeasureString("FINISH !").X / 2,
+                    Font.MeasureString("ESCAPE!").X / 2,
                     (Helper.graphicsDevice.Viewport.Bounds.Height - 48)),
                     FontWinColor);
                 }
