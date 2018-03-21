@@ -728,9 +728,6 @@ namespace TileBasedPlayer20172018
             if (InputEngine.IsButtonPressed(Buttons.Back) || InputEngine.IsKeyPressed(Keys.Escape))
                 Exit();
 
-            if (InputEngine.IsKeyPressed(Keys.Space))
-                MainScreen.CurrentGameCondition = GameCondition.WIN;
-
             if (this.IsActive)
                 base.Update(gameTime);
         }
